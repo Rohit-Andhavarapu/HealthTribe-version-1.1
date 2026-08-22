@@ -5,8 +5,12 @@ export class GeminiProvider implements AIProvider {
   private ai: GoogleGenAI | null = null;
 
   constructor() {
-    const GEMINI_KEY = process.env.GEMINI_API_KEY;
-    if (GEMINI_KEY) {
+    this.getClient();
+  }
+
+  private getClient(): GoogleGenAI | null {
+    if (!this.ai && process.env.GEMINI_API_KEY) {
+      const GEMINI_KEY = process.env.GEMINI_API_KEY.trim();
       try {
         this.ai = new GoogleGenAI({
           apiKey: GEMINI_KEY,
@@ -20,17 +24,21 @@ export class GeminiProvider implements AIProvider {
       } catch (err) {
         console.error("Failed to initialize Gemini Client in Provider:", err);
       }
-    } else {
-      console.log("No GEMINI_API_KEY found in GeminiProvider. Operating in fallback mode.");
     }
+    return this.ai;
   }
 
   public isAvailable(): boolean {
-    return this.ai !== null;
+    const key = process.env.GEMINI_API_KEY;
+    if (!key || key.includes("your_gemini_api_key") || key.trim().length < 20) {
+      return false;
+    }
+    return this.getClient() !== null;
   }
 
   public async generateContent(params: GenerateContentParams): Promise<string> {
-    if (!this.ai) {
+    const client = this.getClient();
+    if (!client) {
       throw new Error("AI provider is not initialized (missing API key)");
     }
 

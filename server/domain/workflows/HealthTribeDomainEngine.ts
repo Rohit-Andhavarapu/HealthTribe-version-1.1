@@ -9,8 +9,8 @@ import {
 } from "../commands/DomainCommand";
 import { UserSession } from "../session/SessionManager";
 import { createRequire } from "module";
-const require = createRequire(import.meta.url);
-const pdfParse = require("pdf-parse");
+const customRequire = typeof require !== "undefined" ? require : createRequire(typeof document === "undefined" && typeof location !== "undefined" ? location.href : "file:///");
+const pdfParse = typeof require !== "undefined" ? require("pdf-parse") : customRequire("pdf-parse");
 
 export class HealthTribeDomainEngine {
   private static instance: HealthTribeDomainEngine;

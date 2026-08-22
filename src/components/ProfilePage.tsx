@@ -684,7 +684,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patName : docName}
                   onChange={(e) => isPatient ? setPatName(e.target.value) : setDocName(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -694,7 +694,7 @@ export default function ProfilePage({
                   type="date" 
                   value={isPatient ? patDob : docDob}
                   onChange={(e) => isPatient ? setPatDob(e.target.value) : setDocDob(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -703,7 +703,7 @@ export default function ProfilePage({
                 <select 
                   value={isPatient ? patGender : docGender}
                   onChange={(e) => isPatient ? setPatGender(e.target.value) : setDocGender(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 >
                   <option value="Female">Female</option>
                   <option value="Male">Male</option>
@@ -716,7 +716,7 @@ export default function ProfilePage({
                 <select 
                   value={isPatient ? patBloodGroup : docBloodGroup}
                   onChange={(e) => isPatient ? setPatBloodGroup(e.target.value) : setDocBloodGroup(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 >
                   <option value="O+">O+</option>
                   <option value="O-">O-</option>
@@ -735,7 +735,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patHeight : docHeight}
                   onChange={(e) => isPatient ? setPatHeight(e.target.value) : setDocHeight(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -745,7 +745,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patWeight : docWeight}
                   onChange={(e) => isPatient ? setPatWeight(e.target.value) : setDocWeight(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
             </div>
@@ -753,7 +753,7 @@ export default function ProfilePage({
             <div className="flex justify-end mt-6">
               <button 
                 onClick={() => handleSaveInfo("Personal")}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+                className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
               >
                 <Check className="w-4 h-4" /> Save Personal Data
               </button>
@@ -782,7 +782,7 @@ export default function ProfilePage({
                   type="email" 
                   value={isPatient ? patEmail : docEmail}
                   onChange={(e) => isPatient ? setPatEmail(e.target.value) : setDocEmail(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -792,7 +792,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patPhone : docPhone}
                   onChange={(e) => isPatient ? setPatPhone(e.target.value) : setDocPhone(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -803,7 +803,7 @@ export default function ProfilePage({
                   value={isPatient ? patEmergency : docEmergency}
                   onChange={(e) => isPatient ? setPatEmergency(e.target.value) : setDocEmergency(e.target.value)}
                   placeholder="e.g. +91 94000 00000 (Spouse)"
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -813,7 +813,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patAlternate : docAlternate}
                   onChange={(e) => isPatient ? setPatAlternate(e.target.value) : setDocAlternate(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
             </div>
@@ -821,7 +821,7 @@ export default function ProfilePage({
             <div className="flex justify-end mt-6">
               <button 
                 onClick={() => handleSaveInfo("Contact")}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+                className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
               >
                 <Check className="w-4 h-4" /> Save Contact Details
               </button>
@@ -850,7 +850,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patCountry : docCountry}
                   onChange={(e) => isPatient ? setPatCountry(e.target.value) : setDocCountry(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -860,7 +860,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patState : docState}
                   onChange={(e) => isPatient ? setPatState(e.target.value) : setDocState(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -870,7 +870,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patCity : docCity}
                   onChange={(e) => isPatient ? setPatCity(e.target.value) : setDocCity(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -880,7 +880,7 @@ export default function ProfilePage({
                   type="text" 
                   value={isPatient ? patPinCode : docPinCode}
                   onChange={(e) => isPatient ? setPatPinCode(e.target.value) : setDocPinCode(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
 
@@ -890,7 +890,7 @@ export default function ProfilePage({
                   rows={2}
                   value={isPatient ? patAddress : docAddress}
                   onChange={(e) => isPatient ? setPatAddress(e.target.value) : setDocAddress(e.target.value)}
-                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                 />
               </div>
             </div>
@@ -898,7 +898,7 @@ export default function ProfilePage({
             <div className="flex justify-end mt-6">
               <button 
                 onClick={() => handleSaveInfo("Address")}
-                className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+                className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
               >
                 <Check className="w-4 h-4" /> Save Address Coordinates
               </button>
@@ -929,7 +929,7 @@ export default function ProfilePage({
                     type="text" 
                     value={patAllergies}
                     onChange={(e) => setPatAllergies(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -939,7 +939,7 @@ export default function ProfilePage({
                     type="text" 
                     value={patChronic}
                     onChange={(e) => setPatChronic(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -949,7 +949,7 @@ export default function ProfilePage({
                     type="text" 
                     value={patMedications}
                     onChange={(e) => setPatMedications(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -959,7 +959,7 @@ export default function ProfilePage({
                     type="text" 
                     value={patPrimaryDoctor}
                     onChange={(e) => setPatPrimaryDoctor(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -969,7 +969,7 @@ export default function ProfilePage({
                     type="text" 
                     value={patInsurance}
                     onChange={(e) => setPatInsurance(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -978,7 +978,7 @@ export default function ProfilePage({
                   <select 
                     value={patOrganDonor}
                     onChange={(e) => setPatOrganDonor(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   >
                     <option value="Registered Organ Donor">Registered Organ Donor</option>
                     <option value="Not Registered">Not Registered</option>
@@ -990,7 +990,7 @@ export default function ProfilePage({
               <div className="flex justify-end mt-6">
                 <button 
                   onClick={() => handleSaveInfo("Clinical")}
-                  className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
                 >
                   <Check className="w-4 h-4" /> Save Clinical Records
                 </button>
@@ -1019,7 +1019,7 @@ export default function ProfilePage({
                     type="text" 
                     value={docQualification}
                     onChange={(e) => setDocQualification(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -1029,7 +1029,7 @@ export default function ProfilePage({
                     type="text" 
                     value={docRegNumber}
                     onChange={(e) => setDocRegNumber(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -1039,7 +1039,7 @@ export default function ProfilePage({
                     type="text" 
                     value={docHospital}
                     onChange={(e) => setDocHospital(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -1049,7 +1049,7 @@ export default function ProfilePage({
                     type="text" 
                     value={docExperience}
                     onChange={(e) => setDocExperience(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -1059,7 +1059,7 @@ export default function ProfilePage({
                     type="text" 
                     value={docFee}
                     onChange={(e) => setDocFee(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -1069,7 +1069,7 @@ export default function ProfilePage({
                     type="text" 
                     value={docTimings}
                     onChange={(e) => setDocTimings(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -1079,7 +1079,7 @@ export default function ProfilePage({
                     type="text" 
                     value={docLanguages}
                     onChange={(e) => setDocLanguages(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
 
@@ -1089,7 +1089,7 @@ export default function ProfilePage({
                     rows={3}
                     value={docBio}
                     onChange={(e) => setDocBio(e.target.value)}
-                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-600/40 bg-slate-50/50"
+                    className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-600/40 bg-slate-50/50"
                   />
                 </div>
               </div>
@@ -1097,7 +1097,7 @@ export default function ProfilePage({
               <div className="flex justify-end mt-6">
                 <button 
                   onClick={() => handleSaveInfo("Professional Biography")}
-                  className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+                  className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
                 >
                   <Check className="w-4 h-4" /> Save Professional Data
                 </button>
@@ -1160,7 +1160,7 @@ export default function ProfilePage({
                 <div className="flex justify-end mt-4">
                   <button 
                     onClick={handleUpdatePassword}
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg transition-all cursor-pointer"
+                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-bold rounded-lg transition-all cursor-pointer"
                   >
                     Update Password
                   </button>
@@ -1636,7 +1636,7 @@ export default function ProfilePage({
                   onClick={savePhoto}
                   disabled={!tempPhotoUrl || isPhotoLoading}
                   className={`px-5 py-2 text-white text-xs font-bold rounded-xl cursor-pointer flex items-center gap-1.5 shadow-xs transition-all ${
-                    tempPhotoUrl ? "bg-emerald-600 hover:bg-emerald-700" : "bg-slate-300 cursor-not-allowed"
+                    tempPhotoUrl ? "bg-blue-600 hover:bg-blue-700" : "bg-slate-300 cursor-not-allowed"
                   }`}
                 >
                   <Check className="w-4 h-4" /> Save Avatar Changes

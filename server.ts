@@ -21,7 +21,7 @@ import whatsappRoutes from "./server/channels/whatsapp/routes/whatsappRoutes";
 channelManager.registerAdapter(whatsAppAdapter);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 function isValidHttpUrl(stringVal: string): boolean {
   if (!stringVal || typeof stringVal !== "string") return false;
@@ -3201,7 +3201,8 @@ app.put("/api/triage/messages/:msgId", (req, res) => {
 
 // AI Chatbot Symptom Copilot & Smart Triage
 app.post("/api/triage", async (req, res) => {
-  const { message, history, familyMemberId } = req.body;
+  const message = req.body.message || req.body.query || "";
+  const { history, familyMemberId } = req.body;
   const patient = getProfileById(req, familyMemberId) || db.familyMembers[0];
 
   const systemPrompt = `You are a real-time, high-performance Triage Copilot for HealthTribe AI.
@@ -3291,7 +3292,7 @@ Guidelines:
 
 // Heuristic fallback for Triage
 function generateHeuristicTriage(message: string, patient: any) {
-  const msg = message.toLowerCase();
+  const msg = (message || "").toLowerCase();
   let urgency = "GREEN";
   let urgencyColor = "green";
   let specialty = "General Physician";

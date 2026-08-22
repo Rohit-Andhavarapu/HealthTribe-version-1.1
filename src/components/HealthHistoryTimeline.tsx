@@ -95,9 +95,9 @@ export const HealthHistoryTimeline = ({
       <div className="flex flex-wrap items-center gap-2 p-1.5 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200/70 dark:border-slate-800">
         <button
           onClick={() => setActiveViewMode("timeline")}
-          className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[140px] py-2 px-3.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeViewMode === "timeline"
-              ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs"
+              ? "bg-white dark:bg-[#131b2e] text-blue-600 dark:text-blue-400 shadow-xs border border-slate-200/50 dark:border-slate-700/50"
               : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
           }`}
         >
@@ -107,16 +107,16 @@ export const HealthHistoryTimeline = ({
 
         <button
           onClick={() => setActiveViewMode("trajectory")}
-          className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[160px] py-2 px-3.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeViewMode === "trajectory"
-              ? "bg-indigo-600 text-white shadow-xs"
-              : "text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400"
+              ? "bg-blue-600 text-white shadow-xs"
+              : "text-slate-500 hover:text-blue-600 dark:hover:text-blue-400"
           }`}
         >
           <Activity className="w-3.5 h-3.5" />
           <span>AI Health Forecast</span>
           <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-            activeViewMode === "trajectory" ? "bg-white/20 text-white" : "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300"
+            activeViewMode === "trajectory" ? "bg-white/20 text-white" : "bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300"
           }`}>
             90-Day Trend
           </span>
@@ -124,16 +124,16 @@ export const HealthHistoryTimeline = ({
 
         <button
           onClick={() => setActiveViewMode("reconcile")}
-          className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+          className={`flex-1 min-w-[160px] py-2 px-3.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
             activeViewMode === "reconcile"
-              ? "bg-purple-600 text-white shadow-xs"
-              : "text-slate-500 hover:text-purple-600 dark:hover:text-purple-400"
+              ? "bg-indigo-600 text-white shadow-xs"
+              : "text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400"
           }`}
         >
           <Pill className="w-3.5 h-3.5" />
           <span>Medication Reconciliation</span>
           <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-            activeViewMode === "reconcile" ? "bg-white/20 text-white" : "bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300"
+            activeViewMode === "reconcile" ? "bg-white/20 text-white" : "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300"
           }`}>
             Multi-Hospital
           </span>

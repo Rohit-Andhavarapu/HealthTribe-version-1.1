@@ -62,37 +62,37 @@ export const DoctorChatbot = () => {
     <>
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 bg-emerald-700 text-white p-4 rounded-full shadow-2xl hover:scale-105 transition-transform"
+        className="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl hover:scale-105 transition-transform"
       >
         <Sparkles size={24} />
       </button>
 
       {isOpen && (
-        <div className="fixed bottom-24 right-6 z-50 w-96 h-[500px] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-fade-in">
-          <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-800">
-            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2"><Sparkles size={16} className="text-emerald-600" /> AI Clinical Assistant</h3>
-            <button onClick={() => setIsOpen(false)}><X size={16} /></button>
+        <div className="fixed bottom-24 right-6 z-50 w-96 h-[500px] bg-white dark:bg-[#131b2e] border border-slate-200/80 dark:border-slate-800 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-fade-in">
+          <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-850">
+            <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2"><Sparkles size={16} className="text-blue-600 dark:text-blue-400" /> AI Clinical Assistant</h3>
+            <button onClick={() => setIsOpen(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"><X size={16} /></button>
           </div>
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((m, i) => (
-              <div key={i} className={`p-3 rounded-2xl text-xs max-w-[80%] ${m.sender === "ai" ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 self-start" : "bg-emerald-700 text-white self-end"}`}>
+              <div key={i} className={`p-3 rounded-2xl text-xs max-w-[80%] ${m.sender === "ai" ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 self-start" : "bg-blue-600 text-white self-end"}`}>
                 {m.text}
               </div>
             ))}
             {loading && <div className="text-[10px] text-slate-400">Assistant is thinking...</div>}
           </div>
           <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex gap-2">
-            <button className="p-2 text-slate-400 hover:text-emerald-700" onClick={() => alert("Voice input feature coming soon!")}>
+            <button className="p-2 text-slate-400 hover:text-blue-600 cursor-pointer" onClick={() => alert("Voice input feature coming soon!")}>
               <Mic size={16} />
             </button>
             <input 
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              className="flex-1 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl px-3"
+              className="flex-1 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl px-3 outline-none focus:ring-2 focus:ring-blue-500/30"
               placeholder="Ask about schedule or patients..."
               onKeyPress={(e) => e.key === "Enter" && sendMessage()}
             />
-            <button onClick={sendMessage} className="p-2 bg-emerald-700 text-white rounded-xl"><Send size={14} /></button>
+            <button onClick={sendMessage} className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl cursor-pointer"><Send size={14} /></button>
           </div>
         </div>
       )}

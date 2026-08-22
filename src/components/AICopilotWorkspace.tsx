@@ -729,8 +729,8 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
   const filteredConversations = conversations.filter(c => c.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const mainBg = sessionMode === "doctor" ? "bg-slate-50 dark:bg-slate-900" : "bg-white dark:bg-slate-900";
-  const primaryColor = sessionMode === "doctor" ? "bg-emerald-700 text-white hover:bg-emerald-800" : "bg-emerald-600 text-white hover:bg-emerald-700";
-  const primaryText = sessionMode === "doctor" ? "text-emerald-700 dark:text-emerald-400" : "text-emerald-600 dark:text-emerald-400";
+  const primaryColor = sessionMode === "doctor" ? "bg-blue-700 text-white hover:bg-blue-800" : "bg-blue-600 text-white hover:bg-blue-700";
+  const primaryText = sessionMode === "doctor" ? "text-blue-700 dark:text-blue-400" : "text-blue-600 dark:text-blue-400";
   const aiBubbleBg = sessionMode === "doctor" ? "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700" : "bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700";
 
   return (
@@ -740,7 +740,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
         <div className="p-4 border-b border-slate-200 dark:border-slate-800 space-y-4">
           <button 
             onClick={createNewConversation}
-            className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold transition-all shadow-sm ${primaryColor}`}
+            className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-bold transition-all shadow-sm ${primaryColor} cursor-pointer`}
           >
             <Plus className="w-4 h-4" /> New Conversation
           </button>
@@ -752,7 +752,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
               placeholder="Search conversations..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-9 pr-4 text-xs focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all dark:text-white"
+              className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl py-2.5 pl-9 pr-4 text-xs focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all dark:text-white"
             />
           </div>
         </div>
@@ -765,7 +765,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
             <div 
               key={conv.id}
               onClick={() => loadConversation(conv.id)}
-              className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${activeConvId === conv.id ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-100 dark:border-emerald-800/30" : "hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent"}`}
+              className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all ${activeConvId === conv.id ? "bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800/30" : "hover:bg-slate-50 dark:hover:bg-slate-900 border border-transparent"}`}
             >
               <div className="flex items-center gap-3 overflow-hidden">
                 <MessageSquare className={`w-4 h-4 shrink-0 ${activeConvId === conv.id ? primaryText : "text-slate-400"}`} />
@@ -786,7 +786,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
               <div className="opacity-0 group-hover:opacity-100 flex items-center shrink-0 gap-0.5">
                 <button 
                   onClick={(e) => startEditConversation(conv, e)}
-                  className="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 rounded-md transition-all"
+                  className="p-1.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-md transition-all"
                 >
                   <Edit2 className="w-3 h-3" />
                 </button>
@@ -808,7 +808,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
         <div className="md:hidden flex items-center justify-between p-3 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
           <button 
             onClick={() => setShowMobileSidebar(!showMobileSidebar)}
-            className="p-2 text-slate-500 hover:text-emerald-600 bg-slate-50 dark:bg-slate-800 rounded-lg dark:text-slate-400"
+            className="p-2 text-slate-500 hover:text-blue-600 bg-slate-50 dark:bg-slate-800 rounded-lg dark:text-slate-400"
           >
             <MessageSquare className="w-5 h-5" />
           </button>
@@ -841,7 +841,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                   <div 
                     key={conv.id}
                     onClick={() => { loadConversation(conv.id); setShowMobileSidebar(false); }}
-                    className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer ${activeConvId === conv.id ? "bg-emerald-50 dark:bg-emerald-900/20" : "hover:bg-slate-50 dark:hover:bg-slate-900"}`}
+                    className={`group flex items-center justify-between p-3 rounded-xl cursor-pointer ${activeConvId === conv.id ? "bg-blue-50 dark:bg-blue-900/20 text-blue-900 dark:text-blue-200" : "hover:bg-slate-50 dark:hover:bg-slate-900"}`}
                   >
                     <div className="truncate text-xs font-medium dark:text-slate-200">{conv.title}</div>
                   </div>
@@ -854,7 +854,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
         <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar scroll-smooth">
           {messages.length === 0 ? (
             <div className="h-full flex flex-col items-center justify-center text-center p-8 space-y-4">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${sessionMode === 'doctor' ? 'bg-emerald-100 text-emerald-700' : 'bg-emerald-50 text-emerald-600'}`}>
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${sessionMode === 'doctor' ? 'bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300' : 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400'}`}>
                 <Activity className="w-8 h-8" />
               </div>
               <div>
@@ -882,10 +882,10 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                       <button
                         key={idx}
                         onClick={() => setQuery(promptText)}
-                        className="text-left py-2.5 px-4 bg-slate-50 hover:bg-slate-100/80 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl border border-slate-200/60 dark:border-slate-800 cursor-pointer transition-all flex items-center justify-between group shadow-xs hover:border-emerald-500/40"
+                        className="text-left py-2.5 px-4 bg-slate-50 hover:bg-slate-100/80 dark:bg-slate-900 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-semibold rounded-xl border border-slate-200/60 dark:border-slate-800 cursor-pointer transition-all flex items-center justify-between group shadow-xs hover:border-blue-500/40"
                       >
                         <span>{promptText}</span>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-emerald-500 transition-colors" />
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-blue-500 transition-colors" />
                       </button>
                     ))}
                   </div>
@@ -902,7 +902,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                 }`}>
                   {msg.sender === "ai" ? (
                     <div>
-                      <div className="prose prose-sm dark:prose-invert max-w-none prose-headings:font-bold prose-headings:text-slate-800 dark:prose-headings:text-slate-100 prose-h1:text-lg prose-h2:text-base prose-h3:text-sm prose-p:leading-relaxed prose-a:text-emerald-600 prose-li:my-0.5 marker:text-emerald-500 dark:text-slate-200">
+                      <div className="prose prose-sm dark:prose-invert max-w-none prose-headings:font-bold prose-headings:text-slate-800 dark:prose-headings:text-slate-100 prose-h1:text-lg prose-h2:text-base prose-h3:text-sm prose-p:leading-relaxed prose-a:text-blue-600 prose-li:my-0.5 marker:text-blue-500 dark:text-slate-200">
                         <Markdown remarkPlugins={[remarkGfm]}>{msg.text}</Markdown>
                       </div>
                       
@@ -914,7 +914,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                               {isSpeechPaused ? (
                                 <button 
                                   onClick={resumeSpeaking} 
-                                  className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 hover:bg-emerald-100 transition-all cursor-pointer"
+                                  className="p-1.5 rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 hover:bg-blue-100 transition-all cursor-pointer"
                                   title="Resume"
                                 >
                                   <Play className="w-3.5 h-3.5" />
@@ -922,7 +922,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                               ) : (
                                 <button 
                                   onClick={pauseSpeaking} 
-                                  className="p-1.5 rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 hover:bg-emerald-100 transition-all cursor-pointer"
+                                  className="p-1.5 rounded-lg bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-400 hover:bg-blue-100 transition-all cursor-pointer"
                                   title="Pause"
                                 >
                                   <Pause className="w-3.5 h-3.5" />
@@ -944,7 +944,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                                   .replace(/\{[\s\S]*?\}/g, "");
                                 speakResponse(cleanText, msg.id);
                               }} 
-                              className="p-1.5 rounded-lg bg-slate-50 text-slate-500 dark:bg-slate-900 dark:text-slate-400 hover:bg-emerald-50 hover:text-emerald-600 transition-all cursor-pointer"
+                              className="p-1.5 rounded-lg bg-slate-50 text-slate-500 dark:bg-slate-900 dark:text-slate-400 hover:bg-blue-50 hover:text-blue-600 transition-all cursor-pointer"
                               title="Speak"
                             >
                               <Volume2 className="w-3.5 h-3.5" />
@@ -965,9 +965,9 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                         </div>
                         {currentlySpeakingMsgId === msg.id && !isSpeechPaused && (
                           <div className="flex gap-0.5 items-center">
-                            <span className="w-1 h-3 bg-emerald-500 rounded-full animate-pulse"></span>
-                            <span className="w-1 h-4.5 bg-emerald-500 rounded-full animate-pulse delay-75"></span>
-                            <span className="w-1 h-3 bg-emerald-500 rounded-full animate-pulse delay-150"></span>
+                            <span className="w-1 h-3 bg-blue-500 rounded-full animate-pulse"></span>
+                            <span className="w-1 h-4.5 bg-blue-500 rounded-full animate-pulse delay-75"></span>
+                            <span className="w-1 h-3 bg-blue-500 rounded-full animate-pulse delay-150"></span>
                           </div>
                         )}
                       </div>
@@ -989,7 +989,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                               {doc.rating}
                             </div>
                           </div>
-                          <button onClick={() => onAction && onAction({ type: "OPEN_BOOKING", doctorId: doc.id })} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black rounded-xl transition-all cursor-pointer uppercase tracking-wider">
+                          <button onClick={() => onAction && onAction({ type: "OPEN_BOOKING", doctorId: doc.id })} className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-black rounded-xl transition-all cursor-pointer uppercase tracking-wider">
                             BOOK APPOINTMENT
                           </button>
                           <button onClick={() => onAction && onAction({ type: "OPEN_DOCTOR_PROFILE", doctorId: doc.id })} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-200 text-xs font-black rounded-xl transition-all cursor-pointer ml-2 uppercase tracking-wider">
@@ -1025,7 +1025,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                     </button>
                   )}
 
-                  <div className={`text-[10px] mt-2 opacity-60 flex justify-end ${msg.sender === 'user' ? 'text-emerald-100' : 'text-slate-400'}`}>
+                  <div className={`text-[10px] mt-2 opacity-60 flex justify-end ${msg.sender === 'user' ? 'text-blue-100' : 'text-slate-400'}`}>
                     {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </div>
                 </div>
@@ -1049,14 +1049,14 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
         {/* VOICE HUD OVERLAY */}
         {isListening && (
           <div className="absolute bottom-40 left-1/2 -translate-x-1/2 z-40 w-full max-w-xl px-4 animate-bounce-short">
-            <div className="bg-slate-900/95 text-white backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-emerald-500/30 flex flex-col gap-3">
+            <div className="bg-slate-900/95 text-white backdrop-blur-md rounded-2xl p-4 shadow-2xl border border-blue-500/30 flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping"></span>
                   <span className="text-xs font-black uppercase tracking-widest text-slate-300">Listening...</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="bg-slate-800 text-[10px] font-black text-emerald-400 px-2 py-0.5 rounded-full uppercase tracking-wider">
+                  <span className="bg-slate-800 text-[10px] font-black text-blue-400 px-2 py-0.5 rounded-full uppercase tracking-wider">
                     {voiceLang === "auto" ? "Detecting..." : voiceLang === "te" ? "Telugu" : voiceLang === "hi" ? "Hindi" : "English"}
                   </span>
                   <span className="font-mono text-xs text-slate-400 font-bold">
@@ -1075,7 +1075,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                   return (
                     <div 
                       key={idx} 
-                      className="w-1.5 bg-gradient-to-t from-emerald-500 to-teal-400 rounded-full transition-all duration-100" 
+                      className="w-1.5 bg-gradient-to-t from-blue-500 to-indigo-400 rounded-full transition-all duration-100" 
                       style={{ height: `${finalHeight}%` }}
                     />
                   );
@@ -1113,9 +1113,9 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
               ) : (
                 <button
                   onClick={startContinuousConversation}
-                  className="flex items-center gap-1.5 px-3 py-1 bg-emerald-600 text-white rounded-xl text-xs font-bold shadow-md hover:bg-emerald-700 transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 px-3 py-1 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-md hover:bg-blue-700 transition-all cursor-pointer"
                 >
-                  <Sparkles className="w-3 h-3 text-emerald-200" /> Start Conversation
+                  <Sparkles className="w-3 h-3 text-blue-200" /> Start Conversation
                 </button>
               )}
 
@@ -1127,7 +1127,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                   onChange={(e) => setAutoReadEnabled(e.target.checked)}
                   className="sr-only peer"
                 />
-                <div className="relative w-8 h-4.5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-emerald-500"></div>
+                <div className="relative w-8 h-4.5 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-3.5 after:w-3.5 after:transition-all peer-checked:bg-blue-600"></div>
                 <span className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1">
                   Auto-Speak
                 </span>
@@ -1144,7 +1144,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                   setVoiceLang(e.target.value as any);
                   stopSpeaking();
                 }}
-                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-black text-slate-600 dark:text-slate-300 py-0.5 px-2 focus:ring-1 focus:ring-emerald-500/20 outline-none cursor-pointer"
+                className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs font-black text-slate-600 dark:text-slate-300 py-0.5 px-2 focus:ring-1 focus:ring-blue-500/20 outline-none cursor-pointer"
               >
                 <option value="auto">🇮🇳 Auto Detect</option>
                 <option value="en">🇮🇳 English</option>
@@ -1167,7 +1167,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                     }
                   }}
                   placeholder={sessionMode === "doctor" ? "Message Doctor AI Copilot..." : "Ask your AI Assistant..."}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl py-4 pl-5 pr-24 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all resize-none min-h-[60px] max-h-[200px] custom-scrollbar dark:text-white"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-3xl py-4 pl-5 pr-24 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all resize-none min-h-[60px] max-h-[200px] custom-scrollbar dark:text-white"
                   rows={1}
                 />
                 
@@ -1184,7 +1184,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                   ) : (
                     <button
                       onClick={startListening}
-                      className="p-2 rounded-full bg-slate-100 text-slate-500 hover:bg-emerald-50 hover:text-emerald-600 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-emerald-950/40 dark:hover:text-emerald-400 transition-all cursor-pointer"
+                      className="p-2 rounded-full bg-slate-100 text-slate-500 hover:bg-blue-50 hover:text-blue-600 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-blue-950/40 dark:hover:text-blue-400 transition-all cursor-pointer"
                       title="Voice Command"
                     >
                       <Mic className="w-4 h-4" />
@@ -1214,10 +1214,10 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
           <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col gap-2.5 shadow-xs z-10">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <User className="w-4 h-4 text-emerald-600" />
+                <User className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <h3 className="font-extrabold text-xs text-slate-900 dark:text-white uppercase tracking-wider">Clinical EHR Summary</h3>
               </div>
-              <span className="text-[9px] bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-400 font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
+              <span className="text-[9px] bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-400 font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
                 Active Sync
               </span>
             </div>
@@ -1259,16 +1259,16 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
                     Clinical Overview
                   </h4>
-                  <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full">
+                  <span className="text-[9px] font-bold text-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-300 px-2 py-0.5 rounded-full">
                     ML Active
                   </span>
                 </div>
 
                 {/* ML CLINICAL INTELLIGENCE BUTTONS */}
-                <div className="bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-900/40 p-3 rounded-2xl space-y-2">
+                <div className="bg-blue-50/40 dark:bg-blue-950/20 border border-blue-200/60 dark:border-blue-900/40 p-3 rounded-2xl space-y-2">
                   <div className="flex items-center gap-1.5">
-                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-emerald-800 dark:text-emerald-300">
+                    <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                    <span className="text-[9px] font-black uppercase tracking-widest text-blue-800 dark:text-blue-300">
                       ML Predictive Intelligence
                     </span>
                   </div>
@@ -1461,7 +1461,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
           <div className="bg-white dark:bg-slate-950 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-2">
-                <span className="p-2 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 rounded-xl">
+                <span className="p-2 bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 rounded-xl">
                   {activeMlModal === "trajectory" ? <TrendingUp className="w-5 h-5" /> : <Split className="w-5 h-5" />}
                 </span>
                 <div>

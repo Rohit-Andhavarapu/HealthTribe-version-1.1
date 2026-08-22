@@ -102,7 +102,7 @@ import {
   ShieldAlert,
   Menu,
   Star,
-  UploadCloud, X, FileBox, ImageIcon} from "lucide-react";
+  UploadCloud, X, FileBox, ImageIcon, Info} from "lucide-react";
 
 import {
   Specialty,
@@ -2213,8 +2213,8 @@ export default function App() {
         <div className={`min-h-screen flex items-center justify-center p-4 transition-colors duration-300 ${isDarkMode ? "dark bg-slate-950 text-slate-100" : "bg-slate-50 text-slate-800"} dark:bg-slate-950 dark:text-slate-200`}>
           {/* SUCCESS TOAST NOTIFIER */}
           {successToast && (
-            <div className="fixed top-6 right-6 z-50 flex items-center p-4 bg-emerald-900 border border-emerald-800 text-white rounded-2xl shadow-2xl animate-bounce">
-              <CheckCircle className="w-5 h-5 mr-3 text-emerald-300" />
+            <div className="fixed top-6 right-6 z-50 flex items-center p-4 bg-slate-900 border border-slate-800 text-white rounded-2xl shadow-2xl animate-bounce">
+              <CheckCircle className="w-5 h-5 mr-3 text-emerald-400" />
               <span className="text-xs font-bold">{successToast}</span>
             </div>
           )}
@@ -2239,12 +2239,12 @@ export default function App() {
               {/* Step indicator progress bar */}
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs">
-                  <span className="font-extrabold uppercase tracking-widest text-emerald-600">HealthTribe Onboarding</span>
+                  <span className="font-extrabold uppercase tracking-widest text-blue-600 dark:text-blue-400">HealthTribe Onboarding</span>
                   <span className="text-slate-400 font-mono">Step {onboardingStep} of 5</span>
                 </div>
                 <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                   <div 
-                    className="h-full bg-emerald-600 rounded-full transition-all duration-300"
+                    className="h-full bg-blue-600 rounded-full transition-all duration-300"
                     style={{ width: `${(onboardingStep / 5) * 100}%` }}
                   />
                 </div>
@@ -2254,7 +2254,7 @@ export default function App() {
               {onboardingStep === 1 && (
                 <div className="space-y-6 animate-fade-in">
                   <div className="space-y-2">
-                    <div className="w-14 h-14 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center shadow-md">
+                    <div className="w-14 h-14 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center shadow-md">
                       <ShieldCheck className="w-8 h-8" />
                     </div>
                     <h2 className="text-2xl font-black text-slate-900 dark:text-white">Welcome to HealthTribe AI</h2>
@@ -2265,7 +2265,7 @@ export default function App() {
 
                   <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-200/50 dark:border-slate-800/80 space-y-3">
                     <div className="flex items-start gap-3">
-                      <div className="p-1 bg-emerald-100 dark:bg-emerald-950/60 rounded-lg text-emerald-600 dark:text-emerald-400 mt-0.5">
+                      <div className="p-1 bg-blue-100 dark:bg-blue-950/60 rounded-lg text-blue-600 dark:text-blue-400 mt-0.5">
                         <ShieldCheck className="w-4.5 h-4.5" />
                       </div>
                       <div>
@@ -2274,12 +2274,12 @@ export default function App() {
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <div className="p-1 bg-teal-100 dark:bg-teal-950/60 rounded-lg text-teal-600 dark:text-teal-400 mt-0.5">
+                      <div className="p-1 bg-indigo-100 dark:bg-indigo-950/60 rounded-lg text-indigo-600 dark:text-indigo-400 mt-0.5">
                         <Activity className="w-4.5 h-4.5" />
                       </div>
                       <div>
                         <h4 className="text-xs font-black text-slate-800 dark:text-slate-200">Heuristic AI Triage Co-Pilot</h4>
-                        <p className="text-[11px] text-slate-400 mt-0.5">Instant triage analytics on sympotoms, prescription OCR analysis, and ABHA interoperability.</p>
+                        <p className="text-[11px] text-slate-400 mt-0.5">Instant triage analytics on symptoms, prescription OCR analysis, and ABHA interoperability.</p>
                       </div>
                     </div>
                   </div>
@@ -2287,7 +2287,7 @@ export default function App() {
                   <div className="flex justify-end pt-2">
                     <button
                       onClick={() => setOnboardingStep(2)}
-                      className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold uppercase tracking-wider rounded-xl shadow-lg cursor-pointer flex items-center gap-2"
+                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold uppercase tracking-wider rounded-xl shadow-lg cursor-pointer flex items-center gap-2"
                     >
                       Begin Setup <ChevronRight className="w-4 h-4" />
                     </button>
@@ -2314,7 +2314,7 @@ export default function App() {
                         value={onboardingData.fullName}
                         onChange={(e) => setOnboardingData(prev => ({ ...prev, fullName: e.target.value }))}
                         placeholder="e.g. Supriya Kilari"
-                        className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                        className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       />
                     </div>
 
@@ -2328,7 +2328,7 @@ export default function App() {
                           required
                           value={onboardingData.dob}
                           onChange={(e) => setOnboardingData(prev => ({ ...prev, dob: e.target.value }))}
-                          className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                          className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         />
                       </div>
 
@@ -2339,7 +2339,7 @@ export default function App() {
                         <select
                           value={onboardingData.gender}
                           onChange={(e) => setOnboardingData(prev => ({ ...prev, gender: e.target.value }))}
-                          className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                          className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         >
                           <option value="Female">Female</option>
                           <option value="Male">Male</option>
@@ -2359,7 +2359,7 @@ export default function App() {
                           placeholder="e.g. +91 94021 58210"
                           value={onboardingData.phoneNumber}
                           onChange={(e) => setOnboardingData(prev => ({ ...prev, phoneNumber: e.target.value }))}
-                          className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                          className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         />
                       </div>
 
@@ -2370,7 +2370,7 @@ export default function App() {
                         <select
                           value={onboardingData.bloodGroup}
                           onChange={(e) => setOnboardingData(prev => ({ ...prev, bloodGroup: e.target.value }))}
-                          className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                          className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         >
                           <option value="A+">A+</option>
                           <option value="A-">A-</option>
@@ -2400,7 +2400,7 @@ export default function App() {
                         }
                         setOnboardingStep(3);
                       }}
-                      className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
+                      className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
                     >
                       Next Step <ChevronRight className="w-4 h-4" />
                     </button>
@@ -2454,7 +2454,7 @@ export default function App() {
                         placeholder="e.g. Penicillin, Peanuts (or 'None')"
                         value={onboardingData.allergies}
                         onChange={(e) => setOnboardingData(prev => ({ ...prev, allergies: e.target.value }))}
-                        className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                        className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       />
                     </div>
 
@@ -2496,7 +2496,7 @@ export default function App() {
                     </button>
                     <button
                       onClick={() => setOnboardingStep(4)}
-                      className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
+                      className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
                     >
                       Next Step <ChevronRight className="w-4 h-4" />
                     </button>
@@ -2520,7 +2520,7 @@ export default function App() {
                       <select
                         value={onboardingData.preferredHospital}
                         onChange={(e) => setOnboardingData(prev => ({ ...prev, preferredHospital: e.target.value }))}
-                        className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                        className="w-full bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       >
                         <option value="AIMS Super Speciality Hospital">AIMS Super Speciality Hospital, New Delhi</option>
                         <option value="St. Mary's General Hospital">St. Mary's General Hospital, Hyderabad</option>
@@ -2538,7 +2538,7 @@ export default function App() {
                               type="checkbox" 
                               checked={onboardingData.notificationPrefEmail} 
                               onChange={(e) => setOnboardingData(prev => ({ ...prev, notificationPrefEmail: e.target.checked }))}
-                              className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                              className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                             />
                             Email Alerts (Clinical)
                           </label>
@@ -2547,7 +2547,7 @@ export default function App() {
                               type="checkbox" 
                               checked={onboardingData.notificationPrefSms} 
                               onChange={(e) => setOnboardingData(prev => ({ ...prev, notificationPrefSms: e.target.checked }))}
-                              className="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+                              className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                             />
                             SMS Emergency Ping
                           </label>
@@ -2560,14 +2560,14 @@ export default function App() {
                           <button
                             type="button"
                             onClick={() => setOnboardingData(prev => ({ ...prev, themePreference: "Light" }))}
-                            className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${onboardingData.themePreference === "Light" ? "bg-emerald-50 border-emerald-500 text-emerald-700" : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-transparent"}`}
+                            className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${onboardingData.themePreference === "Light" ? "bg-blue-50 border-blue-500 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300" : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-transparent"}`}
                           >
                             Light
                           </button>
                           <button
                             type="button"
                             onClick={() => setOnboardingData(prev => ({ ...prev, themePreference: "Dark" }))}
-                            className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${onboardingData.themePreference === "Dark" ? "bg-emerald-950 border-emerald-500 text-emerald-400" : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-transparent"}`}
+                            className={`p-2 rounded-xl text-xs font-bold border text-center transition-all ${onboardingData.themePreference === "Dark" ? "bg-blue-950 border-blue-500 text-blue-400" : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-transparent"}`}
                           >
                             Dark
                           </button>
@@ -2585,7 +2585,7 @@ export default function App() {
                     </button>
                     <button
                       onClick={() => setOnboardingStep(5)}
-                      className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
+                      className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-md cursor-pointer flex items-center gap-1.5"
                     >
                       Verify Details <ChevronRight className="w-4 h-4" />
                     </button>
@@ -2597,7 +2597,7 @@ export default function App() {
               {onboardingStep === 5 && (
                 <div className="space-y-5 animate-fade-in">
                   <div className="space-y-1.5 text-center">
-                    <div className="mx-auto w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-inner">
+                    <div className="mx-auto w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center shadow-inner">
                       <CheckCircle className="w-7 h-7" />
                     </div>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white">Profile Registration Verified</h3>
@@ -2619,7 +2619,7 @@ export default function App() {
                     </div>
                     <div className="flex justify-between pb-0.5">
                       <span className="text-slate-400">Primary Health Gateway:</span>
-                      <span className="font-bold text-emerald-600 dark:text-emerald-400">{onboardingData.preferredHospital}</span>
+                      <span className="font-bold text-blue-600 dark:text-blue-400">{onboardingData.preferredHospital}</span>
                     </div>
                   </div>
 
@@ -2633,7 +2633,7 @@ export default function App() {
                     <button
                       onClick={() => handleOnboardingSubmit()}
                       disabled={loading}
-                      className="px-8 py-3 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-black uppercase tracking-widest rounded-xl shadow-lg cursor-pointer flex items-center gap-1.5"
+                      className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white text-xs font-black uppercase tracking-widest rounded-xl shadow-lg cursor-pointer flex items-center gap-1.5"
                     >
                       {loading ? (
                         <>
@@ -2654,11 +2654,11 @@ export default function App() {
           ) : (
             <div className="w-full max-w-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 shadow-2xl text-center space-y-6">
               <div className="flex flex-col items-center">
-                <div className="p-3 bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl shadow-lg shrink-0 mb-3 animate-pulse">
+                <div className="p-3 bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-lg shrink-0 mb-3">
                   <Activity className="w-8 h-8" />
                 </div>
                 <h1 className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">HealthTribe AI</h1>
-                <p className="text-xs text-emerald-600 uppercase font-bold tracking-widest mt-1">India Care Gateway</p>
+                <p className="text-xs text-blue-600 dark:text-blue-400 uppercase font-bold tracking-widest mt-1">India Care Gateway</p>
               </div>
 
               <div className="space-y-2">
@@ -2680,7 +2680,7 @@ export default function App() {
                       placeholder="name@example.com"
                       value={loginEmailInput}
                       onChange={(e) => setLoginEmailInput(e.target.value)}
-                      className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
                 </div>
@@ -2688,7 +2688,7 @@ export default function App() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-extrabold uppercase tracking-widest rounded-xl shadow-lg cursor-pointer transition-all flex items-center justify-center gap-2"
+                  className="w-full py-3 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white text-xs font-extrabold uppercase tracking-widest rounded-xl shadow-lg cursor-pointer transition-all flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <>
@@ -2713,11 +2713,11 @@ export default function App() {
                 type="button"
                 disabled={googleAuthLoading}
                 onClick={handleGoogleSignIn}
-                className="w-full py-3 bg-white dark:bg-slate-900 hover:bg-slate-50 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer transition-all flex items-center justify-center gap-2"
+                className="w-full py-3 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm cursor-pointer transition-all flex items-center justify-center gap-2"
               >
                 {googleAuthLoading ? (
                   <>
-                    <RefreshCw className="w-4 h-4 text-emerald-600 animate-spin" />
+                    <RefreshCw className="w-4 h-4 text-blue-600 animate-spin" />
                     <span>Connecting Google Account...</span>
                   </>
                 ) : (
@@ -2756,8 +2756,8 @@ export default function App() {
       
       {/* SUCCESS TOAST NOTIFIER */}
       {successToast && (
-        <div className="fixed top-6 right-6 z-50 flex items-center p-4 bg-emerald-900 border border-emerald-800 text-white rounded-2xl shadow-2xl animate-bounce">
-          <CheckCircle className="w-5 h-5 mr-3 text-emerald-300" />
+        <div className="fixed top-6 right-6 z-50 flex items-center p-4 bg-slate-900 border border-slate-800 text-white rounded-2xl shadow-2xl animate-bounce">
+          <CheckCircle className="w-5 h-5 mr-3 text-emerald-400" />
           <span className="text-xs font-bold">{successToast}</span>
         </div>
       )}
@@ -2776,7 +2776,7 @@ export default function App() {
             triggerToast("Switched Workspace to Patient Portal.");
           }}
           className={`px-4 py-2 rounded-full text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer ${
-            sessionMode === "patient" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
+            sessionMode === "patient" ? "bg-blue-600 text-white" : "text-slate-400 hover:text-white"
           }`}
         >
           <User className="w-3.5 h-3.5" /> Patient View
@@ -2787,7 +2787,7 @@ export default function App() {
             triggerToast("Switched Workspace to Practitioner Dashboard.");
           }}
           className={`px-4 py-2 rounded-full text-xs font-extrabold flex items-center gap-1.5 transition-all cursor-pointer ${
-            sessionMode === "doctor" ? "bg-teal-700 text-white" : "text-slate-400 hover:text-white"
+            sessionMode === "doctor" ? "bg-indigo-600 text-white" : "text-slate-400 hover:text-white"
           }`}
         >
           <Sliders className="w-3.5 h-3.5" /> Doctor View
@@ -2799,7 +2799,7 @@ export default function App() {
         <div className={sidebarCollapsed ? "p-3" : "p-4 lg:p-6"}>
           {/* Brand Logo */}
           <div className={`flex items-center gap-3 cursor-pointer mb-8 ${sidebarCollapsed ? "justify-center" : "justify-start"}`} onClick={() => setActiveTab("home")}>
-            <div className="p-2 bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-2xl shadow-lg shrink-0">
+            <div className="p-2 bg-gradient-to-br from-[#1e3a8a] to-[#2563eb] text-white rounded-2xl shadow-lg shrink-0">
               <Activity className="w-5 h-5" />
             </div>
             {!sidebarCollapsed && (
@@ -2807,7 +2807,7 @@ export default function App() {
                 <span className="text-sm lg:text-base font-extrabold tracking-tight block">
                   HealthTribe AI
                 </span>
-                <span className="text-[9px] text-emerald-600 uppercase font-bold tracking-wider">
+                <span className="text-[9px] text-blue-600 dark:text-blue-400 uppercase font-bold tracking-wider">
                   India Care Gateway
                 </span>
               </div>
@@ -2830,7 +2830,7 @@ export default function App() {
                     onClick={() => { setActiveTab("home"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "home"
-                        ? "bg-emerald-600 text-white shadow-md shadow-emerald-900/10"
+                        ? "bg-blue-600 text-white shadow-md shadow-blue-900/10"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title={t.homeDashboard}
@@ -2847,7 +2847,7 @@ export default function App() {
                     onClick={() => { setActiveTab("copilot"); }}
                     className={`w-full flex items-center px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-between"} ${
                       activeTab === "copilot"
-                        ? "bg-emerald-600 text-white shadow-md shadow-emerald-900/10"
+                        ? "bg-blue-600 text-white shadow-md shadow-blue-900/10"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title={t.aiSymptomTriage}
@@ -2856,7 +2856,7 @@ export default function App() {
                       <Brain className="w-4 h-4 shrink-0" />
                       {!sidebarCollapsed && <span className="truncate animate-fade-in">{t.aiSymptomTriage}</span>}
                     </div>
-                    {!sidebarCollapsed && <span className="bg-amber-100 dark:bg-amber-900/50 text-amber-900 dark:text-amber-200 text-[8px] px-1.5 py-0.5 rounded-md font-extrabold ml-2 shrink-0 animate-fade-in">AI</span>}
+                    {!sidebarCollapsed && <span className="bg-blue-100 dark:bg-blue-900/50 text-blue-900 dark:text-blue-200 text-[8px] px-1.5 py-0.5 rounded-md font-extrabold ml-2 shrink-0 animate-fade-in">AI</span>}
                   </button>
 
                   <button
@@ -2864,7 +2864,7 @@ export default function App() {
                     onClick={() => { setActiveTab("doctors"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "doctors"
-                        ? "bg-emerald-600 text-white shadow-md"
+                        ? "bg-blue-600 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title={t.doctorDiscovery}
@@ -2878,7 +2878,7 @@ export default function App() {
                     onClick={() => { setActiveTab("timeline"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "timeline"
-                        ? "bg-emerald-600 text-white shadow-md"
+                        ? "bg-blue-600 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title={t.medicalTimeline}
@@ -2892,7 +2892,7 @@ export default function App() {
                     onClick={() => { setActiveTab("abha"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "abha"
-                        ? "bg-emerald-600 text-white shadow-md"
+                        ? "bg-blue-600 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="ABHA Health Gateway"
@@ -2906,7 +2906,7 @@ export default function App() {
                     onClick={() => { setActiveTab("family"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "family"
-                        ? "bg-emerald-600 text-white shadow-md"
+                        ? "bg-blue-600 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title={t.familyVault}
@@ -2920,7 +2920,7 @@ export default function App() {
                     onClick={() => { setActiveTab("store"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "store"
-                        ? "bg-emerald-600 text-white shadow-md"
+                        ? "bg-blue-600 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title={t.pharmacyAndLabs}
@@ -2934,7 +2934,7 @@ export default function App() {
                     onClick={() => { setActiveTab("help"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "help"
-                        ? "bg-emerald-600 text-white shadow-md"
+                        ? "bg-blue-600 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title={t.helpSupportSos}
@@ -2951,7 +2951,7 @@ export default function App() {
                     onClick={() => { setActiveTab("home"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "home"
-                        ? "bg-emerald-700 text-white shadow-md shadow-emerald-900/10"
+                        ? "bg-blue-700 text-white shadow-md shadow-blue-900/10"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="Clinic Dashboard"
@@ -2965,7 +2965,7 @@ export default function App() {
                     onClick={() => { setActiveTab("copilot"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "copilot"
-                        ? "bg-emerald-700 text-white shadow-md shadow-emerald-900/10"
+                        ? "bg-blue-700 text-white shadow-md shadow-blue-900/10"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="Patient Queue"
@@ -2980,7 +2980,7 @@ export default function App() {
                     onClick={() => { setActiveTab("ai-assistant"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "ai-assistant"
-                        ? "bg-emerald-700 text-white shadow-md shadow-emerald-900/10"
+                        ? "bg-blue-700 text-white shadow-md shadow-blue-900/10"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="Doctor AI Assistant"
@@ -2994,7 +2994,7 @@ export default function App() {
                     onClick={() => { setActiveTab("doctors"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "doctors"
-                        ? "bg-emerald-700 text-white shadow-md"
+                        ? "bg-blue-700 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="SOAP Prescriber"
@@ -3008,7 +3008,7 @@ export default function App() {
                     onClick={() => { setActiveTab("timeline"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "timeline"
-                        ? "bg-emerald-700 text-white shadow-md"
+                        ? "bg-blue-700 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="Telehealth Calls"
@@ -3022,7 +3022,7 @@ export default function App() {
                     onClick={() => { setActiveTab("family"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "family"
-                        ? "bg-emerald-700 text-white shadow-md"
+                        ? "bg-blue-700 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="Practice Insights"
@@ -3036,7 +3036,7 @@ export default function App() {
                     onClick={() => { setActiveTab("store"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "store"
-                        ? "bg-emerald-700 text-white shadow-md"
+                        ? "bg-blue-700 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="E-Rx Approvals"
@@ -3050,7 +3050,7 @@ export default function App() {
                     onClick={() => { setActiveTab("help"); }}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${sidebarCollapsed ? "justify-center" : "justify-start"} ${
                       activeTab === "help"
-                        ? "bg-emerald-700 text-white shadow-md"
+                        ? "bg-blue-700 text-white shadow-md"
                         : "text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                     title="Clinical Guidelines"
@@ -3067,14 +3067,14 @@ export default function App() {
           {sessionMode === "patient" && !sidebarCollapsed && (
             <div className="mt-8 hidden md:block animate-fade-in">
               <h3 className="text-[9px] font-bold uppercase tracking-widest text-slate-400 mb-2 px-3">ABHA Gateway</h3>
-              <div className={`p-4 rounded-2xl border text-left transition-all ${isDarkMode ? "bg-slate-800/80 border-slate-700" : "bg-emerald-50/60 border-emerald-100"}`}>
+              <div className={`p-4 rounded-2xl border text-left transition-all ${isDarkMode ? "bg-slate-800/80 border-slate-700" : "bg-blue-50/60 border-blue-100 dark:bg-blue-950/30 dark:border-blue-900/50"}`}>
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[9px] bg-emerald-600 text-white font-extrabold px-1.5 py-0.5 rounded-md">ABHA LIVE</span>
-                  <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <span className="text-[9px] bg-blue-600 text-white font-extrabold px-1.5 py-0.5 rounded-md">ABHA LIVE</span>
+                  <ShieldCheck className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
-                <p className="text-xs font-bold truncate text-emerald-950">{selectedMember?.name || "Supriya Kilari"}</p>
+                <p className="text-xs font-bold truncate text-slate-900 dark:text-white">{selectedMember?.name || "Supriya Kilari"}</p>
                 <p className="text-[10px] text-slate-500 dark:text-slate-400 font-mono mt-0.5 truncate">{abhaId}</p>
-                <button onClick={syncAbhaRecords} className="text-[10px] text-emerald-700 font-bold underline mt-2 flex items-center gap-1 cursor-pointer justify-start w-full">
+                <button onClick={syncAbhaRecords} className="text-[10px] text-blue-600 dark:text-blue-400 font-bold underline mt-2 flex items-center gap-1 cursor-pointer justify-start w-full">
                   <RefreshCw className="w-3 h-3 animate-spin-hover" /> <span>Sync Diagnostics</span>
                 </button>
               </div>
@@ -3109,7 +3109,7 @@ export default function App() {
             <div className="flex items-center gap-3 overflow-hidden">
               <div 
                 onClick={() => setActiveTab("profile")}
-                className="w-9 h-9 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 font-bold rounded-full flex items-center justify-center shrink-0 cursor-pointer hover:ring-2 hover:ring-emerald-500 transition-all"
+                className="w-9 h-9 bg-blue-100 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-bold rounded-full flex items-center justify-center shrink-0 cursor-pointer hover:ring-2 hover:ring-blue-500 transition-all"
                 title="View Health Profile"
               >
                 {selectedMember?.name ? selectedMember.name.charAt(0) : "S"}
@@ -3144,12 +3144,12 @@ export default function App() {
             <Menu className="w-5 h-5" />
           </button>
           <div className="flex items-center gap-2">
-            <div className="p-1.5 bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-xl shadow-md">
+            <div className="p-1.5 bg-gradient-to-br from-[#1e3a8a] to-[#2563eb] text-white rounded-xl shadow-md">
               <Activity className="w-4 h-4" />
             </div>
             <div className="text-left">
               <span className="text-xs font-black tracking-tight block">HealthTribe AI</span>
-              <span className="text-[8px] text-emerald-600 uppercase font-black tracking-wider">India Care Gateway</span>
+              <span className="text-[8px] text-blue-600 dark:text-blue-400 uppercase font-black tracking-wider">India Care Gateway</span>
             </div>
           </div>
         </div>
@@ -3178,7 +3178,7 @@ export default function App() {
               setActiveTab("home");
               triggerToast(`Switched to mobile ${nextMode === "patient" ? "Patient Workspace" : "Doctor Practice"}`);
             }}
-            className="px-2 py-1.5 bg-emerald-100 hover:bg-emerald-200 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-100 rounded-xl text-[9px] font-black cursor-pointer transition-all uppercase"
+            className="px-2 py-1.5 bg-blue-100 hover:bg-blue-200 text-blue-900 dark:bg-blue-950 dark:text-blue-100 rounded-xl text-[9px] font-black cursor-pointer transition-all uppercase"
           >
             {sessionMode === "patient" ? "To Doctor" : "To Patient"}
           </button>
@@ -3188,12 +3188,12 @@ export default function App() {
             onClick={() => setActiveTab("profile")}
             className={`p-1.5 rounded-xl cursor-pointer transition-all ${
               activeTab === "profile"
-                ? "bg-white text-emerald-600 border border-emerald-200"
-                : "bg-emerald-50 dark:bg-slate-800 text-emerald-600 border border-emerald-100 dark:border-slate-700 hover:bg-emerald-100"
+                ? "bg-white text-blue-600 border border-blue-200"
+                : "bg-blue-50 dark:bg-slate-800 text-blue-600 border border-blue-100 dark:border-slate-700 hover:bg-blue-100"
             }`}
             title="View Active Profile"
           >
-            <User className="w-4 h-4 text-emerald-600" />
+            <User className="w-4 h-4 text-blue-600" />
           </button>
 
           {/* Critical SOS Alarm Trigger */}
@@ -3232,12 +3232,12 @@ export default function App() {
               <div>
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-2">
-                    <div className="p-1.5 bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-xl shadow-md">
+                    <div className="p-1.5 bg-gradient-to-br from-[#1e3a8a] to-[#2563eb] text-white rounded-xl shadow-md">
                       <Activity className="w-5 h-5" />
                     </div>
                     <div className="text-left">
                       <span className="text-sm font-extrabold tracking-tight block">HealthTribe AI</span>
-                      <span className="text-[8px] text-emerald-600 uppercase font-bold tracking-wider">India Care Gateway</span>
+                      <span className="text-[8px] text-blue-600 dark:text-blue-400 uppercase font-bold tracking-wider">India Care Gateway</span>
                     </div>
                   </div>
                   <button
@@ -3259,7 +3259,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("home"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "home" ? "bg-emerald-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "home" ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <Activity className="w-4 h-4" />
@@ -3269,20 +3269,20 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("copilot"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "copilot" ? "bg-emerald-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "copilot" ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <div className="flex items-center gap-3">
                             <Brain className="w-4 h-4" />
                             <span>{t.aiSymptomTriage}</span>
                           </div>
-                          <span className="bg-amber-100 dark:bg-amber-900/50 text-amber-900 dark:text-amber-200 text-[8px] px-1.5 py-0.5 rounded-md font-extrabold">AI</span>
+                          <span className="bg-blue-100 dark:bg-blue-900/50 text-blue-900 dark:text-blue-200 text-[8px] px-1.5 py-0.5 rounded-md font-extrabold">AI</span>
                         </button>
 
                         <button
                           onClick={() => { setActiveTab("doctors"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "doctors" ? "bg-emerald-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "doctors" ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <Smile className="w-4 h-4" />
@@ -3292,7 +3292,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("timeline"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "timeline" ? "bg-emerald-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "timeline" ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <FileText className="w-4 h-4" />
@@ -3302,7 +3302,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("abha"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "abha" ? "bg-emerald-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "abha" ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <ShieldCheck className="w-4 h-4" />
@@ -3312,7 +3312,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("family"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "family" ? "bg-emerald-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "family" ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <Users className="w-4 h-4" />
@@ -3322,7 +3322,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("store"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "store" ? "bg-emerald-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "store" ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <ShoppingBag className="w-4 h-4" />
@@ -3332,7 +3332,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("help"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "help" ? "bg-emerald-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "help" ? "bg-blue-600 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <HelpCircle className="w-4 h-4" />
@@ -3344,7 +3344,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("home"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "home" ? "bg-emerald-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "home" ? "bg-blue-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <Activity className="w-4 h-4" />
@@ -3354,7 +3354,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("copilot"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "copilot" ? "bg-emerald-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "copilot" ? "bg-blue-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <Users className="w-4 h-4" />
@@ -3364,7 +3364,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("ai-assistant"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "ai-assistant" ? "bg-emerald-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "ai-assistant" ? "bg-blue-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <Brain className="w-4 h-4" />
@@ -3374,7 +3374,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("doctors"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "doctors" ? "bg-emerald-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "doctors" ? "bg-blue-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <FileText className="w-4 h-4" />
@@ -3384,7 +3384,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("timeline"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "timeline" ? "bg-emerald-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "timeline" ? "bg-blue-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <Video className="w-4 h-4" />
@@ -3394,7 +3394,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("family"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "family" ? "bg-emerald-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "family" ? "bg-blue-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <TrendingUp className="w-4 h-4" />
@@ -3404,7 +3404,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("store"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "store" ? "bg-emerald-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "store" ? "bg-blue-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <CheckCircle className="w-4 h-4" />
@@ -3414,7 +3414,7 @@ export default function App() {
                         <button
                           onClick={() => { setActiveTab("help"); setShowMobileSidebar(false); }}
                           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                            activeTab === "help" ? "bg-emerald-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
+                            activeTab === "help" ? "bg-blue-700 text-white" : "text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                           }`}
                         >
                           <HelpCircle className="w-4 h-4" />
@@ -3438,7 +3438,7 @@ export default function App() {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 overflow-hidden">
-                    <div className="w-9 h-9 bg-emerald-100 text-emerald-600 font-bold rounded-full flex items-center justify-center shrink-0">
+                    <div className="w-9 h-9 bg-blue-100 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-bold rounded-full flex items-center justify-center shrink-0">
                       {selectedMember?.name ? selectedMember.name.charAt(0) : "S"}
                     </div>
                     <div className="text-left overflow-hidden">
@@ -3466,7 +3466,7 @@ export default function App() {
           <>
             <button
               onClick={() => setActiveTab("home")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "home" ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "home" ? "text-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-400" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <Activity className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Home</span>
@@ -3474,7 +3474,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("copilot")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "copilot" ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "copilot" ? "text-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-400" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <Brain className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Triage</span>
@@ -3482,7 +3482,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("doctors")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "doctors" ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "doctors" ? "text-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-400" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <Smile className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Doctors</span>
@@ -3490,7 +3490,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("timeline")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "timeline" ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "timeline" ? "text-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-400" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <FileText className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Timeline</span>
@@ -3498,7 +3498,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("abha")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "abha" ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "abha" ? "text-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-400" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <ShieldCheck className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">ABHA</span>
@@ -3506,7 +3506,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("store")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "store" ? "text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "store" ? "text-blue-600 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-400" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <ShoppingBag className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Store</span>
@@ -3517,7 +3517,7 @@ export default function App() {
           <>
             <button
               onClick={() => setActiveTab("home")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "home" ? "text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "home" ? "text-blue-700 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-300" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <Activity className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Clinic</span>
@@ -3525,7 +3525,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("copilot")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "copilot" ? "text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "copilot" ? "text-blue-700 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-300" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <Users className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Queue</span>
@@ -3533,7 +3533,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("doctors")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "doctors" ? "text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "doctors" ? "text-blue-700 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-300" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <FileText className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">SOAP</span>
@@ -3541,7 +3541,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("timeline")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "timeline" ? "text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "timeline" ? "text-blue-700 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-300" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <Video className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Video</span>
@@ -3549,7 +3549,7 @@ export default function App() {
 
             <button
               onClick={() => setActiveTab("family")}
-              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "family" ? "text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
+              className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl transition-all cursor-pointer ${ activeTab === "family" ? "text-blue-700 bg-blue-50 dark:bg-blue-950/40 dark:text-blue-300" : "text-slate-400 hover:text-slate-600" } dark:text-slate-400`}
             >
               <TrendingUp className="w-5 h-5" />
               <span className="text-[8px] font-bold mt-0.5">Stats</span>
@@ -3573,10 +3573,10 @@ export default function App() {
             {/* Application Level Profile Switcher */}
             <button
               onClick={() => setShowProfileSelector(true)}
-              className="flex items-center gap-2 px-3 py-2 font-extrabold text-xs rounded-xl transition-all cursor-pointer border shadow-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-600 border-emerald-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:border-slate-700"
+              className="flex items-center gap-2 px-3 py-2 font-extrabold text-xs rounded-xl transition-all cursor-pointer border shadow-xs bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-100 dark:bg-slate-800 dark:hover:bg-slate-700 dark:border-slate-700 dark:text-blue-300"
               title="Switch Active Profile"
             >
-              <User className="w-3.5 h-3.5 text-emerald-600" />
+              <User className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
               <span>{sessionMode === "patient" ? `Profile: ${selectedMember?.name || "None"}` : "Profile: Doctor"} ▼</span>
             </button>
 
@@ -3610,38 +3610,264 @@ export default function App() {
           {/* PATIENT PORTAL INTERFACES */}
           {sessionMode === "patient" && (
             <>
-              {/* TAB 1: DASHBOARD */}
+              {/* TAB 1: DASHBOARD (Stitch Reference Design) */}
               {activeTab === "home" && (
-                <div className="space-y-8 max-w-[1250px] mx-auto w-full text-left">
-                  {/* HERO HEADER */}
-                  <div className="bg-gradient-to-br from-emerald-800 to-teal-950 text-white rounded-3xl p-8 relative overflow-hidden shadow-xl">
-                    <div className="absolute right-0 bottom-0 top-0 w-1/3 bg-radial from-emerald-600/20 to-transparent blur-3xl"></div>
-                    <div className="relative z-10 max-w-xl">
-                      <span className="bg-emerald-600/30 text-emerald-300 text-xs font-extrabold tracking-widest uppercase px-3 py-1 rounded-full mb-4 inline-block">
-                        {t.heroBadge}
-                      </span>
-                      <h1 className="text-3xl font-extrabold tracking-tight mb-2 leading-tight">
-                        {t.heroTitle}
+                <div className="space-y-6 max-w-[1250px] mx-auto w-full text-left">
+                  {/* TOP HEADER: GREETING & NEAREST TRAUMA CENTER BANNER */}
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        Good morning, <span className="text-blue-600 dark:text-blue-400">{selectedMember?.name || "Supriya"}.</span>
                       </h1>
-                      <p className="text-sm text-emerald-100/90 mb-6 leading-relaxed">
-                        {t.heroSub}
+                      <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                        Your vitals are stable today. We've prepared your daily health summary.
                       </p>
+                    </div>
+
+                    {/* NEAREST TRAUMA CENTER BADGE (Stitch Reference) */}
+                    <div 
+                      onClick={() => triggerToast(`Emergency Route: Navigating to ${hospitals[0]?.name || "City Hospital"} (2.4 mi). Call 108 for immediate ambulance.`)}
+                      className="inline-flex items-center gap-3.5 bg-rose-50/60 dark:bg-rose-950/20 border border-rose-200/80 dark:border-rose-900/40 p-3.5 px-4 rounded-2xl cursor-pointer hover:bg-rose-50 transition-all shadow-xs shrink-0 self-start md:self-auto group"
+                    >
+                      <div className="w-9 h-9 rounded-xl bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 flex items-center justify-center font-black text-base shadow-xs">
+                        ✳
+                      </div>
+                      <div className="text-left">
+                        <span className="text-[10px] font-black tracking-wider text-rose-700 dark:text-rose-400 uppercase block">NEAREST TRAUMA CENTER</span>
+                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">{hospitals[0]?.name || "City Hospital"}, 2.4 mi</span>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-rose-400 group-hover:translate-x-0.5 transition-transform ml-1" />
+                    </div>
+                  </div>
+
+                  {/* MAIN DASHBOARD GRID: 2 COLUMNS (8 cols left, 4 cols right) */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    {/* LEFT COLUMN: HEALTH STATUS, VITALS, AI INSIGHT, UPCOMING */}
+                    <div className="lg:col-span-8 space-y-6">
                       
-                      <div className="flex flex-col sm:flex-row gap-3">
-                        <button
+                      {/* HEALTH STATUS REVIEW CARD */}
+                      <div className="bg-white dark:bg-[#131b2e] border border-slate-200/80 dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-5">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                            <h3 className="text-xs font-black tracking-wider uppercase text-blue-900 dark:text-blue-300">
+                              Health Status Review
+                            </h3>
+                          </div>
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-2.5 py-1 rounded-full border border-blue-200/60 dark:border-blue-900/60">
+                            <ShieldCheck className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                            ALL SYSTEMS NORMAL
+                          </span>
+                        </div>
+
+                        {/* METRICS ROW: HEART RATE & SLEEP (Stitch Graphic Style) */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {/* Heart Rate Metric */}
+                          <div className="bg-slate-50/70 dark:bg-slate-850 border border-slate-200/70 dark:border-slate-800 rounded-2xl p-4 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <Heart className="w-3.5 h-3.5 text-rose-500" /> HEART RATE
+                              </span>
+                              <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md">
+                                Optimal
+                              </span>
+                            </div>
+                            <div className="flex items-baseline gap-1.5">
+                              <span className="text-2xl font-black text-slate-900 dark:text-white">68</span>
+                              <span className="text-xs font-semibold text-slate-400">bpm</span>
+                            </div>
+                            {/* Smooth Sparkline */}
+                            <div className="h-9 w-full flex items-end">
+                              <svg className="w-full h-8 overflow-visible" viewBox="0 0 100 25" fill="none">
+                                <path 
+                                  d="M0 15 Q 15 18, 30 14 T 60 8 T 85 16 T 100 12" 
+                                  stroke="#3b82f6" 
+                                  strokeWidth="2.5" 
+                                  strokeLinecap="round" 
+                                  fill="none" 
+                                />
+                              </svg>
+                            </div>
+                          </div>
+
+                          {/* Sleep Metric */}
+                          <div className="bg-slate-50/70 dark:bg-slate-850 border border-slate-200/70 dark:border-slate-800 rounded-2xl p-4 space-y-3">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <Clock className="w-3.5 h-3.5 text-indigo-500" /> SLEEP
+                              </span>
+                              <span className="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md">
+                                Restorative
+                              </span>
+                            </div>
+                            <div className="flex items-baseline gap-1.5">
+                              <span className="text-2xl font-black text-slate-900 dark:text-white">7h 20m</span>
+                            </div>
+                            {/* Sleep Bar Chart */}
+                            <div className="h-9 w-full flex items-end justify-between gap-1.5 pt-1">
+                              {[55, 70, 85, 45, 90, 80, 95].map((val, idx) => (
+                                <div 
+                                  key={idx} 
+                                  className={`flex-1 rounded-sm ${idx >= 5 ? "bg-blue-600" : "bg-blue-300 dark:bg-blue-800"}`}
+                                  style={{ height: `${val}%` }}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* ROW: AI INSIGHT & UPCOMING CONSULTATION */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                          {/* AI Insight (Stitch Reference) */}
+                          <div className="bg-blue-50/40 dark:bg-blue-950/20 border border-blue-200/60 dark:border-blue-900/40 rounded-2xl p-4 space-y-2 flex flex-col justify-between">
+                            <div>
+                              <div className="flex items-center gap-1.5 text-blue-600 dark:text-blue-400 text-xs font-bold">
+                                <Sparkles className="w-3.5 h-3.5" />
+                                <span>AI INSIGHT</span>
+                              </div>
+                              <h4 className="font-bold text-xs text-slate-900 dark:text-white mt-1">Hydration Trend Alert</h4>
+                              <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                                Your water intake has been 15% below target for the past two days. Recommend increasing intake to maintain optimal cellular function.
+                              </p>
+                            </div>
+                            <button 
+                              onClick={() => {
+                                setCopilotInput("Explain my hydration trends and recommendations for optimal cellular recovery.");
+                                setActiveTab("copilot");
+                              }}
+                              className="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 flex items-center gap-1 mt-2 cursor-pointer"
+                            >
+                              View Analysis →
+                            </button>
+                          </div>
+
+                          {/* Upcoming Consultation */}
+                          <div className="bg-slate-50/70 dark:bg-slate-850 border border-slate-200/70 dark:border-slate-800 rounded-2xl p-4 space-y-2 flex flex-col justify-between">
+                            <div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">UPCOMING</span>
+                                <span className="text-[10px] font-bold text-blue-700 dark:text-blue-300 bg-blue-100/70 dark:bg-blue-950 px-2 py-0.5 rounded-md">
+                                  Tomorrow, 10:00 AM
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2.5 mt-2">
+                                <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 font-black flex items-center justify-center shrink-0">
+                                  RA
+                                </div>
+                                <div>
+                                  <h4 className="font-bold text-xs text-slate-900 dark:text-white">Dr. Rahul Atluri</h4>
+                                  <p className="text-[11px] text-slate-500">Cardiology Checkup</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="pt-2 border-t border-slate-200/50 dark:border-slate-800 flex justify-between items-center">
+                              <span className="text-[10px] text-slate-400">Telehealth Video Call</span>
+                              <button 
+                                onClick={() => startVideoCall(doctors[0] || allDoctors[0])}
+                                className="p-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white cursor-pointer transition-all shadow-xs"
+                                title="Join Call"
+                              >
+                                <Video className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    {/* RIGHT COLUMN: FAMILY CIRCLE (Stitch Reference) */}
+                    <div className="lg:col-span-4 space-y-4">
+                      <div className="bg-white dark:bg-[#131b2e] border border-slate-200/80 dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-4">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800/80">
+                          <h3 className="font-bold text-xs text-slate-900 dark:text-white tracking-wide">
+                            Family Circle
+                          </h3>
+                          <button 
+                            onClick={() => setActiveTab("family")} 
+                            className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
+                          >
+                            <Sliders className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+
+                        {/* Member 1: Rami */}
+                        <div 
                           onClick={() => {
-                            setCopilotInput("I am having sudden chest tightness and radiating pain.");
-                            setActiveTab("copilot");
+                            const rami = vaultMembers.find(m => m.name.includes("Rami")) || vaultMembers[0];
+                            if (rami) { setSelectedMember(rami); triggerToast(`Switched to ${rami.name}'s profile.`); }
                           }}
-                          className="px-5 py-3 bg-white dark:bg-slate-900 text-emerald-900 font-bold rounded-xl shadow-lg hover:bg-slate-100 transition-all text-xs flex items-center justify-center gap-2 cursor-pointer"
+                          className="p-3.5 bg-slate-50/70 dark:bg-slate-850 rounded-2xl border border-slate-200/60 dark:border-slate-800 space-y-2 cursor-pointer hover:border-blue-400 transition-all text-left"
                         >
-                          <Brain className="w-4 h-4 text-emerald-700" /> Start AI Triage
-                        </button>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2.5">
+                              <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-bold text-xs flex items-center justify-center">
+                                R
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-xs text-slate-900 dark:text-white">Rami</h4>
+                                <span className="text-[10px] text-slate-400">Dad • 68 yrs</span>
+                              </div>
+                            </div>
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Stable
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-200/40 dark:border-slate-800 text-[10px]">
+                            <div>
+                              <span className="text-slate-400 uppercase tracking-wider block">BP</span>
+                              <strong className="text-slate-800 dark:text-slate-200 font-mono">120/80</strong>
+                            </div>
+                            <div>
+                              <span className="text-slate-400 uppercase tracking-wider block">GLUCOSE</span>
+                              <strong className="text-slate-800 dark:text-slate-200 font-mono">98 <span className="text-[9px] font-normal text-slate-400">mg/dL</span></strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Member 2: Lakshmi */}
+                        <div 
+                          onClick={() => {
+                            const lakshmi = vaultMembers.find(m => m.name.includes("Lakshmi")) || vaultMembers[1];
+                            if (lakshmi) { setSelectedMember(lakshmi); triggerToast(`Switched to ${lakshmi.name}'s profile.`); }
+                          }}
+                          className="p-3.5 bg-slate-50/70 dark:bg-slate-850 rounded-2xl border border-slate-200/60 dark:border-slate-800 space-y-2 cursor-pointer hover:border-blue-400 transition-all text-left"
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2.5">
+                              <div className="w-8 h-8 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center">
+                                L
+                              </div>
+                              <div>
+                                <h4 className="font-bold text-xs text-slate-900 dark:text-white">Lakshmi</h4>
+                                <span className="text-[10px] text-slate-400">Mom • 65 yrs</span>
+                              </div>
+                            </div>
+                            <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Stable
+                            </span>
+                          </div>
+                          <div className="grid grid-cols-2 gap-2 pt-1 border-t border-slate-200/40 dark:border-slate-800 text-[10px]">
+                            <div>
+                              <span className="text-slate-400 uppercase tracking-wider block">HEART</span>
+                              <strong className="text-slate-800 dark:text-slate-200 font-mono">72 <span className="text-[9px] font-normal text-slate-400">bpm</span></strong>
+                            </div>
+                            <div>
+                              <span className="text-slate-400 uppercase tracking-wider block">MEDS</span>
+                              <strong className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-0.5">
+                                <Check className="w-3 h-3 text-emerald-500" /> Taken
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Add Member Dashed Button (Stitch Reference) */}
                         <button
-                          onClick={() => setActiveTab("doctors")}
-                          className="px-5 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl transition-all text-xs flex items-center justify-center gap-2 cursor-pointer"
+                          onClick={() => setIsCreatingProfileModal(true)}
+                          className="w-full py-3 border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600 rounded-2xl text-xs font-bold text-slate-600 dark:text-slate-300 flex items-center justify-center gap-1.5 transition-all cursor-pointer"
                         >
-                          Book Doctor Consultation
+                          <Plus className="w-3.5 h-3.5 text-blue-600" />
+                          <span>+ Add Member</span>
                         </button>
                       </div>
                     </div>
@@ -3722,9 +3948,9 @@ export default function App() {
                               setSelectedSpecialtyId(spec.id);
                               setActiveTab("doctors");
                             }}
-                            className="bg-white dark:bg-slate-900 border border-slate-200/80 hover:border-emerald-500/40 p-5 rounded-2xl text-center cursor-pointer transition-all hover:shadow-md dark:border-slate-800"
+                            className="bg-white dark:bg-slate-900 border border-slate-200/80 hover:border-blue-500/40 p-5 rounded-2xl text-center cursor-pointer transition-all hover:shadow-md dark:border-slate-800"
                           >
-                            <div className="w-12 h-12 mx-auto bg-emerald-50 text-emerald-800 rounded-xl flex items-center justify-center mb-3">
+                            <div className="w-12 h-12 mx-auto bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 rounded-xl flex items-center justify-center mb-3">
                               <SpecialtyIcon iconName={spec.icon} className="w-6 h-6" />
                             </div>
                             <h4 className="font-extrabold text-xs text-slate-900 dark:text-white">{spec.name}</h4>
@@ -3737,7 +3963,7 @@ export default function App() {
                     <div className="flex justify-center mt-6">
                       <button
                         onClick={() => setShowAllSpecialties(!showAllSpecialties)}
-                        className="flex items-center gap-2 px-6 py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs rounded-xl transition-all cursor-pointer border border-emerald-100 shadow-sm"
+                        className="flex items-center gap-2 px-6 py-2.5 bg-blue-50 hover:bg-blue-100 text-blue-800 dark:bg-slate-800 dark:hover:bg-slate-700 dark:text-blue-300 font-extrabold text-xs rounded-xl transition-all cursor-pointer border border-blue-100 dark:border-slate-700 shadow-sm"
                       >
                         {showAllSpecialties ? (
                           <>
@@ -3760,7 +3986,7 @@ export default function App() {
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5 pb-3 border-b border-slate-100 dark:border-slate-800/50">
                         <div className="flex items-center gap-2">
                           <h3 className="font-extrabold text-sm text-slate-900 dark:text-white">Family Appointment Center</h3>
-                          <span className="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 px-1.5 py-0.5 rounded-full font-extrabold">
+                          <span className="text-[10px] bg-blue-100 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300 px-1.5 py-0.5 rounded-full font-extrabold">
                             Unified
                           </span>
                         </div>
@@ -3771,7 +3997,7 @@ export default function App() {
                           <select
                             value={selectedPatientFilter}
                             onChange={(e) => setSelectedPatientFilter(e.target.value)}
-                            className="bg-slate-50 border border-slate-200 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-lg px-2 py-1 text-xs font-bold focus:ring-1 focus:ring-emerald-500 cursor-pointer"
+                            className="bg-slate-50 border border-slate-200 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-lg px-2 py-1 text-xs font-bold focus:ring-1 focus:ring-blue-500 cursor-pointer"
                           >
                             <option value="All">All Patients</option>
                             {selectedMember && (
@@ -3817,7 +4043,7 @@ export default function App() {
                                   <button
                                     key={status}
                                     onClick={() => setAppointmentFilter(status)}
-                                    className={`pb-2 text-xs font-bold border-b-2 transition-all ${ appointmentFilter === status ? "border-emerald-600 text-emerald-700 dark:text-emerald-400 dark:border-emerald-500" : "border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-300" }`}
+                                    className={`pb-2 text-xs font-bold border-b-2 transition-all ${ appointmentFilter === status ? "border-blue-600 text-blue-700 dark:text-blue-400 dark:border-blue-500" : "border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-300" }`}
                                   >
                                     {status} ({count})
                                   </button>
@@ -3860,7 +4086,7 @@ export default function App() {
                                           >
                                             <div className="flex justify-between items-start">
                                               <div className="flex gap-2.5">
-                                                <div className="w-8 h-8 rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-extrabold text-xs border border-emerald-100/60 dark:border-emerald-800/30">
+                                                <div className="w-8 h-8 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 flex items-center justify-center font-extrabold text-xs border border-blue-100/60 dark:border-blue-800/30">
                                                   {patientInitial}
                                                 </div>
                                                 <div>
@@ -3873,7 +4099,7 @@ export default function App() {
                                                 </div>
                                               </div>
                                               <span className={`text-[9px] font-extrabold px-2 py-0.5 rounded-full ${
-                                                appt.status === "Upcoming" ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400" :
+                                                appt.status === "Upcoming" ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400" :
                                                 appt.status === "Completed" ? "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300" :
                                                 "bg-rose-100 text-rose-800 dark:bg-rose-950/20 dark:text-rose-400"
                                               }`}>
@@ -3897,7 +4123,7 @@ export default function App() {
                                             )}
 
                                             {appt.diagnosis && (
-                                              <div className="bg-emerald-50/40 dark:bg-emerald-950/10 p-2.5 rounded-xl border border-emerald-100/40 dark:border-emerald-900/10 text-[11px]">
+                                              <div className="bg-blue-50/40 dark:bg-blue-950/10 p-2.5 rounded-xl border border-blue-100/40 dark:border-blue-900/10 text-[11px]">
                                                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed">
                                                   <strong>Diagnosis:</strong> {appt.diagnosis}
                                                 </p>
@@ -3919,7 +4145,7 @@ export default function App() {
                                               <div className="flex gap-2 pt-1">
                                                 <button
                                                   onClick={() => startVideoCall(doctors[0] || allDoctors[0])}
-                                                  className="flex-1 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[10px] rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1 shadow-sm"
+                                                  className="flex-1 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1 shadow-sm"
                                                 >
                                                   <Video className="w-3 h-3" /> Connect Video
                                                 </button>
@@ -4107,123 +4333,136 @@ export default function App() {
                 </div>
               )}
 
-              {/* TAB 3: DOCTOR DISCOVERY */}
+              {/* TAB 3: DOCTOR DISCOVERY (Stitch Reference Design) */}
               {activeTab === "doctors" && (
-                <div className="space-y-5 max-w-[1250px] mx-auto w-full text-left">
-                  {/* Specialized filter bar */}
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200/80 p-3 sm:p-4 rounded-2xl flex flex-wrap gap-2 items-center justify-between dark:border-slate-800">
-                    <div className="flex flex-wrap gap-1.5">
-                      <button
-                        onClick={() => setSelectedSpecialtyId("all")}
-                        className={`px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all cursor-pointer ${ selectedSpecialtyId === "all" ? "bg-emerald-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700" } dark:text-slate-300`}
-                      >
-                        All Specialists
-                      </button>
-                      {specialties.map((spec) => (
-                        <button
-                          key={spec.id}
-                          onClick={() => setSelectedSpecialtyId(spec.id)}
-                          className={`px-3 py-1.5 rounded-xl text-[10px] font-bold transition-all cursor-pointer ${ selectedSpecialtyId === spec.id ? "bg-emerald-700 text-white" : "bg-slate-100 hover:bg-slate-200 text-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700" } dark:text-slate-300`}
-                        >
-                          {spec.name}
-                        </button>
-                      ))}
-                    </div>
-
-                    <div className="text-[10px] text-slate-400 font-bold">
-                      {doctors.length} Verified Care Providers
-                    </div>
+                <div className="space-y-6 max-w-[1250px] mx-auto w-full text-left">
+                  {/* HEADER */}
+                  <div>
+                    <h2 className="text-2xl md:text-3xl font-extrabold text-blue-950 dark:text-white tracking-tight">
+                      Find a Specialist
+                    </h2>
+                    <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                      Discover top-rated doctors, book appointments, and manage your care with clinical precision.
+                    </p>
                   </div>
 
-                  {/* DOCTORS RESPONSIVE GRID (2 columns on tablet/desktop, 1 column on mobile) */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* SEARCH BAR (Stitch Reference) */}
+                  <div className="bg-white dark:bg-[#131b2e] border border-slate-200/80 dark:border-slate-800 p-2 rounded-2xl shadow-xs flex items-center gap-2">
+                    <Search className="w-5 h-5 text-slate-400 ml-2.5 shrink-0" />
+                    <input
+                      type="text"
+                      placeholder="Search for doctors, specialties, or symptoms..."
+                      value={globalSearchQuery}
+                      onChange={(e) => setGlobalSearchQuery(e.target.value)}
+                      className="w-full bg-transparent border-none outline-none text-xs md:text-sm text-slate-800 dark:text-white placeholder-slate-400 py-2"
+                    />
+                    <button
+                      onClick={() => triggerToast(`Filtering specialists for "${globalSearchQuery || "all"}"`)}
+                      className="px-5 py-2.5 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer shrink-0"
+                    >
+                      Search
+                    </button>
+                  </div>
+
+                  {/* SPECIALTY FILTER PILLS (Stitch Reference) */}
+                  <div className="flex flex-wrap gap-2 items-center">
+                    <button
+                      onClick={() => setSelectedSpecialtyId("all")}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${ 
+                        selectedSpecialtyId === "all" 
+                          ? "bg-blue-900 dark:bg-blue-600 text-white shadow-xs" 
+                          : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" 
+                      }`}
+                    >
+                      All Specialties
+                    </button>
+                    {specialties.map((spec) => (
+                      <button
+                        key={spec.id}
+                        onClick={() => setSelectedSpecialtyId(spec.id)}
+                        className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${ 
+                          selectedSpecialtyId === spec.id 
+                            ? "bg-blue-900 dark:bg-blue-600 text-white shadow-xs" 
+                            : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700" 
+                        }`}
+                      >
+                        {spec.name}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* DOCTORS RESPONSIVE 3-COLUMN GRID (Stitch Reference) */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     {doctors.map((doc) => {
                       const isExpanded = !!expandedDoctorProfileIds[doc.id];
                       return (
                         <div
                           id={`doctor-card-${doc.id}`}
                           key={doc.id}
-                          className={`bg-white dark:bg-slate-900 border rounded-2xl p-4 sm:p-5 shadow-xs flex flex-col justify-between transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 ${
-                            highlightedDoctorId === doc.id
-                              ? "border-emerald-500 ring-4 ring-emerald-500/10 dark:ring-emerald-500/20 scale-[1.01]"
-                              : "border-slate-200/80 dark:border-slate-800"
-                          }`}
+                          className="bg-white dark:bg-[#131b2e] border border-slate-200/80 dark:border-slate-800 rounded-3xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4"
                         >
-                          <div className="space-y-3">
+                          <div className="space-y-4">
                             {/* Doctor Header Block */}
-                            <div className="flex items-start gap-3.5">
+                            <div className="flex items-center gap-3.5">
                               <img
                                 src={doc.avatar}
                                 alt={doc.name}
-                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl object-cover border border-slate-100 dark:border-slate-800 shrink-0"
+                                className="w-14 h-14 rounded-2xl object-cover border border-slate-100 dark:border-slate-800 shrink-0"
                                 referrerPolicy="no-referrer"
                               />
                               <div className="min-w-0 flex-1">
-                                <div className="flex items-center gap-1.5 flex-wrap">
-                                  <h4 className="font-extrabold text-sm text-slate-900 dark:text-white truncate">{doc.name}</h4>
-                                  <span className="bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-[8px] font-extrabold px-1.5 py-0.5 rounded-sm shrink-0">ABHA Verified</span>
-                                </div>
-                                <div className="flex items-center gap-2 mt-0.5 text-xs text-slate-500 dark:text-slate-400">
-                                  <span className="font-semibold text-emerald-700 dark:text-emerald-400">{doc.specialty}</span>
-                                  <span>•</span>
-                                  <span>{doc.experience} Yrs Exp</span>
-                                </div>
-                                <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5 truncate">{doc.hospital}</p>
-                              </div>
-                            </div>
-
-                            {/* Ratings & Quick Bio section */}
-                            <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-2.5 space-y-1.5 text-xs">
-                              <div className="flex items-center justify-between">
-                                <span className="text-slate-400 text-[10px] font-bold uppercase tracking-wider">Patient Satisfaction</span>
-                                <div className="flex items-center gap-1 text-amber-500 font-extrabold">
-                                  <Star className="w-3.5 h-3.5 fill-amber-500 stroke-amber-500" />
-                                  <span>{doc.rating || "4.9"}</span>
-                                  <span className="text-[10px] text-slate-400 font-normal">({(doc.experience * 18 + 12)} reviews)</span>
-                                </div>
-                              </div>
-
-                              <div className="border-t border-slate-100 dark:border-slate-800/80 pt-2">
-                                <p className={`text-slate-600 dark:text-slate-400 leading-relaxed text-[11px] ${isExpanded ? "" : "line-clamp-2"}`}>
-                                  {doc.bio}
+                                <h4 className="font-extrabold text-sm md:text-base text-slate-900 dark:text-white truncate">
+                                  {doc.name}
+                                </h4>
+                                <p className="text-xs font-semibold text-blue-600 dark:text-blue-400 mt-0.5">
+                                  {doc.specialty}
                                 </p>
-                                <button
-                                  onClick={() => setExpandedDoctorProfileIds(prev => ({ ...prev, [doc.id]: !isExpanded }))}
-                                  className="text-[10px] text-emerald-700 dark:text-emerald-400 font-extrabold hover:underline mt-1 cursor-pointer"
-                                >
-                                  {isExpanded ? "Hide Bio" : "Show Bio & Specialties"}
-                                </button>
+                                <p className="text-[11px] text-slate-400 mt-0.5 truncate flex items-center gap-1">
+                                  <span className="text-blue-600 font-bold">+</span> {doc.hospital || "Apollo Hospitals"}
+                                </p>
                               </div>
                             </div>
 
-                            {/* Standard Clinical Metrics */}
-                            <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] pt-1">
-                              <div className="flex justify-between border-b border-slate-100 dark:border-slate-800/50 pb-1">
-                                <span className="text-slate-400">Credentials:</span>
-                                <span className="font-semibold text-slate-700 dark:text-slate-300 truncate max-w-[110px]" title={doc.education}>{doc.education}</span>
+                            {/* Experience & Rating Row */}
+                            <div className="grid grid-cols-2 gap-2 py-2 border-y border-slate-100 dark:border-slate-800 text-center">
+                              <div className="border-r border-slate-100 dark:border-slate-800 pr-2">
+                                <span className="text-sm font-extrabold text-slate-900 dark:text-white block">{doc.experience}+</span>
+                                <span className="text-[10px] text-slate-400 font-medium">Years Exp.</span>
                               </div>
-                              <div className="flex justify-between border-b border-slate-100 dark:border-slate-800/50 pb-1">
-                                <span className="text-slate-400">Languages:</span>
-                                <span className="font-semibold text-slate-700 dark:text-slate-300 truncate max-w-[110px]" title={doc.languages.join(", ")}>{doc.languages.join(", ")}</span>
+                              <div className="pl-2">
+                                <span className="text-sm font-extrabold text-slate-900 dark:text-white flex items-center justify-center gap-1">
+                                  {doc.rating || "4.9"} <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                                </span>
+                                <span className="text-[10px] text-slate-400 font-medium">{(doc.experience * 18 + 120)} Reviews</span>
                               </div>
                             </div>
 
-                            {/* Consultation Fee Badge */}
-                            <div className="flex items-center justify-between bg-emerald-50/50 dark:bg-emerald-950/20 px-3 py-2 rounded-xl border border-emerald-100/40 dark:border-emerald-950/40">
-                              <span className="text-[10px] text-emerald-800 dark:text-emerald-300 font-bold uppercase tracking-wider">Direct Consultation Fee</span>
-                              <span className="font-black text-emerald-800 dark:text-emerald-300 text-sm">₹{doc.fee}</span>
-                            </div>
+                            {isExpanded && (
+                              <div className="text-[11px] text-slate-600 dark:text-slate-400 space-y-1.5 pt-1 animate-fade-in">
+                                <p className="leading-relaxed">{doc.bio}</p>
+                                <p className="text-[10px] text-slate-500"><strong>Languages:</strong> {doc.languages.join(", ")}</p>
+                                <p className="text-[10px] text-slate-500"><strong>Credentials:</strong> {doc.education}</p>
+                              </div>
+                            )}
                           </div>
 
-                          <div className="mt-3.5 pt-2 flex gap-2">
+                          {/* Action Buttons: Book Appointment + Info button (Stitch Reference) */}
+                          <div className="flex items-center gap-2 pt-1">
                             <button
                               onClick={() => {
                                 setSelectedDoctorForBooking(doc);
                                 triggerToast(`Selected ${doc.name} for appointment scheduling.`);
                               }}
-                              className="w-full py-2 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold rounded-xl transition-all cursor-pointer shadow-sm hover:shadow"
+                              className="flex-1 py-2.5 bg-blue-700 hover:bg-blue-800 text-white text-xs font-bold rounded-xl transition-all shadow-xs cursor-pointer text-center"
                             >
-                              Reserve Slot (In-Person/Video)
+                              Book Appointment
+                            </button>
+                            <button
+                              onClick={() => setExpandedDoctorProfileIds(prev => ({ ...prev, [doc.id]: !isExpanded }))}
+                              className="w-10 h-10 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                              title="Information"
+                            >
+                              <Info className="w-4 h-4" />
                             </button>
                           </div>
                         </div>
@@ -4309,23 +4548,23 @@ export default function App() {
                               value={bookingNotes}
                               onChange={(e) => setBookingNotes(e.target.value)}
                               placeholder="Describe why you want this checkup..."
-                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs rounded-xl p-2.5 focus:ring-emerald-500"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs rounded-xl p-2.5 focus:ring-2 focus:ring-blue-500/20 outline-none"
                             />
                           </div>
 
-                          <div className="p-3 bg-emerald-50 border border-emerald-100 rounded-xl text-left space-y-1">
+                          <div className="p-3.5 bg-blue-50/60 dark:bg-blue-950/20 border border-blue-200/60 dark:border-blue-900/40 rounded-2xl text-left space-y-1">
                             <div className="flex justify-between text-xs">
-                              <span className="text-emerald-900 font-medium">Verified Consultation Fee:</span>
-                              <span className="font-bold text-emerald-950">₹{selectedDoctorForBooking.fee}</span>
+                              <span className="text-blue-900 dark:text-blue-200 font-medium">Verified Consultation Fee:</span>
+                              <span className="font-bold text-blue-950 dark:text-white">₹{selectedDoctorForBooking.fee}</span>
                             </div>
-                            <p className="text-[10px] text-emerald-700 leading-tight">By pressing continue, you will review instant payment gateways with direct hospital slot lock keys.</p>
+                            <p className="text-[10px] text-blue-700 dark:text-blue-300 leading-tight">By pressing continue, you will review instant payment gateways with direct hospital slot lock keys.</p>
                           </div>
                         </div>
 
                         <div className="flex gap-3 pt-2">
                           <button
                             onClick={() => setSelectedDoctorForBooking(null)}
-                            className="flex-1 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl transition-all cursor-pointer"
+                            className="flex-1 py-2.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 font-bold text-xs rounded-xl transition-all cursor-pointer"
                           >
                             Cancel
                           </button>
@@ -4335,7 +4574,7 @@ export default function App() {
                                 openPaymentGate(selectedDoctorForBooking.fee, `Consultation Fee with ${selectedDoctorForBooking.name}`);
                               }
                             }}
-                            className="flex-1 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
+                            className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer"
                           >
                             Pay & Lock Booking Slot
                           </button>
@@ -4409,7 +4648,7 @@ export default function App() {
                               setSelectedDoctorForBooking(viewingDoctorProfile);
                               setViewingDoctorProfile(null);
                             }}
-                            className="flex-1 py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl transition-all cursor-pointer text-center"
+                            className="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all cursor-pointer text-center"
                           >
                             Book Appointment
                           </button>
@@ -4427,7 +4666,7 @@ export default function App() {
                   {/* BENTO 1: AI OCR Diagnostics scanner */}
                   <div className="bg-white dark:bg-slate-900 border border-slate-200/80 p-6 rounded-3xl shadow-xs space-y-4 text-left dark:border-slate-800">
                     <div>
-                      <span className="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                      <span className="bg-blue-100 text-blue-800 dark:bg-blue-950/40 dark:text-blue-300 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-wider">
                         Smart Diagnostic Scanners
                       </span>
                       <h3 className="font-extrabold text-base text-slate-900 dark:text-white mt-2">AI Diagnostic Report Parser (OCR Decoder)</h3>
@@ -4440,7 +4679,7 @@ export default function App() {
                       <div className="space-y-3">
                         <div
                           className={`relative border-2 border-dashed rounded-xl p-4 text-center transition-all ${
-                            isDraggingReport ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20" : "border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"
+                            isDraggingReport ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20" : "border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800"
                           }`}
                           onDragOver={(e) => { e.preventDefault(); setIsDraggingReport(true); }}
                           onDragLeave={() => setIsDraggingReport(false)}
@@ -4477,7 +4716,7 @@ export default function App() {
                                       <img src={file.preview} alt="preview" className="w-full h-full object-cover" />
                                     </div>
                                   ) : (
-                                    <div className="w-8 h-8 rounded bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center shrink-0">
+                                    <div className="w-8 h-8 rounded bg-blue-50 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center shrink-0">
                                       <FileText className="w-4 h-4" />
                                     </div>
                                   )}
@@ -4499,7 +4738,7 @@ export default function App() {
                           value={reportTextToAnalyze}
                           onChange={(e) => setReportTextToAnalyze(e.target.value)}
                           placeholder="Or paste blood work parameters e.g., 'HbA1c 7.4%...'"
-                          className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs rounded-xl p-3 focus:ring-emerald-500 focus:ring-2"
+                          className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs rounded-xl p-3 focus:ring-blue-500 focus:ring-2"
                         />
                         <button
                           onClick={handleAnalyzeReport}
@@ -4508,7 +4747,7 @@ export default function App() {
                         >
                           {loading && reportAnalysisStage ? (
                             <>
-                              <div className="w-3.5 h-3.5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                              <div className="w-3.5 h-3.5 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
                               {reportAnalysisStage}
                             </>
                           ) : (
@@ -4520,8 +4759,8 @@ export default function App() {
                       <div className="p-4 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-2xl min-h-[180px]">
                         {loading && reportAnalysisStage ? (
                           <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
-                            <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-                            <p className="text-sm font-medium text-emerald-700 animate-pulse">{reportAnalysisStage}</p>
+                            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                            <p className="text-sm font-medium text-blue-700 dark:text-blue-300 animate-pulse">{reportAnalysisStage}</p>
                           </div>
                         ) : reportAnalysisError ? (
                           <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-2">
@@ -4541,9 +4780,9 @@ export default function App() {
     </div>
   ) : (
     reportAnalysisResult.summary && (
-      <div className="p-2 bg-emerald-50 border border-emerald-100 rounded-xl">
-        <p className="font-bold text-emerald-950">AI Summary:</p>
-        <p className="text-emerald-800 text-[11px] leading-relaxed mt-0.5">{reportAnalysisResult.summary}</p>
+      <div className="p-2 bg-blue-50 border border-blue-100 dark:bg-blue-950/30 dark:border-blue-900/40 rounded-xl">
+        <p className="font-bold text-blue-950 dark:text-blue-200">AI Summary:</p>
+        <p className="text-blue-800 dark:text-blue-300 text-[11px] leading-relaxed mt-0.5">{reportAnalysisResult.summary}</p>
       </div>
     )
   )}
@@ -4667,7 +4906,7 @@ export default function App() {
                            <select
                              value={selectedTimelinePatientFilter}
                              onChange={(e) => setSelectedTimelinePatientFilter(e.target.value)}
-                             className="bg-slate-50 border border-slate-200 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-lg px-2 py-1 text-xs font-bold focus:ring-1 focus:ring-emerald-500 cursor-pointer"
+                             className="bg-slate-50 border border-slate-200 text-slate-700 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-300 rounded-lg px-2 py-1 text-xs font-bold focus:ring-1 focus:ring-blue-500 cursor-pointer"
                            >
                              <option value="All">All Members</option>
                              {unifiedFamily.map(m => (
@@ -4699,12 +4938,12 @@ export default function App() {
                              value={customRecordTitle}
                              onChange={(e) => setCustomRecordTitle(e.target.value)}
                              placeholder="Record Title"
-                             className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs rounded-xl p-2 focus:ring-emerald-500 font-bold w-full"
+                             className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs rounded-xl p-2 focus:ring-blue-500 font-bold w-full"
                            />
                            <select
                              value={customRecordCategory}
                              onChange={(e) => setCustomRecordCategory(e.target.value)}
-                             className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs rounded-xl p-2 focus:ring-emerald-500 font-bold"
+                             className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs rounded-xl p-2 focus:ring-blue-500 font-bold"
                            >
                              <option value="Consultation">Consultation Record</option>
                              <option value="Lab Report">Lab Report</option>
@@ -4713,7 +4952,7 @@ export default function App() {
                            <select
                              value={customRecordPatientId || selectedMember?.id || ""}
                              onChange={(e) => setCustomRecordPatientId(e.target.value)}
-                             className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs rounded-xl p-2 focus:ring-emerald-500 font-bold"
+                             className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs rounded-xl p-2 focus:ring-blue-500 font-bold"
                            >
                              {unifiedFamily.map(m => (
                                <option key={m.id} value={m.id}>{m.name} ({m.relation})</option>
@@ -4725,10 +4964,10 @@ export default function App() {
                            value={customRecordDetails}
                            onChange={(e) => setCustomRecordDetails(e.target.value)}
                            placeholder="Record Details"
-                           className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs rounded-xl p-2 focus:ring-emerald-500 font-bold w-full"
+                           className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 text-xs rounded-xl p-2 focus:ring-blue-500 font-bold w-full"
                          />
                          <div className="flex gap-2">
-                           <button type="submit" className="px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-[10px] font-bold cursor-pointer">
+                           <button type="submit" className="px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-[10px] font-bold cursor-pointer">
                              Log to Timeline
                            </button>
                            <button onClick={() => setCustomRecordTitle("")} className="px-3 py-1.5 bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl text-[10px] font-bold cursor-pointer">
@@ -4762,10 +5001,10 @@ export default function App() {
               {/* TAB 5: FAMILY HEALTH VAULT */}
               {activeTab === "family" && (
                 <div className="space-y-6 text-left max-w-[1150px] mx-auto w-full">
-                  {/* Join Unique Code Section (AS REQUESTED) */}
-                  <div className="bg-slate-900 text-white p-6 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
+                  {/* Join Unique Code Section */}
+                  <div className="bg-[#0b192c] text-white p-6 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-800">
                     <div className="space-y-1">
-                      <h3 className="font-extrabold text-sm text-emerald-400">Dynamic Cross-Account Connection</h3>
+                      <h3 className="font-extrabold text-sm text-blue-400">Dynamic Cross-Account Connection</h3>
                       <p className="text-xs text-slate-300">
                         Connect with another family member who is already using HealthTribe AI via their unique profile access code.
                       </p>
@@ -4777,11 +5016,11 @@ export default function App() {
                         value={familyUniqueCode}
                         onChange={(e) => setFamilyUniqueCode(e.target.value)}
                         placeholder="Enter Unique Code (e.g. TRIBE-941)"
-                        className="bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-2 text-xs font-mono text-slate-900 dark:text-white focus:outline-hidden focus:ring-1 focus:ring-emerald-500 w-full md:w-64"
+                        className="bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-xs font-mono text-white focus:outline-hidden focus:ring-1 focus:ring-blue-500 w-full md:w-64"
                       />
                       <button
                         onClick={handleLinkUniqueCode}
-                        className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl whitespace-nowrap cursor-pointer"
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl whitespace-nowrap cursor-pointer"
                       >
                         Connect Profile
                       </button>
@@ -4802,7 +5041,7 @@ export default function App() {
                             onChange={(e) => setNewMemberName(e.target.value)}
                             placeholder="Father/Mother/Child Name"
                             required
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 text-xs focus:ring-emerald-500"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 text-xs focus:ring-blue-500"
                           />
                         </div>
 
@@ -4812,7 +5051,7 @@ export default function App() {
                             <select
                               value={newMemberRelation}
                               onChange={(e) => setNewMemberRelation(e.target.value)}
-                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2 text-xs focus:ring-emerald-500 font-bold"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2 text-xs focus:ring-blue-500 font-bold"
                             >
                               <option value="Father">Father</option>
                               <option value="Mother">Mother</option>
@@ -4828,7 +5067,7 @@ export default function App() {
                               value={newMemberAge}
                               onChange={(e) => setNewMemberAge(e.target.value)}
                               placeholder="Age"
-                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2 text-xs focus:ring-emerald-500"
+                              className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2 text-xs focus:ring-blue-500"
                             />
                           </div>
                         </div>
@@ -4838,7 +5077,7 @@ export default function App() {
                           <select
                             value={newMemberGender}
                             onChange={(e) => setNewMemberGender(e.target.value)}
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2 text-xs focus:ring-emerald-500 font-bold"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2 text-xs focus:ring-blue-500 font-bold"
                           >
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -4853,13 +5092,13 @@ export default function App() {
                             value={newMemberAllergies}
                             onChange={(e) => setNewMemberAllergies(e.target.value)}
                             placeholder="Contrast dyes / Penicillin etc."
-                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 text-xs focus:ring-emerald-500"
+                            className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-slate-100 rounded-xl p-2.5 text-xs focus:ring-blue-500"
                           />
                         </div>
 
                         <button
                           type="submit"
-                          className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
+                          className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
                         >
                           Save New Profile
                         </button>
@@ -4881,7 +5120,7 @@ export default function App() {
                               className="p-4 rounded-2xl border text-left bg-slate-50 border-slate-200 dark:bg-slate-950 dark:border-slate-800"
                             >
                               <div className="flex items-center gap-3 mb-3">
-                                <div className="w-10 h-10 bg-emerald-100 text-emerald-800 font-bold rounded-full flex items-center justify-center">
+                                <div className="w-10 h-10 bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300 font-bold rounded-full flex items-center justify-center">
                                   {member.name.charAt(0)}
                                 </div>
                                 <div>
@@ -4907,7 +5146,7 @@ export default function App() {
                                       e.stopPropagation();
                                       openEditMemberModal(member);
                                     }}
-                                    className="text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 font-bold dark:text-slate-400 cursor-pointer"
+                                    className="text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 font-bold dark:text-slate-400 cursor-pointer"
                                   >
                                     Edit
                                   </button>
@@ -4953,7 +5192,7 @@ export default function App() {
                                 )}
                               </div>
                               <p className="text-[10px] text-slate-400">{med.manufacturer} • {med.strength}</p>
-                              <p className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded w-fit mt-1">
+                              <p className="text-[10px] bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 font-bold px-1.5 py-0.5 rounded w-fit mt-1">
                                 {med.category}
                               </p>
                             </div>
@@ -4965,7 +5204,7 @@ export default function App() {
                               </div>
                               <button
                                 onClick={() => addToCart(med)}
-                                className="px-3 py-1 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-[10px] rounded-xl cursor-pointer"
+                                className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] rounded-xl cursor-pointer"
                               >
                                 + Add Cart
                               </button>
@@ -5029,11 +5268,11 @@ export default function App() {
                               <span>Shipping Address:</span>
                               <div className="flex flex-col items-end gap-1">
                                 <span className="font-bold text-slate-800 dark:text-slate-200 text-right max-w-[140px] truncate">{deliveryAddress}</span>
-                                <button onClick={() => setIsAddressModalOpen(true)} className="text-[9px] font-bold text-emerald-700 underline cursor-pointer">Change Address</button>
+                                <button onClick={() => setIsAddressModalOpen(true)} className="text-[9px] font-bold text-blue-600 dark:text-blue-400 underline cursor-pointer">Change Address</button>
                               </div>
                             </div>
                             {appliedCoupon && (
-                              <div className="flex justify-between text-emerald-800 font-bold">
+                              <div className="flex justify-between text-blue-700 dark:text-blue-300 font-bold">
                                 <span>Promo Discount ({appliedCoupon.code}):</span>
                                 <span>- ₹{appliedCoupon.maxDiscount}</span>
                               </div>
@@ -5042,7 +5281,7 @@ export default function App() {
                           
                           <button
                             onClick={() => openPaymentGate(250, "Pharmacy Medicine Order Fulfillment")}
-                            className="w-full py-2.5 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
+                            className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
                           >
                             Lock Order & Continue Payment
                           </button>
@@ -5061,7 +5300,7 @@ export default function App() {
                           <div className="space-y-2">
                             <div className="flex flex-wrap gap-1">
                               {test.tags?.map((tag) => (
-                                <span key={tag} className="bg-emerald-100 text-emerald-800 text-[8px] font-extrabold px-1.5 py-0.5 rounded">
+                                <span key={tag} className="bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 text-[8px] font-extrabold px-1.5 py-0.5 rounded">
                                   {tag}
                                 </span>
                               ))}
@@ -5078,7 +5317,7 @@ export default function App() {
                             </div>
                             <button
                               onClick={() => handleBookLabTest(test.id)}
-                              className="px-3.5 py-1.5 bg-slate-900 text-white font-bold text-[10px] rounded-xl cursor-pointer"
+                              className="px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-[10px] rounded-xl cursor-pointer"
                             >
                               Book Test
                             </button>
@@ -5089,10 +5328,10 @@ export default function App() {
                   </div>
 
                   {/* POST-CONSULTATION AI DIET BUILDER */}
-                  <div className="bg-slate-900 text-white p-6 rounded-3xl space-y-4">
+                  <div className="bg-[#0b192c] text-white p-6 rounded-3xl space-y-4 border border-slate-800">
                     <div className="flex items-center gap-2">
-                      <Apple className="w-5 h-5 text-emerald-400" />
-                      <h3 className="font-extrabold text-sm text-emerald-400">Post-Consultation AI Diet Plan Agent</h3>
+                      <Apple className="w-5 h-5 text-blue-400" />
+                      <h3 className="font-extrabold text-sm text-blue-400">Post-Consultation AI Diet Plan Agent</h3>
                     </div>
                     <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
                       Based on diagnosed metrics and active medications, HealthTribe AI designs specialized dietary advice that protects against blood sugar surges and stomach irritations.
@@ -5106,11 +5345,11 @@ export default function App() {
                           value={dietDiagnosis}
                           onChange={(e) => setDietDiagnosis(e.target.value)}
                           placeholder="e.g. Hypertension, Gastritis, Diabetes..."
-                          className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-2 text-xs text-slate-900 dark:text-slate-100"
+                          className="w-full bg-slate-800 border border-slate-700 rounded-xl p-2 text-xs text-white"
                         />
                         <button
                           onClick={handleGenerateDiet}
-                          className="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
+                          className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all cursor-pointer"
                         >
                           Generate Nutrition Guide
                         </button>
@@ -5119,8 +5358,8 @@ export default function App() {
                       <div className="bg-slate-800 border border-slate-700 rounded-2xl p-4 text-xs space-y-3">
                         {activeDietPlan ? (
                           <>
-                            <div className="p-2 bg-slate-800 rounded-xl">
-                              <p className="font-bold text-emerald-400">Scientific Rationale:</p>
+                            <div className="p-2 bg-slate-900 rounded-xl">
+                              <p className="font-bold text-blue-400">Scientific Rationale:</p>
                               <p className="text-slate-300 text-[11px] leading-tight mt-0.5">{activeDietPlan.scientificRationale}</p>
                             </div>
                             <div className="space-y-1 text-[11px]">
@@ -5132,7 +5371,7 @@ export default function App() {
                           </>
                         ) : (
                           <div className="h-full flex items-center justify-center text-center">
-                            <p className="text-slate-500 dark:text-slate-400 text-xs py-6">Your customized metabolic menu will display here after processing.</p>
+                            <p className="text-slate-400 text-xs py-6">Your customized metabolic menu will display here after processing.</p>
                           </div>
                         )}
                       </div>
@@ -5158,7 +5397,7 @@ export default function App() {
                           />
                           <button
                             onClick={handleAddMedCompare}
-                            className="px-4 py-2 bg-slate-900 text-white font-bold text-xs rounded-xl cursor-pointer"
+                            className="px-4 py-2 bg-slate-900 dark:bg-slate-800 text-white font-bold text-xs rounded-xl cursor-pointer"
                           >
                             Add
                           </button>
@@ -5175,7 +5414,7 @@ export default function App() {
 
                         <button
                           onClick={checkDrugInteractions}
-                          className="w-full py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-xl cursor-pointer"
+                          className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl cursor-pointer"
                         >
                           Run Cross-Med Interaction Audit
                         </button>
@@ -5350,7 +5589,7 @@ export default function App() {
               
               {/* PRACTICE HEADER CARD (REUSABLE ACCROSS PORTAL) */}
               {showWelcomeCard && (
-                <div className="bg-gradient-to-r from-teal-900 via-teal-850 to-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden">
+                <div className="bg-gradient-to-r from-[#0b192c] via-[#1e3a8a] to-[#1e40af] text-white rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden">
                   <div className="absolute right-0 top-0 opacity-10 transform translate-x-12 -translate-y-6">
                     <Activity className="w-96 h-96" />
                   </div>
@@ -5359,18 +5598,18 @@ export default function App() {
                     {/* Left/Middle: Doctor Info & Active Patient Dropdown */}
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 w-full lg:w-auto flex-1">
                       <div>
-                        <span className="bg-teal-850 text-teal-300 border border-teal-800 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
+                        <span className="bg-blue-900/60 text-blue-300 border border-blue-700/50 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
                           Practice Management Room • Live Gate
                         </span>
                         <h1 className="text-xl md:text-2xl font-black mt-3 flex flex-wrap items-center gap-2">
-                          Welcome, Dr. Rahul Atluri <span className="text-sm font-normal text-teal-400">• Cardiology Consultant</span>
+                          Welcome, Dr. Rahul Atluri <span className="text-sm font-normal text-blue-300">• Cardiology Consultant</span>
                         </h1>
-                        <p className="text-xs text-teal-100/80 mt-1 font-medium">AIMS Super Speciality Hospital, Bangalore • ABHA Registered ID: DOC-91-84021</p>
+                        <p className="text-xs text-blue-100/80 mt-1 font-medium">AIMS Super Speciality Hospital, Bangalore • ABHA Registered ID: DOC-91-84021</p>
                       </div>
 
                       {/* Active Patient Dropdown (Context selector) */}
                       <div className="flex flex-col gap-1.5 w-full md:w-auto shrink-0">
-                        <span className="text-[10px] font-black uppercase tracking-wider text-teal-300/90 lg:text-left">Active Patient</span>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-blue-300/90 lg:text-left">Active Patient</span>
                         <div className="relative">
                           <select
                             id="doctor-active-patient-selector"
@@ -5387,7 +5626,7 @@ export default function App() {
                               const matchedName = doctorQueuePatients.find(p => p.id === val)?.name || val;
                               triggerToast(`Switched active patient context to: ${matchedName}`);
                             }}
-                            className="w-full md:w-56 px-3 py-2 font-extrabold text-xs rounded-xl cursor-pointer border shadow-xs bg-teal-800/80 hover:bg-teal-800 text-white border-teal-700 focus:outline-hidden focus:ring-2 focus:ring-teal-400 transition-all appearance-none pr-8"
+                            className="w-full md:w-56 px-3 py-2 font-extrabold text-xs rounded-xl cursor-pointer border shadow-xs bg-blue-900/80 hover:bg-blue-800 text-white border-blue-700 focus:outline-hidden focus:ring-2 focus:ring-blue-400 transition-all appearance-none pr-8"
                           >
                             {doctorQueuePatients.length > 0 ? (
                               <>
@@ -5432,7 +5671,7 @@ export default function App() {
                       </button>
                       <button 
                         onClick={() => triggerToast("All clinician telemetry nodes synchronized to ABHA cloud registry.")}
-                        className="px-4 py-2 bg-teal-800/80 hover:bg-teal-800 text-white border border-teal-700 text-xs font-bold rounded-xl transition-all cursor-pointer flex-1 sm:flex-initial text-center"
+                        className="px-4 py-2 bg-blue-800/80 hover:bg-blue-750 text-white border border-blue-700 text-xs font-bold rounded-xl transition-all cursor-pointer flex-1 sm:flex-initial text-center"
                       >
                         Sync Cloud Gate
                       </button>
@@ -5448,7 +5687,7 @@ export default function App() {
                     {/* BENTO PRACTICE METRICS GRID */}
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                       <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-5 rounded-3xl shadow-sm flex items-center gap-4">
-                        <div className="p-3 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 rounded-2xl">
+                        <div className="p-3 bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 rounded-2xl">
                           <Users className="w-5 h-5" />
                         </div>
                         <div className="text-left">
@@ -5479,12 +5718,12 @@ export default function App() {
                       </div>
 
                       <div className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 p-5 rounded-3xl shadow-sm flex items-center gap-4">
-                        <div className="p-3 bg-teal-100 dark:bg-teal-950/40 text-teal-800 dark:text-teal-300 rounded-2xl">
+                        <div className="p-3 bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 rounded-2xl">
                           <TrendingUp className="w-5 h-5" />
                         </div>
                         <div className="text-left">
                           <span className="text-slate-400 text-[9px] uppercase font-black tracking-wider">Monthly Income</span>
-                          <p className="text-xl font-extrabold text-emerald-700 dark:text-emerald-400 mt-0.5">₹1,24,500</p>
+                          <p className="text-xl font-extrabold text-blue-700 dark:text-blue-400 mt-0.5">₹1,24,500</p>
                         </div>
                       </div>
                     </div>
@@ -5537,7 +5776,7 @@ export default function App() {
                           ]).map((vt, idx) => (
                             <motion.div
                               key={vt.metric}
-                              whileHover={{ y: -3, scale: 1.025, boxShadow: "0 8px 16px rgba(16, 185, 129, 0.06)" }}
+                              whileHover={{ y: -3, scale: 1.025, boxShadow: "0 8px 16px rgba(37, 99, 235, 0.06)" }}
                               transition={{ type: "spring", stiffness: 400, damping: 25 }}
                               className="p-2.5 bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-800 flex flex-col justify-between text-left relative overflow-hidden group cursor-pointer"
                             >
@@ -5586,19 +5825,19 @@ export default function App() {
                               placeholder="Metric (e.g. SpO2, Uric Acid)"
                               value={newVitalMetric}
                               onChange={(e) => setNewVitalMetric(e.target.value)}
-                              className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white rounded-xl px-2.5 py-1.5 placeholder-slate-400 focus:outline-none focus:border-emerald-500/50"
+                              className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white rounded-xl px-2.5 py-1.5 placeholder-slate-400 focus:outline-none focus:border-blue-500/50"
                             />
                             <input
                               type="text"
                               placeholder="Value (e.g. 98%, 7.2 mg/dL)"
                               value={newVitalValue}
                               onChange={(e) => setNewVitalValue(e.target.value)}
-                              className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white rounded-xl px-2.5 py-1.5 placeholder-slate-400 focus:outline-none focus:border-emerald-500/50"
+                              className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white rounded-xl px-2.5 py-1.5 placeholder-slate-400 focus:outline-none focus:border-blue-500/50"
                             />
                             <select
                               value={newVitalStatus}
                               onChange={(e) => setNewVitalStatus(e.target.value as any)}
-                              className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white rounded-xl px-2 py-1.5 focus:outline-none focus:border-emerald-500/50"
+                              className="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-xs text-slate-900 dark:text-white rounded-xl px-2 py-1.5 focus:outline-none focus:border-blue-500/50"
                             >
                               <option value="Normal">Normal Status</option>
                               <option value="Borderline">Borderline Risk</option>
@@ -5606,7 +5845,7 @@ export default function App() {
                             </select>
                             <button
                               onClick={addCustomVital}
-                              className="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-black uppercase tracking-wider py-1.5 px-3 rounded-xl transition-all cursor-pointer whitespace-nowrap"
+                              className="bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-black uppercase tracking-wider py-1.5 px-3 rounded-xl transition-all cursor-pointer whitespace-nowrap"
                             >
                               Insert Metric
                             </button>
@@ -5625,8 +5864,8 @@ export default function App() {
                             <svg className="w-full h-full" viewBox="0 0 200 80" preserveAspectRatio="none">
                               <defs>
                                 <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                                  <stop offset="0%" stopColor="#10b981" stopOpacity="0.4" />
-                                  <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                                  <stop offset="0%" stopColor="#2563eb" stopOpacity="0.4" />
+                                  <stop offset="100%" stopColor="#2563eb" stopOpacity="0.0" />
                                 </linearGradient>
                               </defs>
                               {/* Gridlines */}
@@ -5647,7 +5886,7 @@ export default function App() {
                               <motion.path
                                 d="M 10,70 Q 40,40 70,55 T 100,20 T 130,30 T 160,15 T 190,5"
                                 fill="none"
-                                stroke="#059669"
+                                stroke="#2563eb"
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 initial={{ pathLength: 0 }}

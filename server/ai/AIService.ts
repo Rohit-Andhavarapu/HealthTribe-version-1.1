@@ -7,30 +7,34 @@ export class AIService {
   private fallbackProvider: AIProvider | null = null;
 
   constructor() {
-    const selectedProvider = process.env.AI_PROVIDER?.toLowerCase();
+    this.initProviders();
+  }
 
-    const gemini = new GeminiProvider();
+  private initProviders() {
+    const selectedProvider = (process.env.AI_PROVIDER || "groq").toLowerCase();
+
     const groq = new GroqProvider();
+    const gemini = new GeminiProvider();
 
     if (selectedProvider === "groq" && groq.isAvailable()) {
       this.primaryProvider = groq;
       if (gemini.isAvailable()) {
         this.fallbackProvider = gemini;
       }
-    } else {
-      // Default to Gemini in AI Studio environment
-      if (gemini.isAvailable()) {
-        this.primaryProvider = gemini;
-        if (groq.isAvailable()) {
-          this.fallbackProvider = groq;
-        }
-      } else if (groq.isAvailable()) {
-        this.primaryProvider = groq;
+    } else if (gemini.isAvailable()) {
+      this.primaryProvider = gemini;
+      if (groq.isAvailable()) {
+        this.fallbackProvider = groq;
       }
+    } else if (groq.isAvailable()) {
+      this.primaryProvider = groq;
     }
   }
 
   public isAvailable(): boolean {
+    if (!this.primaryProvider) {
+      this.initProviders();
+    }
     const isPrimaryAvail = this.primaryProvider !== null && (this.primaryProvider.isAvailable ? this.primaryProvider.isAvailable() : true);
     const isFallbackAvail = this.fallbackProvider !== null && (this.fallbackProvider.isAvailable ? this.fallbackProvider.isAvailable() : true);
     return isPrimaryAvail || isFallbackAvail;

@@ -20,7 +20,7 @@ export const AddressModal: React.FC<Props> = ({ isOpen, addresses, selectedAddre
             <button
               key={addr.id}
               onClick={() => onSelect(addr)}
-              className={`w-full text-left p-4 rounded-2xl border ${selectedAddress.id === addr.id ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' : 'border-slate-200 dark:border-slate-700'}`}
+              className={`w-full text-left p-4 rounded-2xl border ${selectedAddress.id === addr.id ? 'border-blue-600 bg-blue-50 dark:bg-blue-950/40 text-blue-900 dark:text-blue-200' : 'border-slate-200 dark:border-slate-700'}`}
             >
               <p className="font-bold text-xs">{addr.fullName}</p>
               <p className="text-[10px] text-slate-500 dark:text-slate-400">{addr.house}, {addr.area}, {addr.city}</p>

@@ -3,36 +3,39 @@ import { AIProvider, GenerateContentParams } from "./AIProvider";
 
 export class GroqProvider implements AIProvider {
   private groq: Groq | null = null;
-  private model: string = "llama-3.3-70b-versatile";
+  private model: string = "openai/gpt-oss-120b";
 
   constructor() {
-    const GROQ_KEY = process.env.GROQ_API_KEY;
-    if (process.env.GROQ_MODEL) {
-      this.model = process.env.GROQ_MODEL;
-    }
-    
-    if (GROQ_KEY) {
+    this.getClient();
+  }
+
+  private getClient(): Groq | null {
+    if (!this.groq && process.env.GROQ_API_KEY) {
+      const GROQ_KEY = process.env.GROQ_API_KEY.trim();
+      if (process.env.GROQ_MODEL) {
+        this.model = process.env.GROQ_MODEL;
+      }
       try {
         this.groq = new Groq({ apiKey: GROQ_KEY });
         console.log(`GroqProvider initialized successfully with model: ${this.model}`);
       } catch (err) {
         console.error("Failed to initialize Groq Client in Provider:", err);
       }
-    } else {
-      console.log("No GROQ_API_KEY found in GroqProvider. Operating in fallback mode.");
     }
+    return this.groq;
   }
 
   public isAvailable(): boolean {
     const key = process.env.GROQ_API_KEY;
-    if (!key || key.includes("your_groq_api_key") || key.trim().length < 30) {
+    if (!key || key.includes("your_groq_api_key") || key.trim().length < 20) {
       return false;
     }
-    return this.groq !== null;
+    return this.getClient() !== null;
   }
 
   public async generateContent(params: GenerateContentParams): Promise<string> {
-    if (!this.groq) {
+    const client = this.getClient();
+    if (!client) {
       throw new Error("AI provider is not initialized (missing API key)");
     }
 
