@@ -50,7 +50,7 @@ export class GeminiProvider implements AIProvider {
     }
 
     const request: any = {
-      model: "gemini-3.6-flash",
+      model: "gemini-3.7-flash",
       contents: contents,
     };
 

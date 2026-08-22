@@ -21,8 +21,9 @@
           ],
           "patientName": "Supriya Kilari",
           "title": "Annual Heart Health Checkup",
-          "details": "Sinus rhythm normal, blood pressure stable at 118/75.",
-          "category": "Consultation"
+          "details": "Sinus rhythm normal, Blood Pressure: 134/84 mmHg. Fasting Blood Glucose: 136 mg/dL. HbA1c: 7.1%. LDL Cholesterol: 140 mg/dL. Continuing cardiac & glycemic observation.",
+          "category": "Consultation",
+          "hospital": "Apollo Hospitals"
         },
         {
           "details": "Fasting sugar: 128 mg/dL. HbA1c: 7.1%. Control is fair but requires mild exercise monitoring.",
@@ -36,6 +37,28 @@
           "doctorName": "Diagnostic Labs Inc.",
           "id": "timeline-2",
           "date": "2026-05-10"
+        },
+        {
+          "id": "timeline-0",
+          "date": "2026-03-10",
+          "title": "Baseline Executive Health Screening",
+          "patientId": "fam-self",
+          "patientName": "Supriya Kilari",
+          "category": "Lab Report",
+          "doctorName": "Dr. Amit Das",
+          "hospital": "AIIMS New Delhi",
+          "details": "Fasting Blood Glucose: 118 mg/dL. HbA1c: 6.6%. Blood Pressure: 122/78 mmHg. LDL Cholesterol: 122 mg/dL. Total Cholesterol: 198 mg/dL. Mild initial lipid monitoring advised."
+        },
+        {
+          "id": "timeline-0b",
+          "date": "2026-05-02",
+          "title": "Routine Lipid & Glycemic Review",
+          "patientId": "fam-self",
+          "patientName": "Supriya Kilari",
+          "category": "Lab Report",
+          "doctorName": "Dr. Meera Iyer",
+          "hospital": "Apollo Hospitals",
+          "details": "Fasting Blood Glucose: 128 mg/dL. HbA1c: 6.9%. Blood Pressure: 128/82 mmHg. LDL Cholesterol: 132 mg/dL. Total Cholesterol: 210 mg/dL. Prescribed Metformin 500mg daily."
         }
       ],
       "importedHealthRecords": [],

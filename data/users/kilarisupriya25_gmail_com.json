@@ -1297,14 +1297,15 @@
           "id": "timeline-1",
           "date": "2026-06-15",
           "title": "Annual Heart Health Checkup",
-          "details": "Sinus rhythm normal, blood pressure stable at 118/75.",
+          "details": "Sinus rhythm normal, Blood Pressure: 134/84 mmHg. Fasting Blood Glucose: 136 mg/dL. HbA1c: 7.1%. LDL Cholesterol: 140 mg/dL. Continuing cardiac & glycemic observation.",
           "category": "Consultation",
           "patientId": "fam-self",
-          "doctorName": "Dr. Supriya Kilari",
+          "doctorName": "Dr. Rahul Atluri",
           "attachments": [
             "ECG_Report_June.pdf"
           ],
-          "patientName": "Supriya Kilari"
+          "patientName": "Supriya Kilari",
+          "hospital": "Apollo Hospitals"
         },
         {
           "id": "timeline-2",
@@ -1318,6 +1319,28 @@
             "Sugar_Report_May.pdf"
           ],
           "patientName": "Srinivas Kilari"
+        },
+        {
+          "id": "timeline-0",
+          "date": "2026-03-10",
+          "title": "Baseline Executive Health Screening",
+          "patientId": "fam-self",
+          "patientName": "Supriya Kilari",
+          "category": "Lab Report",
+          "doctorName": "Dr. Amit Das",
+          "hospital": "AIIMS New Delhi",
+          "details": "Fasting Blood Glucose: 118 mg/dL. HbA1c: 6.6%. Blood Pressure: 122/78 mmHg. LDL Cholesterol: 122 mg/dL. Total Cholesterol: 198 mg/dL. Mild initial lipid monitoring advised."
+        },
+        {
+          "id": "timeline-0b",
+          "date": "2026-05-02",
+          "title": "Routine Lipid & Glycemic Review",
+          "patientId": "fam-self",
+          "patientName": "Supriya Kilari",
+          "category": "Lab Report",
+          "doctorName": "Dr. Meera Iyer",
+          "hospital": "Apollo Hospitals",
+          "details": "Fasting Blood Glucose: 128 mg/dL. HbA1c: 6.9%. Blood Pressure: 128/82 mmHg. LDL Cholesterol: 132 mg/dL. Total Cholesterol: 210 mg/dL. Prescribed Metformin 500mg daily."
         }
       ],
       "triageConversations": [

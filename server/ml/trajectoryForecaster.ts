@@ -575,6 +575,59 @@ export function generateHealthTrajectoryReport(
   else if (totalRiskScore >= 55) overallRisk = "HIGH";
   else if (totalRiskScore >= 35) overallRisk = "MODERATE";
 
+  // Build dynamic, mathematically grounded clinical impression
+  const longitudinalTrajectories = trajectories.filter(t => t.historicalReadings && t.historicalReadings.length >= 2);
+  const singleObservationTrajectories = trajectories.filter(t => !t.historicalReadings || t.historicalReadings.length === 1);
+  const risingTrajectories = longitudinalTrajectories.filter(t => t.trendDirection === "RISING");
+  const fallingTrajectories = longitudinalTrajectories.filter(t => t.trendDirection === "FALLING");
+
+  let defaultSummary = "";
+  let defaultClinicalImpression = "";
+  let defaultPreventiveActions: string[] = [];
+  let defaultMonitoringSchedule = "";
+
+  if (longitudinalTrajectories.length === 0) {
+    // All biomarkers have insufficient longitudinal points (<2)
+    defaultSummary = `Single baseline measurements recorded for ${trajectories.length} clinical biomarker${trajectories.length === 1 ? "" : "s"}. Longitudinal trajectory analysis requires additional historical observations.`;
+    defaultClinicalImpression = `Only single baseline measurements are currently on file for ${patientName}. A mathematical trajectory, monthly rate of change, and future forecast cannot be calculated without at least two temporal observations. Clinical status is evaluated against standard reference ranges.`;
+    defaultPreventiveActions = [
+      "Schedule follow-up laboratory panels to begin longitudinal trend tracking.",
+      "Review current baseline values with your physician against clinical target ranges.",
+      "Maintain consistent vitals logging (blood pressure, fasting glucose) in the HealthTribe app."
+    ];
+    defaultMonitoringSchedule = "Obtain repeat diagnostic lab panels in 60-90 days to establish multi-point trajectory modeling.";
+  } else {
+    // We have verified longitudinal data for one or more biomarkers
+    const risingNames = risingTrajectories.map(t => `${t.markerName} (+${t.velocityPerMonth} ${t.unit}/mo)`).join(", ");
+    const fallingNames = fallingTrajectories.map(t => `${t.markerName} (${t.velocityPerMonth} ${t.unit}/mo)`).join(", ");
+
+    defaultSummary = `Longitudinal mathematical analysis across ${longitudinalTrajectories.length} multi-point biomarker${longitudinalTrajectories.length === 1 ? "" : "s"} indicates an overall ${overallRisk.toLowerCase()} cardiometabolic progression risk score of ${totalRiskScore}/100.`;
+
+    if (risingTrajectories.length > 0 && fallingTrajectories.length > 0) {
+      defaultClinicalImpression = `Upward trajectory observed in ${risingNames}, while improvements are noted in ${fallingNames}. Continuous monitoring recommended to stabilize rising parameters.`;
+    } else if (risingTrajectories.length > 0) {
+      defaultClinicalImpression = `Upward trajectory observed in ${risingNames} across consecutive clinical touchpoints. Clinical review of diet, lifestyle, and medication titration recommended.`;
+    } else if (fallingTrajectories.length > 0) {
+      defaultClinicalImpression = `Favorable downward trajectory observed in ${fallingNames}, demonstrating therapeutic response. Continued adherence to current care plan advised.`;
+    } else {
+      defaultClinicalImpression = `Tracked biomarkers demonstrate stable historical baselines with low longitudinal velocity across verified observations.`;
+    }
+
+    if (singleObservationTrajectories.length > 0) {
+      const singleNames = singleObservationTrajectories.map(t => t.markerName).join(", ");
+      defaultClinicalImpression += ` Note: ${singleNames} currently ${singleObservationTrajectories.length === 1 ? "has" : "have"} a single baseline measurement; repeat testing is required for trajectory calculation.`;
+    }
+
+    defaultPreventiveActions = [
+      risingTrajectories.length > 0 
+        ? "Discuss rising biomarker trajectories with your attending physician to evaluate medication adjustments."
+        : "Maintain current medical and dietary regimen to preserve stable biomarker trajectories.",
+      "Continue periodic home and clinical vitals logging to refine forecast confidence intervals.",
+      "Schedule routine follow-up lab screening in accordance with clinician recommendations."
+    ];
+    defaultMonitoringSchedule = "Re-evaluate trajectory models upon receipt of next routine laboratory panel (approx. 60-90 days).";
+  }
+
   return {
     patientId,
     patientName,
@@ -584,14 +637,10 @@ export function generateHealthTrajectoryReport(
     trajectories,
     criticalAlerts,
     geminiSynthesis: {
-      summary: `Longitudinal analysis across ${trajectories.length} tracked clinical biomarkers indicates an overall ${overallRisk.toLowerCase()} cardiometabolic progression score of ${totalRiskScore}/100.`,
-      clinicalImpression: `Key upward velocities observed in glycemic indices and systolic blood pressure over consecutive clinical touchpoints. Ongoing pharmacotherapy and dietary compliance monitoring recommended.`,
-      preventiveActions: [
-        "Schedule 60-day repeat HbA1c & Fasting Lipid Panel to evaluate metabolic response.",
-        "Maintain ambulatory blood pressure monitoring logs twice weekly.",
-        "Review current oral hypoglycemic and antihypertensive dosing with primary physician."
-      ],
-      monitoringSchedule: "Re-evaluate trajectory models upon receipt of next routine laboratory panel."
+      summary: defaultSummary,
+      clinicalImpression: defaultClinicalImpression,
+      preventiveActions: defaultPreventiveActions,
+      monitoringSchedule: defaultMonitoringSchedule
     }
   };
 }

@@ -188,7 +188,9 @@ export const HealthTrajectoryCard: React.FC<Props> = ({ patientId, patientName, 
     }
 
     let trendLabel = "Stable Baseline";
-    if (isRising) {
+    if (t.historicalReadings && t.historicalReadings.length < 2) {
+      trendLabel = "Single Baseline (Trend Pending)";
+    } else if (isRising) {
       trendLabel = `Upward Trend (${formatVelocity(t.velocityPerMonth, 2)} ${t.unit}/mo)`;
     } else if (isFalling) {
       trendLabel = `Improving Trend (${formatVelocity(t.velocityPerMonth, 2)} ${t.unit}/mo)`;
@@ -551,8 +553,10 @@ export const HealthTrajectoryCard: React.FC<Props> = ({ patientId, patientName, 
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           {report.trajectories.map((t) => {
             const isSelected = t.markerKey === selectedMarkerKey;
-            const isRising = t.trendDirection === "RISING";
-            const isFalling = t.trendDirection === "FALLING";
+            const obsCount = t.historicalReadings?.length || 0;
+            const hasMultiPoint = obsCount >= 2;
+            const isRising = hasMultiPoint && t.trendDirection === "RISING";
+            const isFalling = hasMultiPoint && t.trendDirection === "FALLING";
 
             return (
               <button
@@ -572,9 +576,15 @@ export const HealthTrajectoryCard: React.FC<Props> = ({ patientId, patientName, 
                 }`}>
                   {formatNumber(t.currentValue, 1)} {t.unit}
                 </span>
-                {isRising && <ArrowUpRight className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-rose-500"}`} />}
-                {isFalling && <ArrowDownRight className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-emerald-500"}`} />}
-                {!isRising && !isFalling && <Minus className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-slate-400"}`} />}
+                {!hasMultiPoint ? (
+                  <span className={`text-[9px] px-1 py-0.2 rounded font-sans uppercase ${isSelected ? "bg-white/20 text-white" : "text-slate-400"}`}>1 Obs</span>
+                ) : isRising ? (
+                  <ArrowUpRight className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-rose-500"}`} />
+                ) : isFalling ? (
+                  <ArrowDownRight className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-emerald-500"}`} />
+                ) : (
+                  <Minus className={`w-3.5 h-3.5 ${isSelected ? "text-white" : "text-slate-400"}`} />
+                )}
               </button>
             );
           })}

@@ -82,11 +82,16 @@ export class AIService {
         throw err;
       }
 
-      const isQuota = err.status === "RESOURCE_EXHAUSTED" || err.status === 429 || err.status === 503 || (err.message && (err.message.includes("429") || err.message.includes("503")));
+      const isQuota = err.status === "RESOURCE_EXHAUSTED" || err.status === 429 || err.statusCode === 429 || (err.message && (err.message.includes("429") || err.message.includes("quota") || err.message.includes("RESOURCE_EXHAUSTED")));
+      if (isQuota) {
+        // Quota is exhausted - do not stall with retry loops
+        throw err;
+      }
+
       const isNetwork = err.message && (err.message.includes("fetch failed") || err.message.includes("ECONNRESET") || err.message.includes("socket hang up"));
       
-      if (retries > 0 && (isQuota || isNetwork)) {
-        console.log(`[AIService] Transient error: ${err.message}, retrying in ${delay}ms...`);
+      if (retries > 0 && isNetwork) {
+        console.log(`[AIService] Network transient error: ${err.message}, retrying in ${delay}ms...`);
         await new Promise(resolve => setTimeout(resolve, delay));
         return this.retryWithBackoff(fn, retries - 1, delay * 2);
       }

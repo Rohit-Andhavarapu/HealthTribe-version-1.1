@@ -1154,6 +1154,49 @@ function getUserDb(req: express.Request): any {
       if (!data.patientProfiles) { data.patientProfiles = []; changed = true; }
       if (!data.auditLogs) { data.auditLogs = []; changed = true; }
 
+      // Ensure essential baseline longitudinal timeline records are available in patient partitions
+      if (data.partitions) {
+        // Sync fam-self partition
+        if (!data.partitions["fam-self"]) {
+          initPartition(data, "fam-self");
+        }
+        const famSelfTimeline = data.partitions["fam-self"].medicalTimeline || [];
+        const famSelfBaseRecs = base_db.medicalTimeline.filter((t: any) => !t.patientId || t.patientId === "fam-self" || t.patientId === "self");
+        for (const baseRec of famSelfBaseRecs) {
+          const idx = famSelfTimeline.findIndex((t: any) => t.id === baseRec.id);
+          if (idx === -1) {
+            famSelfTimeline.push(JSON.parse(JSON.stringify(baseRec)));
+            changed = true;
+          } else {
+            // Update details if baseRec has full longitudinal measurements
+            if (baseRec.details && (!famSelfTimeline[idx].details || famSelfTimeline[idx].details.length < baseRec.details.length)) {
+              famSelfTimeline[idx].details = baseRec.details;
+              changed = true;
+            }
+          }
+        }
+        data.partitions["fam-self"].medicalTimeline = famSelfTimeline;
+
+        // Sync fam-1 partition
+        if (data.partitions["fam-1"]) {
+          const fam1Timeline = data.partitions["fam-1"].medicalTimeline || [];
+          const fam1BaseRecs = base_db.medicalTimeline.filter((t: any) => t.patientId === "fam-1");
+          for (const baseRec of fam1BaseRecs) {
+            const idx = fam1Timeline.findIndex((t: any) => t.id === baseRec.id);
+            if (idx === -1) {
+              fam1Timeline.push(JSON.parse(JSON.stringify(baseRec)));
+              changed = true;
+            } else {
+              if (baseRec.details && (!fam1Timeline[idx].details || fam1Timeline[idx].details.length < baseRec.details.length)) {
+                fam1Timeline[idx].details = baseRec.details;
+                changed = true;
+              }
+            }
+          }
+          data.partitions["fam-1"].medicalTimeline = fam1Timeline;
+        }
+      }
+
       // Perform automated zero-data-loss partition migration for existing databases
       if (!data.partitions) {
         data.partitions = {};
@@ -1345,10 +1388,17 @@ function initPartition(userDb: any, profileId: string) {
     userDb.partitions = {};
   }
   if (!userDb.partitions[profileId]) {
+    const seededTimeline = base_db.medicalTimeline.filter((t: any) => {
+      if (profileId === "fam-self" || profileId === "self") {
+        return !t.patientId || t.patientId === "fam-self" || t.patientId === "self";
+      }
+      return t.patientId === profileId;
+    });
+
     userDb.partitions[profileId] = {
       familyMembers: [],
       appointments: [],
-      medicalTimeline: [],
+      medicalTimeline: JSON.parse(JSON.stringify(seededTimeline)),
       abhaIdentities: [],
       consentRecords: [],
       importSessions: [],
@@ -2092,9 +2142,36 @@ app.get("/api/v1/ml/trajectory/:patientId", async (req, res) => {
       patientName = userDb.primaryProfile?.name || "Supriya Kilari";
     }
 
-    // Combine medical timeline and imported health records
-    const timeline = (db.medicalTimeline || []).filter((e: any) => !e.patientId || e.patientId === patientId || patientId === "fam-self");
-    const imported = (db.importedHealthRecords || []).filter((e: any) => !e.patientId || e.patientId === patientId || patientId === "fam-self");
+    // Combine medical timeline and imported health records strictly for the requested patient
+    let patientTimeline: any[] = [];
+    let patientImported: any[] = [];
+    if (userDb.partitions && userDb.partitions[patientId]) {
+      patientTimeline = userDb.partitions[patientId].medicalTimeline || [];
+      patientImported = userDb.partitions[patientId].importedHealthRecords || [];
+    } else if (patientId === "fam-self" || patientId === "self") {
+      patientTimeline = userDb.partitions?.["fam-self"]?.medicalTimeline || [];
+      patientImported = userDb.partitions?.["fam-self"]?.importedHealthRecords || [];
+    } else {
+      for (const p of Object.values(userDb.partitions || {})) {
+        const pt = (p as any).medicalTimeline || [];
+        const pi = (p as any).importedHealthRecords || [];
+        patientTimeline.push(...pt);
+        patientImported.push(...pi);
+      }
+    }
+
+    const timeline = patientTimeline.filter((e: any) => {
+      if (patientId === "fam-self" || patientId === "self") {
+        return !e.patientId || e.patientId === "fam-self" || e.patientId === "self";
+      }
+      return e.patientId === patientId;
+    });
+    const imported = patientImported.filter((e: any) => {
+      if (patientId === "fam-self" || patientId === "self") {
+        return !e.patientId || e.patientId === "fam-self" || e.patientId === "self";
+      }
+      return e.patientId === patientId;
+    });
     const combinedRecords = [...timeline, ...imported];
 
     // Compute mathematical statistical forecasting
@@ -2103,18 +2180,26 @@ app.get("/api/v1/ml/trajectory/:patientId", async (req, res) => {
     // Contextualize with Gemini if available (Gemini explains ML output; it does NOT alter numbers)
     if (aiService.isAvailable() && report.trajectories.length > 0) {
       try {
-        const trajectoriesSummary = report.trajectories.map(t => 
-          `- ${t.markerName}: Current=${t.currentValue}${t.unit}, Trend=${t.trendDirection} (${t.velocityPerMonth > 0 ? "+" : ""}${t.velocityPerMonth}${t.unit}/mo), 60-Day Forecast=${t.forecast60Days.value}${t.unit} (Range: ${t.forecast60Days.confidenceLow}-${t.forecast60Days.confidenceHigh}), Risk=${t.projectedRiskLevel}`
-        ).join("\n");
+        const trajectoriesSummary = report.trajectories.map(t => {
+          const obsCount = t.historicalReadings?.length || 0;
+          if (obsCount < 2) {
+            return `- ${t.markerName}: Latest Value=${t.currentValue} ${t.unit} (Single observation on ${t.historicalReadings?.[0]?.date || "record"}). INSUFFICIENT DATA FOR FORECASTING (<2 temporal points). No rate of change or trend calculated.`;
+          }
+          return `- ${t.markerName}: Latest Value=${t.currentValue} ${t.unit}, Longitudinal Trend=${t.trendDirection} (${t.velocityPerMonth > 0 ? "+" : ""}${t.velocityPerMonth} ${t.unit}/month over ${obsCount} verified readings), 60-Day Forecast=${t.forecast60Days.value} ${t.unit} (Range: ${t.forecast60Days.confidenceLow}-${t.forecast60Days.confidenceHigh}), Risk Category=${t.projectedRiskLevel}`;
+        }).join("\n");
 
         const prompt = `You are a clinical AI communicator for HealthTribe. 
-The statistical forecasting engine has computed longitudinal biomarker trajectories for patient ${patientName}:
+The statistical forecasting engine has computed biomarker trajectories for patient ${patientName}:
 
 ${trajectoriesSummary}
 Overall Risk Score: ${report.riskScore}/100 (${report.overallCardiometabolicRisk})
 
 Generate a concise clinical narrative that explains these mathematical trends to the doctor and patient.
-CRITICAL SAFETY RULE: You MUST NOT change any numbers, slopes, or forecast values. Reference the exact forecast numbers provided.
+CRITICAL SAFETY RULES:
+1. You MUST NOT change any numbers, slopes, or forecast values. Reference the exact forecast numbers provided.
+2. For biomarkers marked with INSUFFICIENT DATA FOR FORECASTING (<2 temporal points), you MUST NOT state or imply any upward/downward velocity or worsening/improving progression. State that only a baseline observation exists and repeat testing is needed for trajectory calculations.
+3. For biomarkers with verified multi-point trends, explain the clinical significance of the mathematical rate of change.
+
 Provide your output in JSON format with fields:
 {
   "summary": "1-2 sentence overall summary",
@@ -2159,13 +2244,41 @@ app.get("/api/v1/ml/reconcile/:patientId", async (req, res) => {
   try {
     const { patientId } = req.params;
     const store = dbStorage.getStore();
+    const userDb = getUserDb(req);
 
-    // Gather all historical timeline records and imported hospital records
-    const timeline = (db.medicalTimeline || []).filter((e: any) => !e.patientId || e.patientId === patientId || patientId === "fam-self");
-    const imported = (db.importedHealthRecords || []).filter((e: any) => !e.patientId || e.patientId === patientId || patientId === "fam-self");
+    // Gather all historical timeline records and imported hospital records strictly for the requested patient
+    let patientTimeline: any[] = [];
+    let patientImported: any[] = [];
+    if (userDb.partitions && userDb.partitions[patientId]) {
+      patientTimeline = userDb.partitions[patientId].medicalTimeline || [];
+      patientImported = userDb.partitions[patientId].importedHealthRecords || [];
+    } else if (patientId === "fam-self" || patientId === "self") {
+      patientTimeline = userDb.partitions?.["fam-self"]?.medicalTimeline || [];
+      patientImported = userDb.partitions?.["fam-self"]?.importedHealthRecords || [];
+    } else {
+      for (const p of Object.values(userDb.partitions || {})) {
+        const pt = (p as any).medicalTimeline || [];
+        const pi = (p as any).importedHealthRecords || [];
+        patientTimeline.push(...pt);
+        patientImported.push(...pi);
+      }
+    }
+
+    const timeline = patientTimeline.filter((e: any) => {
+      if (patientId === "fam-self" || patientId === "self") {
+        return !e.patientId || e.patientId === "fam-self" || e.patientId === "self";
+      }
+      return e.patientId === patientId;
+    });
+    const imported = patientImported.filter((e: any) => {
+      if (patientId === "fam-self" || patientId === "self") {
+        return !e.patientId || e.patientId === "fam-self" || e.patientId === "self";
+      }
+      return e.patientId === patientId;
+    });
     const combinedRecords = [...timeline, ...imported];
 
-    const storedResolutions = db.reconciliationResolutions || {};
+    const storedResolutions = (userDb.partitions && userDb.partitions[patientId]?.reconciliationResolutions) || userDb.partitions?.["fam-self"]?.reconciliationResolutions || userDb.reconciliationResolutions || {};
 
     // Execute NLP entity extraction, brand-generic ontology resolution, and string similarity scoring
     const report = reconcileMedications(patientId, combinedRecords, storedResolutions);
