@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MessageSquare, Search, Plus, Trash2, Edit2, Send, Activity, Info, Calendar, Pill, AlertTriangle, ChevronRight, User, X, Loader2, Star, Volume2, VolumeX, Mic, MicOff, Globe, Play, Pause, Square, Sparkles } from "lucide-react";
+import { MessageSquare, Search, Plus, Trash2, Edit2, Send, Activity, Info, Calendar, Pill, AlertTriangle, ChevronRight, User, X, Loader2, Star, Volume2, VolumeX, Mic, MicOff, Globe, Play, Pause, Square, Sparkles, TrendingUp, Layers, Split } from "lucide-react";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { HealthTrajectoryCard } from "./HealthTrajectoryCard";
+import { MedicationReconciliationCard } from "./MedicationReconciliationCard";
 
 interface ChatMessage {
   id: string;
@@ -36,6 +38,7 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
   const [loading, setLoading] = useState(false);
 
   const [localSelectedPatientId, setLocalSelectedPatientId] = useState<string>("");
+  const [activeMlModal, setActiveMlModal] = useState<"trajectory" | "reconcile" | null>(null);
 
   useEffect(() => {
     if (patientId) {
@@ -1252,10 +1255,47 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
             {ehrPatientContext ? (
               <div className="space-y-4">
                 {/* Clinical Overview Title */}
-                <div className="pb-1 border-b border-slate-100 dark:border-slate-800/60">
+                <div className="pb-1 border-b border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
                   <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500">
                     Clinical Overview
                   </h4>
+                  <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full">
+                    ML Active
+                  </span>
+                </div>
+
+                {/* ML CLINICAL INTELLIGENCE BUTTONS */}
+                <div className="bg-emerald-50/40 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-900/40 p-3 rounded-2xl space-y-2">
+                  <div className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                    <span className="text-[9px] font-black uppercase tracking-widest text-emerald-800 dark:text-emerald-300">
+                      ML Predictive Intelligence
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-2">
+                    <button
+                      onClick={() => setActiveMlModal("trajectory")}
+                      className="w-full py-2 px-3 bg-white dark:bg-slate-900 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold border border-indigo-200/50 dark:border-indigo-900/30 flex items-center justify-between transition-all group cursor-pointer shadow-xs"
+                    >
+                      <div className="flex items-center gap-2">
+                        <TrendingUp className="w-3.5 h-3.5 text-indigo-600 group-hover:text-white" />
+                        <span>AI Health Forecast & Trajectory</span>
+                      </div>
+                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
+                    </button>
+
+                    <button
+                      onClick={() => setActiveMlModal("reconcile")}
+                      className="w-full py-2 px-3 bg-white dark:bg-slate-900 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold border border-purple-200/50 dark:border-purple-900/30 flex items-center justify-between transition-all group cursor-pointer shadow-xs"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Split className="w-3.5 h-3.5 text-purple-600 group-hover:text-white" />
+                        <span>Reconcile Medications</span>
+                      </div>
+                      <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" />
+                    </button>
+                  </div>
                 </div>
 
                 {/* Chief Complaint */}
@@ -1410,6 +1450,54 @@ export const AICopilotWorkspace: React.FC<AICopilotWorkspaceProps> = ({ sessionM
                   <p className="text-xs text-slate-500 mt-1">Select a patient to sync clinical workspace.</p>
                 </div>
               </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ML Clinical Intelligence Modal (Trajectory & Reconciliation) */}
+      {activeMlModal && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-950 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-2">
+                <span className="p-2 bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 rounded-xl">
+                  {activeMlModal === "trajectory" ? <TrendingUp className="w-5 h-5" /> : <Split className="w-5 h-5" />}
+                </span>
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 dark:text-white">
+                    {activeMlModal === "trajectory" 
+                      ? `AI Health Forecast & Trajectory — ${ehrPatientContext?.name || "Patient"}`
+                      : `Multi-Hospital Medication Reconciliation — ${ehrPatientContext?.name || "Patient"}`}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    {activeMlModal === "trajectory"
+                      ? "Longitudinal time-series predictive modeling across verified laboratory touchpoints."
+                      : "Brand-generic ontology mapping and cross-facility prescription deduplication."}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setActiveMlModal(null)}
+                className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {activeMlModal === "trajectory" ? (
+              <HealthTrajectoryCard
+                patientId={localSelectedPatientId || "fam-self"}
+                patientName={ehrPatientContext?.name || "Patient"}
+                role="doctor"
+              />
+            ) : (
+              <MedicationReconciliationCard
+                patientId={localSelectedPatientId || "fam-self"}
+                patientName={ehrPatientContext?.name || "Patient"}
+                role="doctor"
+              />
             )}
           </div>
         </div>

@@ -24,13 +24,25 @@ import {
   FileSpreadsheet
 } from "lucide-react";
 import { TimelineRecord } from "../types";
+import { HealthTrajectoryCard } from "./HealthTrajectoryCard";
+import { MedicationReconciliationCard } from "./MedicationReconciliationCard";
 
 interface Props {
   records: TimelineRecord[];
   onViewAnalysis?: (record: TimelineRecord) => void;
+  patientId?: string;
+  patientName?: string;
+  role?: "patient" | "doctor";
 }
 
-export const HealthHistoryTimeline = ({ records, onViewAnalysis }: Props) => {
+export const HealthHistoryTimeline = ({ 
+  records, 
+  onViewAnalysis,
+  patientId = "fam-self",
+  patientName = "Supriya Kilari",
+  role = "patient"
+}: Props) => {
+  const [activeViewMode, setActiveViewMode] = useState<"timeline" | "trajectory" | "reconcile">("timeline");
   const [expandedYears, setExpandedYears] = useState<Record<string, boolean>>({});
   const [expandedAnalysis, setExpandedAnalysis] = useState<Record<string, boolean>>({});
   const [selectedRecord, setSelectedRecord] = useState<TimelineRecord | null>(null);
@@ -79,7 +91,75 @@ export const HealthHistoryTimeline = ({ records, onViewAnalysis }: Props) => {
 
   return (
     <div className="space-y-5">
-      {years.map(year => (
+      {/* ML & Timeline View Mode Switcher */}
+      <div className="flex flex-wrap items-center gap-2 p-1.5 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200/70 dark:border-slate-800">
+        <button
+          onClick={() => setActiveViewMode("timeline")}
+          className={`flex-1 min-w-[140px] py-2 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+            activeViewMode === "timeline"
+              ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-xs"
+              : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
+          }`}
+        >
+          <Clock className="w-3.5 h-3.5" />
+          <span>Timeline ({records.length})</span>
+        </button>
+
+        <button
+          onClick={() => setActiveViewMode("trajectory")}
+          className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+            activeViewMode === "trajectory"
+              ? "bg-indigo-600 text-white shadow-xs"
+              : "text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400"
+          }`}
+        >
+          <Activity className="w-3.5 h-3.5" />
+          <span>AI Health Forecast</span>
+          <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+            activeViewMode === "trajectory" ? "bg-white/20 text-white" : "bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300"
+          }`}>
+            90-Day Trend
+          </span>
+        </button>
+
+        <button
+          onClick={() => setActiveViewMode("reconcile")}
+          className={`flex-1 min-w-[160px] py-2 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-1.5 ${
+            activeViewMode === "reconcile"
+              ? "bg-purple-600 text-white shadow-xs"
+              : "text-slate-500 hover:text-purple-600 dark:hover:text-purple-400"
+          }`}
+        >
+          <Pill className="w-3.5 h-3.5" />
+          <span>Medication Reconciliation</span>
+          <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+            activeViewMode === "reconcile" ? "bg-white/20 text-white" : "bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300"
+          }`}>
+            Multi-Hospital
+          </span>
+        </button>
+      </div>
+
+      {/* Conditionally Render Selected View Mode */}
+      {activeViewMode === "trajectory" && (
+        <HealthTrajectoryCard 
+          patientId={patientId} 
+          patientName={patientName} 
+          role={role} 
+        />
+      )}
+
+      {activeViewMode === "reconcile" && (
+        <MedicationReconciliationCard 
+          patientId={patientId} 
+          patientName={patientName} 
+          role={role} 
+        />
+      )}
+
+      {activeViewMode === "timeline" && (
+        <>
+          {years.map(year => (
         <div key={year} className="space-y-4">
           <button 
             onClick={() => toggleYear(year)}
@@ -311,6 +391,8 @@ export const HealthHistoryTimeline = ({ records, onViewAnalysis }: Props) => {
           )}
         </div>
       ))}
+      </>
+      )}
 
       {/* Slide-over details and analysis drawer (Apple Health & Epic style) */}
       {selectedRecord && (

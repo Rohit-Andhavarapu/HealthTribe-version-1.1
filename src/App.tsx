@@ -4743,7 +4743,16 @@ export default function App() {
                          const filteredTimeline = selectedTimelinePatientFilter === "All"
                            ? timeline
                            : timeline.filter(t => t.patientId === selectedTimelinePatientFilter);
-                         return <HealthHistoryTimeline records={filteredTimeline} />;
+                          const activePatId = selectedTimelinePatientFilter === "All" ? (selectedMember?.id || "fam-self") : selectedTimelinePatientFilter;
+                          const activePatName = selectedTimelinePatientFilter === "All" ? (selectedMember?.name || "Supriya Kilari") : (familyMembers.find(f => f.id === selectedTimelinePatientFilter)?.name || "Patient");
+                         return (
+                           <HealthHistoryTimeline 
+                             records={filteredTimeline} 
+                             patientId={activePatId}
+                             patientName={activePatName}
+                             role="patient"
+                           />
+                         );
                        })()}
                      </div>
                    </div>
@@ -5860,6 +5869,9 @@ export default function App() {
                       <div className="space-y-3">
                         <HealthHistoryTimeline 
                           records={timeline.filter(t => t.patientId === doctorSelectedPatientId || doctorSelectedPatientId === "ext-1")} 
+                          patientId={doctorSelectedPatientId || "fam-self"}
+                          patientName={activeProfile.name || "Patient"}
+                          role="doctor"
                         />
                       </div>
 

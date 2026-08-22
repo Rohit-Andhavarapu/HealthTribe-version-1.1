@@ -923,22 +923,23 @@ export const ABHAGateway = ({
                   {activeImportSession.progress >= 100 ? "✓" : "5"}
                 </div>
                 <span className={activeImportSession.progress >= 100 ? "text-emerald-700 font-bold" : ""}>
-                  Generating consolidated scientific AI summary
+                  Executing ML Trajectory Forecasting & Medication Reconciliation
                 </span>
               </div>
             </div>
 
             {/* ACTION BUTTON ON SUCCESS */}
             {activeImportSession.status === "COMPLETED" && (
-              <div className="pt-2 animate-bounce">
+              <div className="pt-2 space-y-2">
                 <button
                   onClick={() => {
                     setActiveImportSession(null);
                     onNavigateToTab("timeline");
                   }}
-                  className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-black text-xs rounded-xl shadow-md cursor-pointer"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md cursor-pointer flex items-center justify-center gap-2"
                 >
-                  View Consolidated Records in Timeline →
+                  <Activity className="w-4 h-4" />
+                  View Longitudinal Trajectories & Timeline →
                 </button>
               </div>
             )}

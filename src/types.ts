@@ -286,3 +286,130 @@ export interface ImportedHealthRecord {
   fhirData?: string;
 }
 
+// ==========================================
+// ML HEALTH TRAJECTORY FORECASTING TYPES
+// ==========================================
+
+export interface BiomarkerReading {
+  date: string;
+  value: number;
+  unit: string;
+  source: string;
+  context?: string;
+  status: "Normal" | "Elevated" | "High" | "Critical" | "Low";
+}
+
+export interface ForecastPoint {
+  date: string;
+  daysAhead: number;
+  value: number;
+  confidenceLow: number;
+  confidenceHigh: number;
+}
+
+export interface BiomarkerTrajectory {
+  markerKey: "hba1c" | "fasting_glucose" | "systolic_bp" | "diastolic_bp" | "ldl_cholesterol" | "total_cholesterol" | "bmi" | string;
+  markerName: string;
+  unit: string;
+  historicalReadings: BiomarkerReading[];
+  currentValue: number;
+  trendDirection: "RISING" | "FALLING" | "STABLE";
+  velocityPerMonth: number;
+  forecast30Days: ForecastPoint;
+  forecast60Days: ForecastPoint;
+  forecast90Days: ForecastPoint;
+  allForecastPoints: ForecastPoint[];
+  projectedRiskLevel: "LOW" | "MODERATE" | "HIGH" | "CRITICAL";
+  riskProbability: number; // 0 to 1
+  clinicalTarget: { min?: number; max?: number; optimal: string };
+  trajectoryAlert: string | null;
+  modelDetails: {
+    algorithm: "HoltLinearTrend" | "PolynomialRegression" | "ExponentialSmoothing" | "WeightedMovingAverage";
+    rSquared: number;
+    standardError: number;
+    slope: number;
+    confidenceBandPercent: number;
+  };
+  clinicalNarrative?: string;
+}
+
+export interface HealthTrajectoryReport {
+  patientId: string;
+  patientName: string;
+  generatedAt: string;
+  overallCardiometabolicRisk: "LOW" | "MODERATE" | "HIGH" | "CRITICAL";
+  riskScore: number; // 0-100
+  trajectories: BiomarkerTrajectory[];
+  criticalAlerts: string[];
+  geminiSynthesis?: {
+    summary: string;
+    clinicalImpression: string;
+    preventiveActions: string[];
+    monitoringSchedule: string;
+  };
+}
+
+// ==========================================
+// ML RECORD RECONCILIATION & DEDUPLICATION TYPES
+// ==========================================
+
+export interface ExtractedMedication {
+  id: string;
+  rawText: string;
+  drugName: string;
+  activeIngredient: string;
+  brandName?: string;
+  genericName: string;
+  strength: string;
+  normalizedDosageMg: number;
+  frequency: string;
+  route: string;
+  prescribedDate: string;
+  prescribingDoctor: string;
+  facility: string;
+  sourceRecordId: string;
+  sourceType: "HealthTribe" | "ABHA";
+  careContextRef?: string;
+  therapeuticClass: string;
+  status: "ACTIVE" | "DISCONTINUED" | "RECONCILED";
+}
+
+export interface DuplicateConflictGroup {
+  conflictId: string;
+  conflictType: "EXACT_DUPLICATE" | "BRAND_GENERIC_DUPLICATE" | "SAME_CLASS_OVERLAP" | "DOSAGE_DISCREPANCY" | "FREQUENCY_CONFLICT";
+  similarityScore: number; // 0.0 to 1.0 (from Jaro-Winkler, Levenshtein, Token similarity)
+  matchConfidence: number; // 0 to 100 percentage
+  activeMolecule: string;
+  therapeuticClass: string;
+  primaryMedication: ExtractedMedication;
+  conflictingMedications: ExtractedMedication[];
+  clinicalRiskSeverity: "CRITICAL" | "HIGH" | "MODERATE" | "LOW";
+  clinicalRiskDescription: string;
+  suggestedResolution: "MERGE_AND_MAINTAIN_LATEST" | "SELECT_SINGLE_BRAND" | "REDUCE_DOSAGE" | "FLAG_FOR_DOCTOR";
+  resolutionStatus: "UNRESOLVED" | "RESOLVED_MERGED" | "RESOLVED_KEPT_PRIMARY" | "RESOLVED_DISMISSED";
+  resolvedAt?: string;
+  resolvedBy?: string;
+  resolutionNotes?: string;
+}
+
+export interface ReconciliationReport {
+  id: string;
+  patientId: string;
+  timestamp: string;
+  totalRecordsEvaluated: number;
+  totalMedicationsFound: number;
+  duplicatesDetectedCount: number;
+  conflicts: DuplicateConflictGroup[];
+  reconciledMasterList: ExtractedMedication[];
+  safetySummary: {
+    duplicateRiskCount: number;
+    classOverlapCount: number;
+    overallSafetyScore: number; // 0 to 100
+  };
+  geminiExplanation?: {
+    clinicalSummary: string;
+    doctorActionItems: string[];
+    patientGuidance: string;
+  };
+}
+

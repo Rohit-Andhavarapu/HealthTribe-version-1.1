@@ -4,6 +4,8 @@ import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import { aiService } from "./server/ai/AIService";
 import { PromptBuilder } from "./server/ai/PromptBuilder";
+import { generateHealthTrajectoryReport } from "./server/ml/trajectoryForecaster";
+import { reconcileMedications } from "./server/ml/medicationReconciler";
 import { AsyncLocalStorage } from "async_hooks";
 import { createClient } from "@supabase/supabase-js";
 
@@ -1011,6 +1013,28 @@ let base_db: {
   ],
   medicalTimeline: [
     {
+      id: "timeline-0",
+      date: "2026-03-10",
+      title: "Baseline Executive Health Screening",
+      patientId: "fam-self",
+      patientName: "Supriya Kilari",
+      category: "Lab Report",
+      doctorName: "Dr. Amit Das",
+      details: "Fasting Blood Glucose: 118 mg/dL. HbA1c: 6.6%. Blood Pressure: 122/78 mmHg. LDL Cholesterol: 122 mg/dL. Total Cholesterol: 198 mg/dL. Mild initial lipid monitoring advised.",
+      attachments: ["Executive_Health_March.pdf"]
+    },
+    {
+      id: "timeline-0b",
+      date: "2026-05-02",
+      title: "Routine Lipid & Glycemic Review",
+      patientId: "fam-self",
+      patientName: "Supriya Kilari",
+      category: "Lab Report",
+      doctorName: "Dr. Meera Iyer",
+      details: "Fasting Blood Glucose: 128 mg/dL. HbA1c: 6.9%. Blood Pressure: 128/82 mmHg. LDL Cholesterol: 132 mg/dL. Total Cholesterol: 210 mg/dL. Prescribed Metformin 500mg daily.",
+      attachments: ["Lipid_Glycemic_May.pdf"]
+    },
+    {
       id: "timeline-1",
       date: "2026-06-15",
       title: "Annual Heart Health Checkup",
@@ -1018,18 +1042,40 @@ let base_db: {
       patientName: "Supriya Kilari",
       category: "Consultation",
       doctorName: "Dr. Rahul Atluri",
-      details: "Sinus rhythm normal, blood pressure stable at 118/75.",
+      details: "Sinus rhythm normal, Blood Pressure: 134/84 mmHg. Fasting Blood Glucose: 136 mg/dL. HbA1c: 7.1%. LDL Cholesterol: 140 mg/dL. Continuing cardiac & glycemic observation.",
       attachments: ["ECG_Report_June.pdf"]
+    },
+    {
+      id: "timeline-2-a",
+      date: "2025-11-20",
+      title: "Comprehensive Metabolic Profile",
+      patientId: "fam-1",
+      patientName: "Srinivas Kilari",
+      category: "Lab Report",
+      doctorName: "Apollo Health City",
+      details: "Fasting blood sugar: 112 mg/dL. HbA1c: 6.5%. Blood Pressure: 124/80 mmHg. LDL Cholesterol: 118 mg/dL. Baseline metabolic evaluation.",
+      attachments: ["Metabolic_Report_Nov2025.pdf"]
+    },
+    {
+      id: "timeline-2-b",
+      date: "2026-02-14",
+      title: "Quarterly Glycemic & BP Review",
+      patientId: "fam-1",
+      patientName: "Srinivas Kilari",
+      category: "Lab Report",
+      doctorName: "Fortis Memorial",
+      details: "Fasting glucose: 120 mg/dL. HbA1c: 6.8%. Blood Pressure: 130/84 mmHg. LDL Cholesterol: 126 mg/dL. Advised moderate dietary carbohydrate restriction.",
+      attachments: ["Quarterly_Review_Feb2026.pdf"]
     },
     {
       id: "timeline-2",
       date: "2026-05-10",
-      title: "Blood Sugar Fasting",
+      title: "Blood Sugar & Lipid Panel",
       patientId: "fam-1",
       patientName: "Srinivas Kilari",
       category: "Lab Report",
       doctorName: "Diagnostic Labs Inc.",
-      details: "Fasting sugar: 128 mg/dL. HbA1c: 7.1%. Control is fair but requires mild exercise monitoring.",
+      details: "Fasting sugar: 128 mg/dL. HbA1c: 7.1%. Blood Pressure: 138/88 mmHg. LDL Cholesterol: 134 mg/dL. Control is moderate; lifestyle and exercise monitoring recommended.",
       attachments: ["Sugar_Report_May.pdf"]
     }
   ],
@@ -1288,7 +1334,10 @@ const PARTITIONED_KEYS = new Set([
   "triageMessages",
   "settings",
   "medicineOrders",
-  "labBookings"
+  "labBookings",
+  "reconciliationReports",
+  "reconciliationResolutions",
+  "healthTrajectories"
 ]);
 
 function initPartition(userDb: any, profileId: string) {
@@ -1318,7 +1367,10 @@ function initPartition(userDb: any, profileId: string) {
         selectedLanguage: "English"
       },
       medicineOrders: [],
-      labBookings: []
+      labBookings: [],
+      reconciliationReports: [],
+      reconciliationResolutions: {},
+      healthTrajectories: []
     };
   }
 }
@@ -1760,7 +1812,7 @@ async function completeImportFlow(req: express.Request, patientId: string, hipId
         patientName: pName,
         category: "Lab Report",
         doctorName: "Dr. Sandeep Mahto",
-        details: "LVEF 60%. Mild diastolic dysfunction observed. Left atrium borderline dilated.",
+        details: "LVEF 60%. Mild diastolic dysfunction observed. Left atrium borderline dilated. Blood Pressure: 130/84 mmHg.",
         hospital: hipName,
         specialty: "Cardiology",
         source: "ABHA",
@@ -1769,16 +1821,16 @@ async function completeImportFlow(req: express.Request, patientId: string, hipId
       {
         id: `rec-aiims-${Date.now()}-2`,
         date: "2026-04-18",
-        title: "Clinical Consultation Summary",
+        title: "Clinical Consultation & Prescription",
         patientId,
         patientName: pName,
-        category: "Consultation",
+        category: "Prescription",
         doctorName: "Dr. Sandeep Mahto",
-        details: "Diagnosed with Type-C Hypertension. Advised low salt Diet, morning exercise, and Ramipril 5mg.",
+        details: "Diagnosed with Essential Hypertension & Type-2 Glycemia. Advised low sodium diet. Rx: Glucophage 500mg (Metformin brand) once daily after food, Ramipril 10mg once daily.",
         hospital: hipName,
         specialty: "Cardiology",
         source: "ABHA",
-        type: "Consultation"
+        type: "Prescription"
       }
     ];
   } else if (hipId === "hip-apollo") {
@@ -1791,7 +1843,7 @@ async function completeImportFlow(req: express.Request, patientId: string, hipId
         patientName: pName,
         category: "Lab Report",
         doctorName: "Dr. Anika Verma",
-        details: "HbA1c is 7.2%. Fasting glucose is 134 mg/dL. Consistent with mild Type 2 diabetes control.",
+        details: "HbA1c: 7.2%. Fasting Blood Glucose: 134 mg/dL. Total Cholesterol: 218 mg/dL. LDL Cholesterol: 138 mg/dL. Blood Pressure: 134/86 mmHg. Mild glycemic elevation.",
         hospital: hipName,
         specialty: "Endocrinology",
         source: "ABHA",
@@ -1805,7 +1857,69 @@ async function completeImportFlow(req: express.Request, patientId: string, hipId
         patientName: pName,
         category: "Prescription",
         doctorName: "Dr. Anika Verma",
-        details: "Rx: Metformin 500mg (OD, after breakfast) and Atorvastatin 10mg (HS). Avoid alcohol.",
+        details: "Rx: Metformin 500mg (OD, after breakfast), Ramipril 5mg (OD, morning), and Atorvastatin 10mg (HS). Avoid alcohol and refined carbohydrates.",
+        hospital: hipName,
+        specialty: "Endocrinology",
+        source: "ABHA",
+        type: "Prescription"
+      }
+    ];
+  } else if (hipId === "hip-fortis") {
+    records = [
+      {
+        id: `rec-fortis-${Date.now()}-1`,
+        date: "2026-06-20",
+        title: "Comprehensive Cardiometabolic Panel",
+        patientId,
+        patientName: pName,
+        category: "Lab Report",
+        doctorName: "Dr. Vikram Seth",
+        details: "HbA1c: 7.4%. Fasting Blood Glucose: 142 mg/dL. Systolic Blood Pressure: 142 mmHg. Diastolic Blood Pressure: 88 mmHg. LDL Cholesterol: 146 mg/dL. Total Cholesterol: 232 mg/dL. Indicating progression in glycemic and lipid parameters.",
+        hospital: hipName,
+        specialty: "Cardiology & Diabetology",
+        source: "ABHA",
+        type: "Lab Report"
+      },
+      {
+        id: `rec-fortis-${Date.now()}-2`,
+        date: "2026-06-21",
+        title: "Cardiology & Diabetes Prescription",
+        patientId,
+        patientName: pName,
+        category: "Prescription",
+        doctorName: "Dr. Vikram Seth",
+        details: "Rx: Glycomet 500mg (Metformin brand) 1 tablet twice daily with meals. Cardace 5mg (Ramipril brand) 1 tablet morning. Lipitor 10mg (Atorvastatin brand) 1 tablet bedtime.",
+        hospital: hipName,
+        specialty: "Cardiology",
+        source: "ABHA",
+        type: "Prescription"
+      }
+    ];
+  } else if (hipId === "hip-manipal") {
+    records = [
+      {
+        id: `rec-manipal-${Date.now()}-1`,
+        date: "2026-03-15",
+        title: "Endocrine Review & Lipid Assay",
+        patientId,
+        patientName: pName,
+        category: "Lab Report",
+        doctorName: "Dr. Rajesh Kulkarni",
+        details: "HbA1c: 6.8%. Fasting Blood Glucose: 122 mg/dL. Blood Pressure: 126/80 mmHg. LDL Cholesterol: 128 mg/dL. Total Cholesterol: 204 mg/dL. Baseline metabolic evaluation.",
+        hospital: hipName,
+        specialty: "Internal Medicine",
+        source: "ABHA",
+        type: "Lab Report"
+      },
+      {
+        id: `rec-manipal-${Date.now()}-2`,
+        date: "2026-03-15",
+        title: "Outpatient Diabetes Prescription",
+        patientId,
+        patientName: pName,
+        category: "Prescription",
+        doctorName: "Dr. Rajesh Kulkarni",
+        details: "Rx: Glucophage 500mg (Metformin brand) once daily after food. Atorva 10mg (Atorvastatin brand) at night. Maintain dietary log.",
         hospital: hipName,
         specialty: "Endocrinology",
         source: "ABHA",
@@ -1822,7 +1936,7 @@ async function completeImportFlow(req: express.Request, patientId: string, hipId
         patientName: pName,
         category: "Lab Report",
         doctorName: "Dr. Amit Das",
-        details: "Serum Cholesterol 220 mg/dL. LDL 135 mg/dL. Borderline hyperlipidemia.",
+        details: "Serum Cholesterol 220 mg/dL. LDL 135 mg/dL. Fasting glucose 124 mg/dL. Blood Pressure 128/82 mmHg. Borderline hyperlipidemia.",
         hospital: hipName,
         specialty: "Internal Medicine",
         source: "ABHA",
@@ -1956,6 +2070,185 @@ app.get("/api/doctors", (req, res) => {
 // Hospitals Listing
 app.get("/api/hospitals", (req, res) => {
   res.json({ hospitals: SEEDED_HOSPITALS });
+});
+
+// ==========================================
+// ML HEALTH INTELLIGENCE LAYER (PHASE 3 & 4)
+// ==========================================
+
+// ML Feature 1: Health Trajectory Forecasting API
+app.get("/api/v1/ml/trajectory/:patientId", async (req, res) => {
+  try {
+    const { patientId } = req.params;
+    const store = dbStorage.getStore();
+    const userDb = getUserDb(req);
+
+    // Retrieve patient profile name
+    let patientName = "Patient";
+    const member = (userDb.familyMembers || []).find((m: any) => m.id === patientId || m.name?.toLowerCase().includes(patientId.toLowerCase()));
+    if (member) {
+      patientName = member.name;
+    } else if (patientId === "fam-self" || patientId === "self") {
+      patientName = userDb.primaryProfile?.name || "Supriya Kilari";
+    }
+
+    // Combine medical timeline and imported health records
+    const timeline = (db.medicalTimeline || []).filter((e: any) => !e.patientId || e.patientId === patientId || patientId === "fam-self");
+    const imported = (db.importedHealthRecords || []).filter((e: any) => !e.patientId || e.patientId === patientId || patientId === "fam-self");
+    const combinedRecords = [...timeline, ...imported];
+
+    // Compute mathematical statistical forecasting
+    const report = generateHealthTrajectoryReport(patientId, patientName, combinedRecords);
+
+    // Contextualize with Gemini if available (Gemini explains ML output; it does NOT alter numbers)
+    if (aiService.isAvailable() && report.trajectories.length > 0) {
+      try {
+        const trajectoriesSummary = report.trajectories.map(t => 
+          `- ${t.markerName}: Current=${t.currentValue}${t.unit}, Trend=${t.trendDirection} (${t.velocityPerMonth > 0 ? "+" : ""}${t.velocityPerMonth}${t.unit}/mo), 60-Day Forecast=${t.forecast60Days.value}${t.unit} (Range: ${t.forecast60Days.confidenceLow}-${t.forecast60Days.confidenceHigh}), Risk=${t.projectedRiskLevel}`
+        ).join("\n");
+
+        const prompt = `You are a clinical AI communicator for HealthTribe. 
+The statistical forecasting engine has computed longitudinal biomarker trajectories for patient ${patientName}:
+
+${trajectoriesSummary}
+Overall Risk Score: ${report.riskScore}/100 (${report.overallCardiometabolicRisk})
+
+Generate a concise clinical narrative that explains these mathematical trends to the doctor and patient.
+CRITICAL SAFETY RULE: You MUST NOT change any numbers, slopes, or forecast values. Reference the exact forecast numbers provided.
+Provide your output in JSON format with fields:
+{
+  "summary": "1-2 sentence overall summary",
+  "clinicalImpression": "Clinical interpretation of the multi-marker trajectory",
+  "preventiveActions": ["action item 1", "action item 2", "action item 3"],
+  "monitoringSchedule": "recommended re-testing frequency"
+}`;
+
+        const aiResponse = await aiService.generateContent({
+          systemInstruction: "You are an expert clinical endocrinologist and cardiologist AI assistant. Return valid JSON only.",
+          prompt
+        });
+
+        const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          report.geminiSynthesis = {
+            summary: parsed.summary || report.geminiSynthesis?.summary || "",
+            clinicalImpression: parsed.clinicalImpression || report.geminiSynthesis?.clinicalImpression || "",
+            preventiveActions: parsed.preventiveActions || report.geminiSynthesis?.preventiveActions || [],
+            monitoringSchedule: parsed.monitoringSchedule || report.geminiSynthesis?.monitoringSchedule || ""
+          };
+        }
+      } catch (geminiErr) {
+        console.warn("Gemini trajectory contextualization fallback:", geminiErr);
+        // Retain deterministic mathematical explanation from trajectory engine
+      }
+    }
+
+    db.healthTrajectories = [report, ...(db.healthTrajectories || [])];
+    if (store && store.userDb) saveUserDb(req, store.userDb);
+
+    res.json({ success: true, report });
+  } catch (err: any) {
+    console.error("ML Trajectory API Error:", err);
+    res.status(500).json({ success: false, error: err.message || "Failed to generate health trajectory report." });
+  }
+});
+
+// ML Feature 2: Multi-Hospital Record Reconciliation & Deduplication API
+app.get("/api/v1/ml/reconcile/:patientId", async (req, res) => {
+  try {
+    const { patientId } = req.params;
+    const store = dbStorage.getStore();
+
+    // Gather all historical timeline records and imported hospital records
+    const timeline = (db.medicalTimeline || []).filter((e: any) => !e.patientId || e.patientId === patientId || patientId === "fam-self");
+    const imported = (db.importedHealthRecords || []).filter((e: any) => !e.patientId || e.patientId === patientId || patientId === "fam-self");
+    const combinedRecords = [...timeline, ...imported];
+
+    const storedResolutions = db.reconciliationResolutions || {};
+
+    // Execute NLP entity extraction, brand-generic ontology resolution, and string similarity scoring
+    const report = reconcileMedications(patientId, combinedRecords, storedResolutions);
+
+    // Enhance explanation with Gemini if available (Gemini explains conflicts; does NOT alter medication records)
+    if (aiService.isAvailable() && report.conflicts.length > 0) {
+      try {
+        const conflictDetails = report.conflicts.map(c => 
+          `- [${c.conflictType}] Molecule: ${c.activeMolecule}, Primary: ${c.primaryMedication.drugName} (${c.primaryMedication.facility}), Overlap: ${c.conflictingMedications.map(m => `${m.drugName} (${m.facility})`).join(", ")}, Match Confidence: ${c.matchConfidence}%`
+        ).join("\n");
+
+        const prompt = `You are a clinical pharmacovigilance specialist for HealthTribe.
+The ML reconciliation engine evaluated ${report.totalMedicationsFound} multi-hospital prescription records and identified the following duplicate/conflict groups:
+
+${conflictDetails}
+
+Explain how consolidating these cross-facility prescriptions prevents duplicate dosing while preserving all source records for clinician audit.
+Return JSON with fields:
+{
+  "clinicalSummary": "Concise summary of multi-facility medication deduplication",
+  "doctorActionItems": ["action item 1", "action item 2", "action item 3"],
+  "patientGuidance": "Clear reassurance to the patient on unified vs source records"
+}`;
+
+        const aiResponse = await aiService.generateContent({
+          systemInstruction: "You are an expert clinical pharmacovigilance AI assistant. Return valid JSON only.",
+          prompt
+        });
+
+        const jsonMatch = aiResponse.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          report.geminiExplanation = {
+            clinicalSummary: parsed.clinicalSummary || report.geminiExplanation?.clinicalSummary || "",
+            doctorActionItems: parsed.doctorActionItems || report.geminiExplanation?.doctorActionItems || [],
+            patientGuidance: parsed.patientGuidance || report.geminiExplanation?.patientGuidance || ""
+          };
+        }
+      } catch (geminiErr) {
+        console.warn("Gemini reconciliation explanation fallback:", geminiErr);
+      }
+    }
+
+    db.reconciliationReports = [report, ...(db.reconciliationReports || [])];
+    if (store && store.userDb) saveUserDb(req, store.userDb);
+
+    res.json({ success: true, report });
+  } catch (err: any) {
+    console.error("ML Reconciliation API Error:", err);
+    res.status(500).json({ success: false, error: err.message || "Failed to execute medication reconciliation." });
+  }
+});
+
+// Update Reconciliation Conflict Resolution (Clinician / User Action)
+app.post("/api/v1/ml/reconcile/:patientId/resolve", (req, res) => {
+  try {
+    const { patientId } = req.params;
+    const { conflictId, resolutionStatus, notes, resolvedBy } = req.body;
+    const store = dbStorage.getStore();
+
+    if (!conflictId || !resolutionStatus) {
+      return res.status(400).json({ success: false, error: "Missing conflictId or resolutionStatus." });
+    }
+
+    if (!db.reconciliationResolutions) {
+      db.reconciliationResolutions = {};
+    }
+
+    db.reconciliationResolutions[conflictId] = {
+      status: resolutionStatus,
+      notes: notes || `Manually marked as ${resolutionStatus}`,
+      resolvedBy: resolvedBy || "Attending Physician",
+      resolvedAt: new Date().toISOString()
+    };
+
+    addLog("Medication Reconciled", patientId, `Conflict ${conflictId} marked as ${resolutionStatus} by ${resolvedBy || "Clinician"}.`);
+
+    if (store && store.userDb) saveUserDb(req, store.userDb);
+
+    res.json({ success: true, conflictId, resolution: db.reconciliationResolutions[conflictId] });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 // Custom authentication popup removed in favor of official Firebase Authentication SDK
