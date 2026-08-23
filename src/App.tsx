@@ -5180,11 +5180,10 @@ export default function App() {
                     familyMembers={familyMembers}
                     onSelectPatient={(patient) => {
                       setSelectedMember(patient);
-                      setActiveProfileId(patient.id);
                       localStorage.setItem("healthtribe_active_profile_id", patient.id);
                     }}
                     triggerToast={triggerToast}
-                    addresses={userAddresses}
+                    addresses={addresses}
                     selectedAddress={selectedAddress}
                     onSelectAddress={(addr) => setSelectedAddress(addr)}
                     onOpenInteractionChecker={(drugNames) => {

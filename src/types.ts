@@ -442,6 +442,8 @@ export interface ExtractedMedication {
   careContextRef?: string;
   therapeuticClass: string;
   status: "ACTIVE" | "DISCONTINUED" | "RECONCILED";
+  sourceRecords?: ExtractedMedication[];
+  matchReason?: string;
 }
 
 export interface DuplicateConflictGroup {

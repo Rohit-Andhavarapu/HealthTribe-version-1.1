@@ -1090,6 +1090,8 @@ let base_db: {
   settings: any;
   aiConversations: any[];
   doctors: any[];
+  prescriptions?: any[];
+  [key: string]: any;
 } = {
   aiConversations: [
     {
@@ -3355,9 +3357,8 @@ ${customText || fileName || "Physical prescription scan"}`;
     if (aiService.isAvailable()) {
       try {
         const responseText = await aiService.generateContent({
-          systemPrompt: "You are a clinical-grade medical prescription OCR extraction service. Return strictly valid JSON with no markdown backticks.",
-          userPrompt: prompt,
-          temperature: 0.1
+          systemInstruction: "You are a clinical-grade medical prescription OCR extraction service. Return strictly valid JSON with no markdown backticks.",
+          prompt
         });
 
         const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
@@ -3586,11 +3587,11 @@ app.get("/api/v1/prescriptions/reconciliation-summary", (req, res) => {
       return p.patientId === patientId;
     });
 
+    const combinedRecords = [...(db.medicalTimeline || []), ...(db.importedHealthRecords || [])];
     const report = reconcileMedications(
       patientId,
-      patientName,
-      db.medicalTimeline || [],
-      db.importedHealthRecords || []
+      combinedRecords,
+      db.reconciliationResolutions || {}
     );
 
     res.json({
