@@ -110,6 +110,76 @@ export interface Medicine {
   category: string;
 }
 
+export interface PrescriptionMedicineItem {
+  id: string;
+  name: string;
+  genericName?: string;
+  strength: string;
+  dosage: string;
+  frequency: string;
+  duration: string;
+  quantity: number;
+  instructions?: string;
+  activeMolecule?: string;
+  confidenceScore?: number;
+  unclearFlag?: boolean;
+}
+
+export interface Prescription {
+  id: string;
+  patientId: string;
+  patientName: string;
+  doctorName: string;
+  doctorSpecialty?: string;
+  doctorRegNo?: string;
+  hospital: string;
+  hospitalAddress?: string;
+  prescriptionDate: string;
+  type: "DIGITAL_E_RX" | "PHYSICAL_UPLOAD_OCR" | "ABHA_SYNCED";
+  status: "VERIFIED" | "PENDING_VERIFICATION" | "REQUIRES_REVIEW" | "FULFILLED" | "PARTIALLY_FULFILLED";
+  verificationMethod: "Doctor Digital Signature" | "ABHA Gateway Verified" | "AI OCR + Patient Confirmed" | "Pharmacist Review Required";
+  verificationBadge?: string;
+  diagnosis?: string;
+  consultationId?: string;
+  documentUrl?: string;
+  rawExtractedText?: string;
+  ocrConfidence?: "HIGH" | "MEDIUM" | "LOW";
+  ocrWarnings?: string[];
+  medications: PrescriptionMedicineItem[];
+  fulfillmentStatus?: "NOT_FULFILLED" | "IN_CART" | "PROCESSING" | "DISPATCHED" | "DELIVERED";
+  selectedPharmacy?: string;
+  fulfillmentType?: "HOME_DELIVERY" | "STORE_PICKUP";
+  notes?: string;
+}
+
+export interface PharmacyOption {
+  id: string;
+  name: string;
+  branch: string;
+  distanceKm: number;
+  address: string;
+  rating: number;
+  deliveryTimeEstimate: string;
+  supportsHomeDelivery: boolean;
+  supportsPickup: boolean;
+  inStockCompliancePercent: number;
+  dispensingFee: number;
+  licenseNumber: string;
+}
+
+export interface PrescriptionCartItem {
+  prescriptionId: string;
+  prescriptionCode: string;
+  prescriptionStatus: string;
+  doctorName: string;
+  hospital: string;
+  medicine: PrescriptionMedicineItem;
+  quantity: number;
+  pharmacy: PharmacyOption;
+  fulfillmentType: "HOME_DELIVERY" | "STORE_PICKUP";
+  unitPrice: number;
+}
+
 export interface LabTest {
   id: string;
   name: string;

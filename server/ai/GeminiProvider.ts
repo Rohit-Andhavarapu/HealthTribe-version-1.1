@@ -57,16 +57,33 @@ export class GeminiProvider implements AIProvider {
       contents = params.prompt as any;
     }
 
-    const request: any = {
-      model: "gemini-3.7-flash",
-      contents: contents,
-    };
+    const candidateModels = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-3.7-flash"];
+    let lastError: any = null;
 
-    if (Object.keys(config).length > 0) {
-      request.config = config;
+    for (const modelName of candidateModels) {
+      try {
+        const request: any = {
+          model: modelName,
+          contents: contents,
+        };
+
+        if (Object.keys(config).length > 0) {
+          request.config = config;
+        }
+
+        const response = await this.ai.models.generateContent(request);
+        return response.text || "";
+      } catch (err: any) {
+        lastError = err;
+        const isTemporary = err.status === 503 || err.code === 503 || err.status === "UNAVAILABLE" || err.status === 429 || err.status === "RESOURCE_EXHAUSTED";
+        if (isTemporary) {
+          console.warn(`[GeminiProvider] Model ${modelName} transient issue (${err.status || err.code || "busy"}). Trying candidate fallback...`);
+          continue;
+        }
+        throw err;
+      }
     }
 
-    const response = await this.ai.models.generateContent(request);
-    return response.text || "";
+    throw lastError || new Error("All Gemini candidate models were unavailable.");
   }
 }

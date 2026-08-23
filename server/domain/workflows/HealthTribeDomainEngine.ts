@@ -9,8 +9,24 @@ import {
 } from "../commands/DomainCommand";
 import { UserSession } from "../session/SessionManager";
 import { createRequire } from "module";
-const customRequire = typeof require !== "undefined" ? require : createRequire(typeof document === "undefined" && typeof location !== "undefined" ? location.href : "file:///");
-const pdfParse = typeof require !== "undefined" ? require("pdf-parse") : customRequire("pdf-parse");
+
+async function extractTextFromPdf(buffer: Buffer | Uint8Array): Promise<string> {
+  try {
+    const customRequire = typeof require !== "undefined" ? require : createRequire(import.meta.url);
+    const pdfModule = customRequire("pdf-parse");
+    if (typeof pdfModule === "function") {
+      const parsed = await pdfModule(buffer);
+      return parsed?.text || "";
+    } else if (pdfModule?.PDFParse) {
+      const parser = new pdfModule.PDFParse();
+      const parsed = await parser.parse(buffer);
+      return parsed?.text || "";
+    }
+  } catch (e: any) {
+    console.error("[HealthTribeDomainEngine] Failed to parse PDF buffer:", e?.message || e);
+  }
+  return "Diagnostic lab report text extracted from document.";
+}
 
 export class HealthTribeDomainEngine {
   private static instance: HealthTribeDomainEngine;
@@ -279,13 +295,7 @@ export class HealthTribeDomainEngine {
 
     let reportText = "";
     if (attachment.buffer && (attachment.mimeType?.includes("pdf") || attachment.filename?.endsWith(".pdf"))) {
-      try {
-        const parsed = await pdfParse(attachment.buffer);
-        reportText = parsed.text;
-      } catch (e: any) {
-        console.error("[HealthTribeDomainEngine] Failed to parse PDF buffer:", e?.message || e);
-        reportText = "Diagnostic lab report text extracted from document.";
-      }
+      reportText = await extractTextFromPdf(attachment.buffer);
     } else {
       reportText = `Diagnostic Lab Report (${attachment.filename || "Lab_Result.pdf"}) received for ${patient.name || "Patient"}.`;
     }

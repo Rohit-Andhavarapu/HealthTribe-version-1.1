@@ -86,9 +86,9 @@ export class AIService {
         throw err;
       }
 
-      const isQuota = err.status === "RESOURCE_EXHAUSTED" || err.status === 429 || err.statusCode === 429 || (err.message && (err.message.includes("429") || err.message.includes("quota") || err.message.includes("RESOURCE_EXHAUSTED")));
-      if (isQuota) {
-        // Quota is exhausted - do not stall with retry loops
+      const isQuotaOrUnavailable = err.status === "RESOURCE_EXHAUSTED" || err.status === 429 || err.statusCode === 429 || err.status === 503 || err.statusCode === 503 || err.status === "UNAVAILABLE" || (err.message && (err.message.includes("429") || err.message.includes("503") || err.message.includes("quota") || err.message.includes("RESOURCE_EXHAUSTED") || err.message.includes("high demand") || err.message.includes("UNAVAILABLE")));
+      if (isQuotaOrUnavailable) {
+        // Quota or model demand spike - do not stall with retry loops
         throw err;
       }
 

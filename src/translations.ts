@@ -27,7 +27,7 @@ export const TRANSLATIONS: Record<string, TranslationDict> = {
     doctorDiscovery: "Doctor Discovery",
     medicalTimeline: "Medical Timeline (ABHA)",
     familyVault: "Family Health Vault",
-    pharmacyAndLabs: "Pharmacy & Labs",
+    pharmacyAndLabs: "Prescriptions & Labs",
     helpSupportSos: "Help Support & SOS",
     patientWorkspace: "Patient Workspace",
     clinicalPractitioner: "Doctor Portal",
