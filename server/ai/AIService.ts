@@ -49,18 +49,26 @@ export class AIService {
       try {
         return await this.retryWithBackoff(() => this.primaryProvider!.generateContent(params));
       } catch (err: any) {
-        const isAuthError = err.status === 401 || err.statusCode === 401 || 
-          (err.message && (err.message.includes("401") || err.message.includes("invalid_api_key") || err.message.includes("Invalid API Key")));
+        const isPermanentError = err.status === 401 || err.statusCode === 401 ||
+          err.status === 404 || err.statusCode === 404 ||
+          (err.message && (
+            err.message.includes("401") ||
+            err.message.includes("404") ||
+            err.message.includes("model_not_found") ||
+            err.message.includes("does not exist") ||
+            err.message.includes("invalid_api_key") ||
+            err.message.includes("Invalid API Key")
+          ));
 
-        if (isAuthError && this.fallbackProvider) {
-          console.log(`[AIService] Primary provider authorization failed (401). Switching permanently to fallback provider.`);
+        if (isPermanentError && this.fallbackProvider) {
+          console.log(`[AIService] Primary provider failed permanently (${err.message || err.status || "unsupported"}). Switching permanently to fallback provider.`);
           this.primaryProvider = this.fallbackProvider;
           this.fallbackProvider = null;
           return await this.retryWithBackoff(() => this.primaryProvider!.generateContent(params));
         }
 
         if (this.fallbackProvider) {
-          console.warn(`[AIService] Primary provider transient error (${err.message || err}). Attempting fallback provider...`);
+          console.warn(`[AIService] Primary provider error (${err.message || err}). Attempting fallback provider...`);
           try {
             return await this.retryWithBackoff(() => this.fallbackProvider!.generateContent(params));
           } catch (fallbackErr: any) {

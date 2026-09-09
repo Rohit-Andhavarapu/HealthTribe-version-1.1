@@ -57,7 +57,7 @@ export class GeminiProvider implements AIProvider {
       contents = params.prompt as any;
     }
 
-    const candidateModels = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-3.7-flash"];
+    const candidateModels = ["gemini-2.5-flash", "gemini-2.5-pro", "gemini-3.7-flash"];
     let lastError: any = null;
 
     for (const modelName of candidateModels) {
@@ -76,8 +76,9 @@ export class GeminiProvider implements AIProvider {
       } catch (err: any) {
         lastError = err;
         const isTemporary = err.status === 503 || err.code === 503 || err.status === "UNAVAILABLE" || err.status === 429 || err.status === "RESOURCE_EXHAUSTED";
-        if (isTemporary) {
-          console.warn(`[GeminiProvider] Model ${modelName} transient issue (${err.status || err.code || "busy"}). Trying candidate fallback...`);
+        const isUnavailable = err.status === 404 || err.code === 404 || err.status === "NOT_FOUND" || (err.message && (err.message.includes("no longer available") || err.message.includes("not found")));
+        if (isTemporary || isUnavailable) {
+          console.warn(`[GeminiProvider] Model ${modelName} unavailable or busy (${err.status || err.code || err.message || "busy"}). Trying candidate fallback...`);
           continue;
         }
         throw err;
