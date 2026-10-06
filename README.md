@@ -1,151 +1,352 @@
-# HealthTribe AI
+# Kshema (formerly HealthTribe)
 
 <div align="center">
   <p align="center">
-    <strong>The Unified AI-First Federated Patient Identity & Collaborative Clinical Care Ecosystem</strong>
+    <strong>Agentic AI Healthcare Platform: Orchestrated Clinical Workflows, Longitudinal Context, & Federated Identity</strong>
   </p>
   <p align="center">
-    A production-ready full-stack digital health gateway bridging the gap between patient self-care and professional clinician workflows, built in modern React 19, Tailwind CSS v4, and Node.js.
+    A full-stack clinical intelligence system bridging patient engagement and practitioner workflows via an AI orchestration layer, context-aware assistants, document intelligence, and longitudinal medical history.
+  </p>
+  <p align="center">
+    <em>Built with React 19, TypeScript, Tailwind CSS v4, Express, Gemini 2.5 / Flash, and Groq Llama 3.3.</em>
   </p>
 </div>
 
 ---
 
-HealthTribe AI is a high-performance digital health orchestrator designed to resolve the multi-layered fragmentation of modern healthcare systems. Positioned as an intelligent gateway for both individuals and practitioners, HealthTribe integrates the statutory trust of the **Ayushman Bharat Digital Mission (ABDM)** and **Ayushman Bharat Health Account (ABHA)** federated identity systems with real-time, context-aware large language model (LLM) intelligence. The platform translates complex, multi-year medical histories, raw laboratory biomarkers, and physical prescriptions into plain-language, bilingual patient companions, while simultaneously automating administrative charting (SOAP notes), clinical briefs, and diagnostic differentials for clinicians.
-
-> **The Vision:** To establish a secure, continuous, and frictionless digital health thread that demystifies clinical complexity—transforming raw, inactive medical records into dynamic, bilingual, and conversational clinical companions that work tirelessly for both the patient at home and the doctor in the clinic.
+> [!NOTE]
+> **Codebase Naming & Legacy Identifiers:**  
+> This platform is presented as **Kshema**. The underlying repository contains legacy `HealthTribe` identifiers across internal file paths, package configs, REST API routes (`/api/v1/...`), database keys, and React components (`HealthTribeDomainEngine`, `healthtribe_logged_in_email`, etc.) to preserve backward compatibility with existing services.
 
 ---
 
-## 🚀 Key Architectural Overview
+## 📌 Positioning Statement
+
+> **Kshema is an agentic healthcare intelligence platform built around an AI orchestration layer and specialized patient, clinician, document-intelligence, and longitudinal-context workflows.**
+> 
+> Rather than relying on generic, ungrounded conversational chatbots, Kshema uses an **agentic-inspired orchestration architecture**: incoming user requests are analyzed by an intent-and-action orchestrator that selectively retrieves structured application state (practitioner directories, medical timelines, active prescriptions, and appointments) before dispatching context to dedicated patient or clinical AI workflows.
+
+---
+
+## 🚀 Architectural Overview
 
 ```
-                      +---------------------------------------+
-                      |       HealthTribe React Client        |
-                      |  - Family Health Vault & Voice AI HUD |
-                      |  - Clinical Practitioner Dashboard    |
-                      +───────────────────┬───────────────────+
-                                          │
-                  Global fetch monkeypatch (Context Injection headers)
-                                          │
-                                          ▼
-                      +───────────────────────────────────────+
-                      |        Express Server Gateway         |
-                      |  - REST API Routes & JSON Schema     |
-                      |  - In-Memory User Session Database   |
-                      +───────────────────┬───────────────────+
-                                          │
-                      ┌───────────────────┴───────────────────┐
-                      ▼                                       ▼
-        +───────────────────────────+           +───────────────────────────+
-        |   ABDM Consent Manager    |           |   AI Orchestration Core   |
-        |  - OTP Handshake Gateway  |           |  - PromptBuilder Context  |
-        |  - Care Context Import    |           |  - Exponential Backoff    |
-        +───────────────────────────+           +─────────────┬─────────────+
-                                                              │
-                                            ┌─────────────────┴─────────────────┐
-                                            ▼                                   ▼
-                             +─────────────────────────────+     +─────────────────────────────+
-                             |     Gemini-3.5-Flash        |     |   Llama-3.3-70B (Groq)      |
-                             |  - High-Speed Multimodal   |     |  - High-Density Reasoning   |
-                             +─────────────────────────────+     +─────────────────────────────+
+                      +------------------------------------------------+
+                      |               User Interaction Layer           |
+                      |   - Patient Web Portal & Voice AI HUD (EN/HI/TE)|
+                      |   - Clinical Practitioner Workspace Portal     |
+                      |   - Multi-Channel Meta WhatsApp Adapter         |
+                      +───────────────────────┬────────────────────────+
+                                              │
+                     HTTP / REST Requests (with Session & Profile Context)
+                                              │
+                                              ▼
+                      +────────────────────────────────────────────────+
+                      |         Express API Gateway & Session Core     |
+                      |   - Multi-tenant User Storage (/data/users)    |
+                      |   - In-Memory State Cache & File Proxy Sync    |
+                      +───────────────────────┬────────────────────────+
+                                              │
+                                              ▼
+                      +────────────────────────────────────────────────+
+                      |             AI ORCHESTRATION LAYER             |
+                      |         (PromptBuilder.buildOrchestration)     |
+                      |   Evaluates user intent & selects data action: |
+                      |   [FETCH_DOCTORS | FETCH_TIMELINE |            |
+                      |    FETCH_MEDICATIONS | FETCH_APPOINTMENTS |    |
+                      |    NONE]                                       |
+                      +───────┬────────────────────────────────┬───────+
+                              │                                │
+            Application Data  │                                │  Selected Context
+            Retrieval Phase   ▼                                ▼  Injection Phase
+              ┌──────────────────────────────┐   ┌──────────────────────────────┐
+              │ Platform Context Stores      │   │ Specialized AI Workflows     │
+              │ - Verified Doctor Directory  │──▶│ 1. Patient Care Assistant    │
+              │ - Longitudinal Timeline DB   │   │    (Grounded Patient Prompt) │
+              │ - Active Prescriptions / Meds│   │ 2. Doctor Clinical Copilot   │
+              │ - Scheduled Appointments     │   │    (Briefings & SOAP Notes)  │
+              └──────────────────────────────┘   │ 3. Document Intelligence OCR │
+                                                 │    (Biomarkers & Comparison) │
+                                                 │ 4. ABHA Longitudinal Summary │
+                                                 └──────────────┬───────────────┘
+                                                                │
+                                              ┌─────────────────┴─────────────────┐
+                                              ▼                                   ▼
+                               +─────────────────────────────+     +─────────────────────────────+
+                               |     Gemini 2.5 / Flash      |     |    Llama 3.3 70B (Groq)     |
+                               |  - Multimodal Vision & OCR  |     |  - High-Density Reasoning   |
+                               |  - Fast Triage & Streaming  |     |  - Structured JSON Output   |
+                               +─────────────────────────────+     +─────────────────────────────+
 ```
 
 ---
 
-## 📋 Executive Summary
+## 💡 Why Agentic AI?
 
-Modern healthcare delivery is plagued by deep structural failures. Historical medical records exist in isolated silos across multiple hospitals and clinics; patients struggle to decipher complex medical jargon, which is almost exclusively written in English; and clinicians spend up to 40% of their day on administrative charting instead of active patient engagement.
+Standard LLM chatbots exhibit severe architectural weaknesses when applied to digital healthcare:
+1. **Lack of Application State Grounding:** A standard LLM operates in an isolated text bubble; it cannot see active appointments, available specialists, or current prescription lists without dedicated retrieval hooks.
+2. **Hallucination of Clinical Facts:** Generic conversational models frequently invent medication regimens or clinical milestones when asked to summarize patient history.
+3. **No Tool or Action Awareness:** Standard chatbots cannot decide whether a patient asking "Do I need to see someone for this chest tightness?" requires fetching local cardiologists or reviewing recent ECG entries.
+4. **Isolated Document Parsing:** Extracting numbers from an uploaded lab report in isolation fails to tell the clinician or patient whether a specific biomarker (e.g., HbA1c or LDL) is *improving, worsening, or newly abnormal* compared to historical records.
 
-HealthTribe AI represents a major architectural shift. It moves beyond standard appointment booking apps to deliver a unified, double-sided clinical ecosystem:
-
-*   **For Patients:** It consolidates multi-generational medical records under a single-guardian family vault, provides bilingual AI symptom triage, translates lab reports, checks for drug-drug interactions, and generates custom recovery diet plans.
-*   **For Clinicians:** It provides a high-density clinical dashboard featuring an active patient queue, automatic history summaries, and real-time AI-drafted SOAP notes to optimize the point of care.
-*   **ABHA Compatibility:** Built on simulated National Health Authority (NHA) APIs, it implements secure OTP-based federated identity linking and care context consents, creating a production-ready model for ABDM compliance.
+### How Kshema Resolves This
+Kshema implements a deterministic orchestration loop where the AI first acts as an **Action Classifier & Retrieval Planner**:
+* Queries are first evaluated to decide if concrete application data must be pulled (`FETCH_DOCTORS`, `FETCH_TIMELINE`, `FETCH_MEDICATIONS`, `FETCH_APPOINTMENTS`).
+* Retrieved domain records are injected as ground truth into specialized system instructions.
+* The model produces both a **grounded response** and structured **interactive UI widgets** (such as doctor booking cards or chronological timeline items), anchoring conversational AI directly to native clinical operations.
 
 ---
 
-## 🎯 Product Overview
+## 🏥 Problem Being Addressed
 
-### The Problem
-*   **Hyper-Fragmented Records:** Patient histories are stored in disconnected physical folders or proprietary hospital portals, creating clinical blind spots during emergencies.
-*   **Vernacular Exclusion:** Clinical reports and recommendations are printed in complex technical English, building deep comprehension barriers for patients speaking regional languages.
-*   **Administrative Burnout:** Clinicians suffer severe documentation fatigue from manually writing consultation notes, reviewing PDF reports, and keying in metrics.
-*   **Isolated Care Structures:** Family guardians have no centralized, secure framework to oversee elderly parents' chronic medication lists or children's pediatric charts.
-
-### The Solution
-HealthTribe AI introduces a closed-loop digital health thread. By connecting patients and doctors through a shared API layer, the platform automates data extraction, coordinates specialist bookings, and uses conversational AI to translate medical records into clear, actionable advice.
-
-| Feature | Legacy Systems | HealthTribe AI |
+| Dimension | Industry Problem | Kshema Verified Solution |
 | :--- | :--- | :--- |
-| **Interoperability** | Missing records, manual paper files | Federated ABDM care context sync & import |
-| **Language** | Exclusively technical English | Interactive Voice AI in English, Hindi, & Telugu |
-| **Documentation** | Manual typing of consultation notes | Real-time, AI-drafted SOAP charting |
-| **Family Care** | Fragmented accounts per individual | Unified guardian vault with rapid profile switching |
-
-### Target Users & Impact
-1.  **Multi-generational Families:** Centralize pediatric histories and geriatric prescriptions under one guardian.
-2.  **Specialist Clinicians:** Reduce chart retrieval delays and administrative workload through automated briefings and SOAP notes.
-3.  **Clinic Networks:** Modernize active patient routing, simplify queue management, and support bilingual consultations.
+| **Data Fragmentation** | Patient records exist across disconnected clinics, paper files, and external hospital portals. | Chronological **Medical Timeline** aggregating local encounters, lab reports, and simulated **ABDM / ABHA** care context imports. |
+| **Document Fatigue** | Clinicians spend excessive time deciphering physical lab PDFs, transcribing numbers, and typing consultation charts. | Multi-stage **Document Intelligence Pipeline** structuring biomarkers, comparing trends against timeline history, and drafting **SOAP notes**. |
+| **Language Exclusion** | Medical reports and consultation summaries are predominantly written in dense clinical English. | Trilingual conversational interaction supporting **English, Hindi (हिन्दी), and Telugu (తెలుగు)** with Web Speech voice synthesis. |
+| **Safety & Ambiguity** | Automated systems often silently guess or hallucinate smudged handwriting in physical prescriptions. | Clinical OCR pipeline with explicit **confidence thresholds** (<70), `unclearFlag` indicators, and mandatory human-in-the-loop review warnings. |
 
 ---
 
-## ✨ Feature Highlights
+## 🔬 Core Agentic & AI Architecture
 
-### 🏠 Patient Experience
-*   **Interactive Health Dashboard:** A card-based dashboard that displays vital statistics, active prescriptions, and upcoming appointments.
-*   **Bilingual Voice AI HUD:** Speak to the conversational assistant in English, Hindi, or Telugu to ask about records, schedule bookings, or review prescriptions.
-*   **Address & Checkout Controls:** Easily configure diagnostic lab or medicine delivery locations with interactive modals.
+### 1. Realistic Interaction Flow (Query to Grounded Action)
+```
+User Query (Text / Voice / WhatsApp)
+            │
+            ▼
+┌──────────────────────────────────────────────┐
+│ AI Orchestrator (PromptBuilder.buildOrchestration) │
+│ - Classifies intent                          │
+│ - Selects action: FETCH_* or NONE            │
+└──────────────────────┬───────────────────────┘
+                       │
+          ┌────────────┴────────────┐
+          ▼                         ▼
+   [Action: FETCH_*]          [Action: NONE]
+          │                         │
+┌───────────────────────┐           │
+│ Application State     │           │
+│ Retrieval:            │           │
+│ - Query DB by action  │           │
+│ - Filter by specialty │           │
+│ - Bind top records    │           │
+└──────────┬────────────┘           │
+           │                        │
+           └───────────┬────────────┘
+                       ▼
+┌──────────────────────────────────────────────┐
+│ Specialized Workflow Execution               │
+│ - Patient Assistant (Empathetic / Grounded)  │
+│ - Doctor Copilot (Clinical Brief / SOAP)     │
+│ - Trilingual Mandate applied (EN / HI / TE)  │
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────┐
+│ Structured Output + Client Widgets           │
+│ - Conversational Markdown response           │
+│ - Interactive UI Widget ("doctors", "timeline")
+│ - Saved to conversation history & DB proxy   │
+└──────────────────────────────────────────────┘
+```
 
-### 🩺 Doctor Experience
-*   **Clinical Workspace Portal:** Switch contexts to a high-density workstation featuring practice statistics and active schedules.
-*   **Active Patient Queue:** An interactive patient queue that auto-binds clinical context (history, medications, allergies) for the selected patient.
-*   **AI SOAP Note Drafts:** During consultation, the AI compiles findings and drafts subjective, objective, assessment, and planning notes with one click.
-
-### 🧠 AI Capabilities
-*   **Symptom Triage Engine:** Instantly assesses symptom inputs, maps urgency categories, recommends matching specialists, and guides next steps.
-*   **Drug Interaction Checker:** Checks active medications against known patient allergies to flag cross-reactions and highlight warnings.
-*   **Diet Plan Generator:** Tailors scientific post-consultation meal plans based on diagnosis, medications, and food preferences.
-
-### 📈 Healthcare Intelligence
-*   **Chronological Timeline:** A multi-year medical history timeline that highlights AI summaries in purple, ABHA-synced records in emerald, and local appointments in blue.
-*   **Biomarker Highlighting:** Flags high, low, or normal laboratory values in detailed, interactive tables.
-*   **ABHA Scientific Summary:** Instantly compiles and summarizes imported external health records into a clean, scannable clinical paragraph.
-
-### 📂 ABDM & ABHA Gateway
-*   **OTP Identity Handshake:** Input ABHA IDs to generate and verify statutory OTP transactions, updating the profile status to "ABHA-Verified."
-*   **Dynamic Consent Management:** Issue, review, or revoke care context requests to connected diagnostic labs and hospitals.
-*   **Secure Record Import Pipeline:** A multi-stage pipeline (`PENDING` ➔ `FETCHING` ➔ `DECRYPTING` ➔ `PARSING` ➔ `COMPLETED`) that decrypts and parses external clinical records directly into the patient's active timeline.
-
-### 🏥 Emergency Care
-*   **Emergency Locator Panel:** Instantly locate nearest critical care hubs, displaying real-time distance, rating, and quick Google Maps routing links.
+### 2. Document Intelligence & Longitudinal Ingestion Flow
+```
+Uploaded Medical Report (PDF / Image)
+            │
+            ▼
+┌──────────────────────────────────────────────┐
+│ Text Extraction Layer                        │
+│ - Client-side: pdfjs-dist text stream parsing│
+│ - Server-side: pdf-parse / inline image data │
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────┐
+│ Prior Timeline Retrieval                     │
+│ - Fetches patient's historical records       │
+│ - Gathers prior lab entries & biomarkers     │
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────┐
+│ AI Clinical Structuring (buildOCRPrompt)     │
+│ - Extracts report metadata & confidence %    │
+│ - Normal vs. abnormal biomarker extraction   │
+│ - Longitudinal trend mapping                 │
+│   (Improving, Worsening, Stable, New)        │
+│ - Actionable lifestyle & physician advice    │
+└──────────────────────┬───────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────┐
+│ Longitudinal Timeline Ingestion              │
+│ - Automatically formats Timeline Event card  │
+│ - Sets risk level (High / Moderate / Low)    │
+│ - Appends structured finding highlights to DB│
+│ - Surfaces into Doctor Copilot queue context │
+└──────────────────────────────────────────────┘
+```
 
 ---
 
-## 🛠️ Tech Stack
+## 🧩 Specialized AI Capabilities (Verified in Codebase)
 
-| Layer | Technology | Details |
+### 1. AI Orchestration Layer
+* **Implementation:** `server/ai/PromptBuilder.ts` (`buildOrchestrationPrompt`), `server.ts` (lines 4524–4562), `HealthTribeDomainEngine.ts` (lines 220–240).
+* **Action Types:**
+  - `FETCH_DOCTORS`: Triggered when users ask to consult or book a clinician; extracts medical specialty (e.g., Cardiologist, Dermatologist, General Physician) and queries `db.doctors`.
+  - `FETCH_TIMELINE`: Triggered when users query their clinical background; retrieves longitudinal entries from `db.medicalTimeline`.
+  - `FETCH_MEDICATIONS`: Fetches active prescription orders from `db.medicineOrders`.
+  - `FETCH_APPOINTMENTS`: Fetches confirmed clinic visits from `db.appointments`.
+  - `NONE`: Directly evaluates standard conversational questions.
+* **Widget Binding:** Attaches structured widget metadata (`widgetType = "doctors" | "timeline"`) directly to the chat payload for interactive client rendering.
+
+### 2. Patient AI Assistant / Companion
+* **Implementation:** `PromptBuilder.ts` (`buildPatientPrompt`, `buildTriagePrompt`, `buildDietPrompt`, `buildInteractionPrompt`), `src/components/AICopilotWorkspace.tsx`.
+* **Context Grounding:** Injects the active patient's demographic profile (age, gender, blood group, allergies, chronic conditions, current medications) alongside retrieved application records.
+* **Strict Anti-Hallucination Guard:** Mandates that timeline summaries draw **exclusively** from the user's provided timeline events and consultations rather than generating generic medical history.
+* **Ancillary Clinical Tools:**
+  - **Symptom Triage Engine:** Classifies urgency into `RED`, `YELLOW`, or `GREEN`, returns specialty recommendations, emergency warnings, and home care tips (`/api/triage`).
+  - **Drug Interaction Checker:** Cross-references active medications and patient allergies to flag high/moderate/low cross-reactions (`/api/interaction-check`).
+  - **Post-Consultation Diet Planner:** Compiles scientific meal plans with food avoidance and recommendation lists tailored to patient diagnoses and dietary preferences (`/api/diet`).
+  - **Trilingual Voice HUD:** Web Speech API integration supporting interactive spoken consultations in English, Hindi, and Telugu.
+
+### 3. Doctor Clinical Copilot
+* **Implementation:** `PromptBuilder.ts` (`buildDoctorPrompt`), `server.ts` (`/api/doctor-chat`), `src/components/DoctorChatbot.tsx`, and Doctor Workspace Mode in `AICopilotWorkspace.tsx`.
+* **Clinical Context Binding:** Binds active clinician details, the selected patient queue (`doctorQueue`), vital stats, and historical timelines.
+* **Structured Clinical Briefings:** Automatically formats patient records into 6 standardized briefing sections:
+  1. *Overview*
+  2. *Active Problems*
+  3. *Medications*
+  4. *Allergies*
+  5. *Latest Lab Insights*
+  6. *Suggested Next Actions*
+* **SOAP Note Drafting:** Generates real-time Subjective, Objective, Assessment, and Plan drafts based on telemetry and encounter findings for practitioner review.
+* **Important Safety Boundary:** Serves strictly as a documentation and decision-support tool. Does not diagnose patients or prescribe treatment independently.
+
+### 4. Document Intelligence & OCR Pipeline
+* **Implementation:** `server.ts` (`/api/analyze-report`, `/api/v1/prescriptions/upload-ocr`), `PromptBuilder.ts` (`buildOCRPrompt`), `src/App.tsx` (`extractTextFromPDF`).
+* **Multi-Format Ingestion:** Extracts text from uploaded PDF files on the client using `pdfjs-dist` or on the server via `pdf-parse`, while processing image scans through multimodal vision.
+* **Longitudinal Comparison:** Injects previous timeline records (`db.medicalTimeline`) into the OCR prompt so the AI can assign trend vectors (`Improving`, `Worsening`, `Stable`, `New`) to abnormal markers.
+* **Prescription OCR Safety Checks:**
+  - Evaluates extraction confidence (`HIGH`, `MEDIUM`, `LOW`).
+  - Flags illegible handwriting with `unclearFlag: true` and confidence scores <70.
+  - Adds explicit safety warnings: *"AI does not silently guess illegible text. Please review and manually confirm medication details before pharmacist dispatch."*
+* **Automated Timeline Sync:** Ingested reports compile a structured `timelineEvent` object with highlights and risk scores (`High` vs `Low`) that is committed directly to the patient's medical timeline.
+
+### 5. Medical Timeline & Longitudinal Context Engine
+* **Implementation:** `src/components/HealthHistoryTimeline.tsx`, `server.ts` (`/api/timeline`), `server/ml/trajectoryForecaster.ts`, `server/ml/medicationReconciler.ts`.
+* **Chronological Repository:** Maintains multi-year clinical encounters, lab analyses, prescription orders, and external hospital imports.
+* **ABHA Record Integration:** Formats and summarizes imported ABDM care contexts using `PromptBuilder.buildABHAPrompt`.
+* **Embedded ML & Statistical Analytics:**
+  - **Biomarker Trajectory Forecaster (`/api/v1/ml/trajectory/:patientId`):** Uses Ordinary Least Squares (OLS) linear regression and Holt's Linear Trend exponential smoothing to project HbA1c, fasting glucose, systolic BP, and LDL trends with prediction intervals.
+  - **Medication Reconciliation Engine (`/api/v1/ml/reconcile/:patientId`):** Uses an internal drug ontology and Jaro-Winkler / Levenshtein string similarity to detect cross-hospital duplicate molecules, dosage conflicts, and brand-to-generic equivalencies.
+
+---
+
+## 🔄 Example Multi-Step Workflow
+
+Here is an end-to-end walkthrough demonstrating how the components cooperate:
+
+```
+Step 1: Patient Ingestion & Query
+        Patient speaks to Voice HUD in Telugu: "నాకు గత రెండు రోజులుగా ఛాతీలో అసౌకర్యంగా ఉంది, నేను ఎవరిని సంప్రదించాలి?"
+        (Translation: "I have had chest discomfort for 2 days, who should I consult?")
+
+Step 2: Intent Classification & Orchestration
+        PromptBuilder.buildOrchestrationPrompt classifies query:
+        { "action": "FETCH_DOCTORS", "specialty": "Cardiologist", "reason": "Patient reports chest discomfort" }
+
+Step 3: State Retrieval & Context Injection
+        Server queries db.doctors for Cardiology specialists, retrieves Dr. Rahul Atluri,
+        binds them as contextData, and injects the Telugu language mandate.
+
+Step 4: Grounded Response Generation
+        PromptBuilder.buildPatientPrompt generates an empathetic Telugu response explaining
+        recommended precautions and embeds the "doctors" UI widget with doctor cards.
+
+Step 5: Patient Uploads Prior Lab Report
+        Patient uploads a diagnostic PDF ("Lipid_Panel_2026.pdf").
+        Frontend extracts text with pdfjs-dist and sends it to /api/analyze-report with patientId.
+
+Step 6: OCR Structuring & Longitudinal Comparison
+        Backend retrieves historical timeline events (e.g. prior baseline LDL of 128 mg/dL).
+        PromptBuilder.buildOCRPrompt extracts current LDL (146 mg/dL) and marks it:
+        { "marker": "LDL Cholesterol", "status": "High", "trend": "Worsening" }
+        Report is automatically committed to db.medicalTimeline with highlights and Moderate risk.
+
+Step 7: Clinician Consultation & Copilot Briefing
+        Patient enters Dr. Rahul Atluri's queue.
+        Doctor workspace auto-binds the updated timeline, active vitals, and worsening lipid trend.
+        DoctorChatbot generates a morning brief and pre-populates a clinical briefing.
+        During consultation, the doctor triggers the AI SOAP note generator to draft consultation notes.
+        Doctor reviews, edits, and finalizes the clinical chart.
+```
+
+---
+
+## 🛡️ Human-in-the-Loop & Clinical Safety Framework
+
+Kshema is built with explicit boundaries to ensure ethical, safe, and regulated digital health deployment:
+
+* **No Autonomous Medical Decisions:** Kshema does **not** provide autonomous diagnostic determinations, does **not** autonomously prescribe medications, and does **not** execute autonomous clinical referrals.
+* **Clinician Decision Support Only:** All doctor-facing briefing notes, SOAP drafts, and diagnostic suggestions are advisory and require human practitioner review, modification, and final sign-off.
+* **Anti-Hallucination Constraints in Prescription Parsing:** In physical prescription OCR workflows (`/api/v1/prescriptions/upload-ocr`), the system explicitly rejects guessing unclear handwriting. Smudged or unreadable entries trigger `unclearFlag: true`, drop confidence below 70%, and generate mandatory manual verification alerts.
+* **Triage Disclaimers & Emergency Routing:** Symptom triage outcomes are strictly risk-stratified educational suggestions (`RED`, `YELLOW`, `GREEN`) accompanied by immediate emergency guidance (108/911 callouts) for acute presentations.
+* **Practitioner Audit Logging:** Actions in the clinician portal (reviewing records, inspecting summaries, generating SOAP notes) write structured records to the system audit trail.
+
+---
+
+## 📊 Current Implementation Status
+
+### ✅ Implemented Now (Verified in Codebase)
+* **AI Orchestration Layer:** Prompt-based intent classifier supporting `FETCH_DOCTORS`, `FETCH_TIMELINE`, `FETCH_MEDICATIONS`, `FETCH_APPOINTMENTS`, and `NONE`.
+* **Interactive UI Widget Embedding:** Chatbot payloads dynamically attach renderable `doctors` and `timeline` component cards.
+* **Context-Grounded Patient AI:** Profile-bound conversational companion with strict anti-fabrication guidelines and trilingual support (English, Hindi, Telugu).
+* **Clinical Doctor Copilot & Chatbot:** High-density doctor portal assistant (`DoctorChatbot.tsx`) generating 6-part clinical briefings and SOAP notes.
+* **Diagnostic Report Intelligence:** PDF text extraction (`pdfjs-dist` / `pdf-parse`), structured biomarker parsing, and trend comparison against timeline history.
+* **Prescription OCR Safety Engine:** Structured prescription extraction with confidence scoring, `unclearFlag` detection, and manual verification warnings.
+* **Longitudinal Medical Timeline:** Multi-year chronological card feed supporting local entries, lab highlights, and risk categorization.
+* **Statistical ML Engines:**
+  - Longitudinal biomarker trajectory forecasting using linear regression and Holt's exponential smoothing (`trajectoryForecaster.ts`).
+  - Multi-hospital medication deduplication and brand-to-generic ontology mapping (`medicationReconciler.ts`).
+* **Simulated ABDM / ABHA Gateway:** OTP-based verification handshake, dynamic consent lifecycle management, and multi-hospital care context import pipelines.
+* **Multi-Channel Architecture:** Web client plus functional Meta WhatsApp webhook adapter (`server/channels/whatsapp`).
+* **Resilient Infrastructure:** Multi-provider fallback (`GeminiProvider` and `GroqProvider`), exponential backoff retry handler, and file-isolated JSON user storage.
+
+### 🔮 Possible Future Extensions (Planned / Not Yet Implemented)
+* **Production ABDM Sandbox Bridge:** Connecting simulated NHA endpoints to live, production-certified National Health Authority gateway sandboxes.
+* **Direct Hardware IoT Integration:** Streaming real-time telemetry from physical consumer wearables (Apple Watch, Fitbit, continuous glucose monitors) instead of simulated canvas feeds.
+* **Ambient Consultation Transcription:** Background microphone transcription for physical clinical encounters to draft SOAP notes from conversational speech without manual input.
+* **Digital Prescription Signing:** Cryptographic e-prescriptions signed with registered doctor digital certificates and Medical Council registry verification.
+* **Broader Indic Language Coverage:** Expanding beyond English, Hindi, and Telugu to include Tamil, Kannada, Marathi, and Bengali speech synthesis models.
+
+---
+
+## 🛠️ Tech Stack & Engineering Specifications
+
+| Layer | Technology | Role in Architecture |
 | :--- | :--- | :--- |
-| **Languages** | TypeScript 5.8+ | Strict type safety across client interfaces and server modules |
-| **Frontend** | React 19, Vite 6 | Fast compilation, Hot Module Replacement (HMR) capabilities |
-| **Animations** | Motion (Framer) | Fluid transitions, interactive sidebar animations, Voice HUD ripples |
-| **Styles** | Tailwind CSS v4 | Utility-first styling with modern css `@theme` variables |
-| **Backend** | Express 4.21, Node.js | Robust API router handling complex state orchestration |
-| **AI SDKs** | `@google/genai` (Gemini), `groq-sdk` | Integrates `gemini-3.5-flash` and `llama-3.3-70b` |
-| **OCR Engines**| `pdfjs-dist`, `pdf-parse` | Extracts structured text layers from uploaded files |
-| **Charts & Icons**| Recharts, Lucide React | High-performance canvas graphs, consistent iconography |
+| **Frontend Framework** | React 19, Vite 6 | High-speed component rendering, strict types, fast HMR |
+| **Language** | TypeScript 5.8+ | End-to-end schema consistency across client and backend |
+| **Styling & UI** | Tailwind CSS v4, Motion (Framer) | Modern `@theme` CSS variables, high-contrast accessible layouts |
+| **Backend Runtime** | Express 4.21, Node.js 20+ | REST API routing, session management, domain engine |
+| **AI Providers** | `@google/genai` (Gemini), `groq-sdk` | Multimodal OCR, intent orchestration, and structured JSON inference |
+| **Document Processing**| `pdfjs-dist`, `pdf-parse` | Client-side and server-side text extraction from PDF reports |
+| **Channel Transport** | Meta WhatsApp Cloud Webhooks | Omnichannel messaging via `WhatsAppAdapter` and `DomainIntentRouter` |
+| **Production Bundler** | `esbuild` | Bundles Node.js backend into standalone `dist/server.cjs` CommonJS binary |
 
----
+### Engineering Highlights
 
-## ⚙️ Engineering Highlights
+#### 1. Dual-Provider AI Interface
+The system isolates generative model dependencies behind an abstract interface (`AIProvider.ts`) with dedicated adapters:
+* `GeminiProvider.ts`: Connects to Google Gemini for multimodal vision and high-throughput conversational completion.
+* `GroqProvider.ts`: Connects to Groq (`llama-3.3-70b-versatile`) for ultra-low latency JSON completions.
 
-### 📦 Modular & Decoupled Architecture
-The system isolates UI rendering components from generative AI operations. To handle multiple model families cleanly, the backend uses a generic interface `AIProvider.ts` implemented by two providers:
-1.  **`GeminiProvider.ts`:** Uses the modern `@google/genai` SDK to run fast, multimodal analysis with `gemini-3.5-flash`.
-2.  **`GroqProvider.ts`:** Uses `groq-sdk` to run rapid, structured JSON completions with `llama-3.3-70b-versatile`.
-
-### 🛡️ Resilient Exponential Backoff
-To protect clinical workflows from upstream rate-limiting (HTTP 429) or temporary network drops, `AIService.ts` wraps generative API calls in an automatic retry engine:
+#### 2. Resilient Exponential Backoff
+Generative calls are wrapped in `AIService.retryWithBackoff`:
 ```typescript
 public static async retryWithBackoff<T>(fn: () => Promise<T>, retries = 3, delay = 1000): Promise<T> {
   try {
@@ -161,110 +362,13 @@ public static async retryWithBackoff<T>(fn: () => Promise<T>, retries = 3, delay
 }
 ```
 
-### 🔌 Global fetch Monkeypatching
-To avoid passing user session headers manually across hundreds of client-side queries, `src/App.tsx` globally wraps `window.fetch` to inject current user credentials automatically:
-```typescript
-if (typeof window !== "undefined") {
-  try {
-    if (!(window as any).__originalFetch) {
-      (window as any).__originalFetch = window.fetch.bind(window);
-    }
-    const originalFetch = (window as any).__originalFetch;
-    Object.defineProperty(window, "fetch", {
-      value: async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
-        const email = localStorage.getItem("healthtribe_logged_in_email") || "";
-        const profileId = localStorage.getItem("healthtribe_active_profile_id") || "fam-self";
-        
-        const newInit: RequestInit = init ? { ...init } : {};
-        const headers = new Headers(newInit.headers || {});
-        if (email) headers.set("x-user-email", email);
-        headers.set("x-active-profile-id", profileId);
-        newInit.headers = headers;
-        
-        return originalFetch(input, newInit);
-      }
-    });
-  } catch (e) {
-    console.error("Failed to patch window.fetch", e);
-  }
-}
-```
+#### 3. Automatic Session Context Injection
+To eliminate passing user credentials manually across client components, `src/App.tsx` monkeypatches `window.fetch` to inject active user headers (`x-user-email`, `x-active-profile-id`) on every request.
 
-### ⚡ Optimized Production Bundling
-During the production build phase, Vite compiles client assets to `dist/`, while `esbuild` bundles the entire Node.js Express backend into a single, self-contained CommonJS file (`dist/server.cjs`):
+#### 4. High-Performance Server Compilation
+During build, Vite outputs client assets while `esbuild` bundles the Express application and domain engine into an optimized CommonJS bundle (`dist/server.cjs`):
 ```bash
 vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs
-```
-This process bundles all internal dependencies, compiles TypeScript type annotations, resolves import paths at compile time, and keeps external npm packages light—enabling incredibly fast cold-start times on containerized runtimes.
-
----
-
-## 🤖 Deep Dive: AI Core & Prompt Engineering
-
-HealthTribe uses highly structured prompts within `PromptBuilder.ts` to enforce clinical accuracy and return clean JSON objects:
-
-### 🏥 Symptom Triage Prompting
-Uses few-shot formatting and strict schema definitions to force the model to output structured assessment criteria. This allows the frontend to parse the result into color-coded urgency alerts:
-```typescript
-{
-  "urgency": "RED" | "YELLOW" | "GREEN",
-  "assessment": "Brief clinical assessment...",
-  "urgencyColor": "red" | "yellow" | "green",
-  "specialtySuggestion": "Cardiologist",
-  "homeCareTips": ["Tip 1", "Tip 2"],
-  "emergencyWarnings": ["Warning 1"],
-  "aiDoctorResponse": "Empathetic patient explanation."
-}
-```
-
-### 🧪 Smart OCR Biomarker Mapping
-Instead of returning unformatted text, the OCR parser processes lab report details against previous medical records to identify anomalies and map historical trends:
-```typescript
-{
-  "marker": "Hemoglobin",
-  "value": "11.2",
-  "referenceRange": "12.0 - 16.0",
-  "status": "Low",
-  "severity": "Mildly Decreased",
-  "whyItMatters": "Hemoglobin is the iron-containing oxygen-transport metalloprotein in red blood cells.",
-  "possibleCauses": "Inadequate dietary iron intake or poor absorption.",
-  "trend": "Worsening"
-}
-```
-
----
-
-## 🔒 Security & Privacy Blueprint
-
-Healthcare applications process highly sensitive, protected health information (PHI). HealthTribe AI implements a comprehensive security model:
-
-1.  **Session & Boundary Isolation:** User databases are partitioned on the backend. Files, timelines, and family profiles are isolated by sanitizing emails into safe keys (e.g., `kilarisupriya25_gmail_com.json`), preventing cross-tenant access.
-2.  **Explicit Consent Lifecycles:** External ABDM Care Context consents default to strict, verifiable statuses (`GRANTED`, `REQUESTED`, `REVOKED`). When a user unlinks their ABHA profile, all active consent keys are purged instantly.
-3.  **Practitioner Audit Logging:** The Doctor Portal features an immutable Security Audit Log. Every action—including reviewing patient timelines, viewing history summaries, or writing SOAP prescriptions—is tracked with timestamp, action category, and user credentials, ensuring complete accountability.
-
----
-
-## 🗺️ Unified User Journeys
-
-### 1. The Patient Care Journey
-```
-[OTP/Google Login] ➔ [Add Family Member] ➔ [Verify ABHA ID] ➔ [Bilingual Symptom Triage]
-                                                                        │
-[View Recovery Diet Plan] ◀── [Order Prescribed Meds] ◀── [Consult Doctor] ◀──┘
-```
-
-### 2. The Clinical Consultation Loop
-```
-[Doctor Portal Sign In] ➔ [View Daily Practice Stats] ➔ [Select Patient Queue]
-                                                               │
-[AI SOAP Notes Generated] ◀── [Telemetry / ECG Monitor] ◀── [Review AI Briefing]
-```
-
-### 3. The ABDM Consent & Sync Pipeline
-```
-[Input ABHA Identifier] ➔ [Verify Statutory OTP] ➔ [Approve Consent Request]
-                                                               │
-[Structured Timeline Event Card] ◀── [Decrypt & Parse FHIR Records] ◀──┘
 ```
 
 ---
@@ -272,174 +376,120 @@ Healthcare applications process highly sensitive, protected health information (
 ## 📁 Repository Structure
 
 ```
-├── /data/users             # Multi-tenant user databases (isolated by sanitized email)
-├── /server                 # Backend Services & AI Architecture Core
-│   └── /ai
-│       ├── AIProvider.ts       # Unified Generative Provider Interface
-│       ├── AIService.ts        # Resilient service manager (Exponential Backoff)
-│       ├── GeminiProvider.ts   # Google Gemini 3.5-Flash integration
-│       ├── GroqProvider.ts     # Groq Llama-3.3-70B-Versatile integration
-│       └── PromptBuilder.ts    # Centralized System Instruction & Prompt factory
+├── /data/users             # Multi-tenant file-based user records (keyed by sanitized email)
+├── /server                 # Backend Core & Specialized AI Services
+│   ├── /ai
+│   │   ├── AIProvider.ts       # Unified Generative Provider Interface
+│   │   ├── AIService.ts        # Resilient AI service runner with exponential backoff
+│   │   ├── GeminiProvider.ts   # Google Gemini SDK integration
+│   │   ├── GroqProvider.ts     # Groq Llama-3.3-70B SDK integration
+│   │   └── PromptBuilder.ts    # Central prompt factory (Orchestration, Patient, Doctor, OCR, ABHA)
+│   ├── /channels
+│   │   └── /whatsapp           # Omnichannel Meta WhatsApp Cloud API adapter & media handler
+│   ├── /domain                 # Domain Engine, Command Router, and Session Manager
+│   └── /ml
+│       ├── medicationReconciler.ts # Brand-to-generic ontology & duplicate drug resolution
+│       ├── trajectoryForecaster.ts # Longitudinal OLS & Holt exponential smoothing forecaster
+│       └── verifyMlEngines.ts      # Statistical engine validation suite
 │
 ├── /src                    # Frontend Application Client
 │   ├── /components
-│   │   ├── ABHAGateway.tsx          # ABDM Statutory Verification & Record Import
-│   │   ├── AICopilotWorkspace.tsx   # Voice AI HUD & Interactive Triage Panel
-│   │   ├── AddressModal.tsx         # Delivery addresses selection modal
-│   │   ├── ConfirmationModal.tsx    # Clinic appointment action overlays
-│   │   ├── DoctorChatbot.tsx        # Practitioner Workspace chatbot helper
-│   │   ├── HealthHistoryTimeline.tsx# Collapsible, multi-year chronological cards
-│   │   ├── LiveECGMonitor.tsx       # Live patient cardiovascular vital graphics
-│   │   └── ProfilePage.tsx          # Client biometric preferences configurations
+│   │   ├── ABHAGateway.tsx          # ABDM Verification & Simulated Care Context Import
+│   │   ├── AICopilotWorkspace.tsx   # Voice AI HUD, Patient/Doctor modes, Widget renderer
+│   │   ├── DoctorChatbot.tsx        # Practitioner Workspace clinical copilot widget
+│   │   ├── HealthHistoryTimeline.tsx# Chronological multi-year timeline with biomarker tags
+│   │   ├── HealthTrajectoryCard.tsx # Visual forecasting charts for longitudinal metrics
+│   │   ├── MedicationReconciliationCard.tsx # Cross-hospital prescription conflict viewer
+│   │   ├── LiveECGMonitor.tsx       # Simulated cardiovascular vital telemetry canvas
+│   │   └── ProfilePage.tsx          # Demographic & family vault management
 │   │
-│   ├── App.tsx             # Central Routing Core, Dashboard views, & layouts
-│   ├── index.css           # Global Tailwind v4 configurations & CSS rules
-│   ├── translations.ts     # Trilingual localization dictionaries (EN, HI, TE)
-│   └── types.ts            # Global TypeScript data schemas and definitions
+│   ├── App.tsx             # Root router, patient/doctor dashboards, PDF extraction
+│   ├── index.css           # Global Tailwind CSS v4 directives
+│   ├── translations.ts     # Localization dictionaries (English, Hindi, Telugu)
+│   └── types.ts            # Shared TypeScript interfaces and schemas
 │
-├── server.ts               # Core Node.js Express server entrypoint & REST API Router
-├── metadata.json           # Platform integration capabilities metadata
-└── .env.example            # Environment configuration template
+├── server.ts               # Core Express REST API entrypoint (legacy HealthTribe routes)
+├── metadata.json           # Platform capabilities manifest
+├── package.json            # Scripts and dependency specifications
+└── .env.example            # Environment variable configuration template
 ```
 
 ---
 
-## 🖼️ Interface Previews & Bento Grids
-
-### 📱 Patient Portal Dashboard
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│  HealthTribe AI • Patient Dashboard                         (🔔) [👤]   │
-├────────────────────────────────────────────────────────────────────────┤
-│  Hello, Supriya!                                                       │
-│  [ Active ABHA: supriya@abha • Verified ✔ ]                           │
-│                                                                        │
-│  ┌─────────────────────────┐ ┌──────────────────────────────────────┐  │
-│  │  Vitals Summary         │ │  Upcoming Consultations              │  │
-│  │  - BP: 118/75 mmHg      │ │  - Dr. Rahul Atluri                  │  │
-│  │  - Heart Rate: 72 bpm   │ │    Cardiology • Today, 10:30 AM      │  │
-│  └─────────────────────────┘ └──────────────────────────────────────┘  │
-│  ┌─────────────────────────┐ ┌──────────────────────────────────────┐  │
-│  │  Active Medications     │ │  Active Family Vault                 │  │
-│  │  - Metformin 500mg (QD) │ │  - Self • Srinivas • Rami            │  │
-│  └─────────────────────────┘ └──────────────────────────────────────┘  │
-│  [ Launch Voice AI HUD ]  [ Run Symptom Triage ]  [ Upload Lab Report ] │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
-### 🩺 Clinician Workspace
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│  Practitioner Portal • Live Practice Management Panel     [Dr. Rahul]  │
-├──────────────────────────────────┬─────────────────────────────────────┤
-│  Practice Stats Summary          │  Active Patient: Supriya Kilari     │
-│  - Appointments Today: 12        ├─────────────────────────────────────┤
-│  - Completed: 8                  │  AI Patient Summary Brief:          │
-│  - Revenue: ₹9,600               │  Patient presents history of mild   │
-│                                  │  asthma, stable BP, normal ECG.     │
-│  Active Consultation Queue       ├─────────────────────────────────────┤
-│  - Supriya Kilari (Active)       │  Live Consultation Telemetry        │
-│  - Rami Kilari (Next)            │  - Pulse Rate: 72 bpm [Stable]      │
-│  - Srinivas Kilari (Waiting)     │  - ECG Feed: Sinus Rhythm Normal    │
-│                                  ├─────────────────────────────────────┤
-│                                  │  [ AI SOAP NOTES GENERATOR ]        │
-└──────────────────────────────────┴─────────────────────────────────────┘
-```
-
-### 🗣️ Voice AI HUD
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│  HealthTribe AI • Bilingual Conversational Voice HUD                  │
-├────────────────────────────────────────────────────────────────────────┤
-│                                                                        │
-│                        [ Speaking in Telugu ]                          │
-│                                                                        │
-│                             _  _  _  _                                 │
-│                           _//_//_//_//_                                │
-│                          // // // // //                                │
-│                          Waveform Reactive                             │
-│                                                                        │
-│   "హలో సుప్రియ! నేను మీ హెల్త్‌ట్రైబ్ AI కోపైలట్. సహాయం కోసం చెప్పండి."   │
-│                                                                        │
-│   [ ⏸ Pause ]         [ ■ Stop Conversation ]         [ 🎙 Restart ]  │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
----
-
-## 🛠️ Installation & Setup
+## 🚀 Installation & Local Setup
 
 ### Prerequisites
-*   [Node.js](https://nodejs.org/) (v18.0.0 or higher)
-*   [npm](https://www.npmjs.com/) (v9.0.0 or higher)
+* **Node.js**: v18.0.0 or higher
+* **npm**: v9.0.0 or higher
+* **API Keys**: Google Gemini API key and/or Groq API key
 
-### Step 1: Clone and Navigate
+### 1. Clone & Navigate
 ```bash
-git clone https://github.com/your-username/healthtribe-ai.git
-cd healthtribe-ai
+git clone https://github.com/Rohit-Andhavarapu/HealthTribe-version-1.1.git
+cd HealthTribe-version-1.1
 ```
 
-### Step 2: Install Full-Stack Dependencies
+### 2. Install Dependencies
 ```bash
 npm install
 ```
 
-### Step 3: Configure Environment Variables
-Copy the configuration template to create your local `.env.local` file:
+### 3. Configure Environment Variables
+Copy the template into `.env.local` or `.env`:
 ```bash
 cp .env.example .env.local
 ```
-Open `.env.local` and add your api keys:
+Provide your generative AI keys in `.env.local`:
 ```env
 AI_PROVIDER=gemini
-GEMINI_API_KEY=your_google_gemini_api_key_here
+GEMINI_API_KEY=your_gemini_api_key_here
 GROQ_API_KEY=your_groq_api_key_here
 GROQ_MODEL=llama-3.3-70b-versatile
+
+# Optional WhatsApp Webhook Settings
+WHATSAPP_PHONE_NUMBER_ID=
+WHATSAPP_ACCESS_TOKEN=
+WHATSAPP_VERIFY_TOKEN=healthtribe_secret_verify_token_2026
+WHATSAPP_APP_SECRET=
 ```
 
-### Step 4: Run the Development Server
+### 4. Run Development Server
 ```bash
 npm run dev
 ```
-The server will boot up using `tsx` and automatically bind to port `3000`. Navigate to `http://localhost:3000` to view the application locally.
+The application boots via `tsx` on port `3000`. Navigate to `http://localhost:3000` to access the portal.
 
-### Step 5: Production Compilation & Run
+### 5. Production Compilation
 ```bash
-# Compile and bundle the full-stack app
+# Build frontend assets and bundle backend CommonJS binary
 npm run build
 
-# Start the optimized server bundle
+# Start the optimized production server
 npm run start
 ```
 
 ---
 
-## 📈 Future Roadmap
+## 🔑 Key API Endpoints (Reference)
 
-*   **Production ABDM Gateway Integration:** Replace simulated workflows with official National Health Authority (NHA) Sandboxes.
-*   **Wearable Health IoT Integrations:** Sync real-time biometrics from Apple Watch or Fitbit directly into the AI Symptom Triage engine.
-*   **Ambient Clinical Listening:** Enable background transcription during consultation sessions to automatically draft SOAP notes from conversational speech.
-*   **Vernacular Expansion:** Expand bilingual translation services to support regional Indian languages, including Tamil, Kannada, Bengali, and Marathi.
-*   **Predictive Health Alerts:** Use historical medical timelines to forecast potential wellness risks and alert clinicians to early symptoms of chronic conditions.
-
----
-
-## 💡 Lessons Learned & Engineering Reflections
-
-Building an AI-first, full-stack clinical platform highlighted several critical design and performance trade-offs:
-
-1.  **Ensuring Structured LLM Outputs:** Initially, requesting raw text responses from models resulted in inconsistent JSON formatting, which broke frontend UI widgets. Transitioning to explicit schema guidelines inside `PromptBuilder.ts` and configuring `responseMimeType: "application/json"` completely resolved parsing issues.
-2.  **Mitigating Latency in Voice AI:** Integrating Speech Recognition with LLM processing and Text-to-Speech synthesis created noticeable lag. Choosing `gemini-3.5-flash` for triage queries and caching system prompts significantly lowered latency, delivering a fast, responsive user experience in our voice HUD.
-3.  **Managing Multi-Tenant Data Boundaries:** To ensure user privacy, we isolated files and timelines on the backend. This multi-tenant boundary ensures data security while maintaining fast access times across family profiles.
-4.  **Bypassing ES Module Resolution Issues:** To simplify backend deployment, we replaced complex relative path structures with an optimized CJS compilation step using `esbuild`. This approach completely resolves import resolution issues, producing a single `dist/server.cjs` file that loads quickly in containerized environments.
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `POST` | `/api/ai-conversations/:id/messages` | Primary AI conversation endpoint; triggers orchestration, context fetching, and model response |
+| `POST` | `/api/doctor-chat` | Dedicated Doctor Clinical Copilot endpoint for briefings and practice queries |
+| `POST` | `/api/analyze-report` | Diagnostic report analyzer parsing OCR text against previous timeline records |
+| `POST` | `/api/v1/prescriptions/upload-ocr` | Prescription OCR parser with illegible handwriting safety detection |
+| `GET` | `/api/timeline` | Retrieves longitudinal medical timeline for the active patient |
+| `POST` | `/api/timeline` | Appends a structured medical or lab record to the longitudinal timeline |
+| `POST` | `/api/triage` | Symptom triage returning structured urgency levels and home care recommendations |
+| `POST` | `/api/interaction-check` | Analyzes active medications against patient allergies for adverse interactions |
+| `POST` | `/api/diet` | Generates a tailored post-consultation diet plan |
+| `GET` | `/api/v1/ml/trajectory/:patientId` | Computes statistical time-series forecasts on historical biomarker data |
+| `GET` | `/api/v1/ml/reconcile/:patientId` | Evaluates cross-hospital prescriptions for molecule overlap and conflicts |
+| `POST` | `/api/v1/abha/import/:patientId` | Initiates simulated ABDM care context import pipeline into the timeline |
 
 ---
 
-## 👨‍💻 About the Developer
+## 👥 Authors & Acknowledgments
 
-This project demonstrates professional full-stack development capability and strong product design thinking:
-
-*   **Full-Stack Software Architecture:** Designed robust client-server communication using global fetch monkeypatching, Express routing, and isolated JSON file-based multi-tenant storage.
-*   **AI-First Application Design:** Implemented modular model adapters, structured prompt templates, rate-limiting handlers, and multi-stage OCR parsing pipelines.
-*   **Production Engineering Principles:** Set up clean dev/build scripts, optimized asset bundling with `esbuild`, ensured strict TypeScript type safety, and configured defensive error recovery.
-*   **Responsive UX/UI Delivery:** Built a distinctive, high-contrast dashboard with Tailwind CSS v4, smooth Framer Motion micro-animations, and full-screen bility features (Voice AI HUD, 44px touch targets).
+* **Rohit Andhavarapu** — Architecture, AI orchestration, full-stack implementation, and clinical workflows.
+* Developed for high-performance clinical intelligence and federated digital health interoperability.
